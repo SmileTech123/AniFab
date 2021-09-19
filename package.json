@@ -1,0 +1,36 @@
+{
+  "name": "anifab",
+  "version": "1.0.0",
+  "private": true,
+  "main": "app.js",
+  "scripts": {
+    "start": "electron . --disable-gpu"
+  },
+  "build": {
+    "appId": "com.anifab.app",
+    "icon": "anifablogo.png",
+    "asar": false,
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "dependencies": {
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "jquery": "^3.6.0",
+    "js-cookie": "^3.0.1",
+    "node-fetch": "^2.6.2",
+    "set-interval-async": "^2.0.3",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "electron": "^14.0.1",
+    "electron-builder": "^22.11.7"
+  }
+}

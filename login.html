@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+	<script type="module" src="node_modules/js-cookie/dist/js.cookie.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+	<script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+    <title>AniFab</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+
+      <div class="container-fluid">
+        <a class="navbar-brand" href="http://localhost:3000">
+            <img style="border-radius: 10px;" src="anifablogo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+            AniFab
+        </a>
+       
+     
+        </div>
+      </div>
+    </nav>
+    
+    <div style="padding-top: 10%;"  class="container h-100">
+		<div class="d-flex justify-content-center h-100">
+			<div class="user_card">
+				<div class="d-flex justify-content-center">
+					<div class="brand_logo_container">
+						<img src="anifablogo.png" class="brand_logo" alt="Logo">
+					</div>
+				</div>
+				<div class="d-flex justify-content-center form_container">
+					<form>
+						<div class="input-group mb-3">
+							<div class="input-group-append">
+								<span style="font-size: 26px;" class="input-group-text"><i class="fas fa-user"></i></span>
+							</div>
+							<input id="user" type="text" name="" class="form-control input_user" value="" placeholder="Username">
+						</div>
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span  style="font-size: 26px;" class="input-group-text"><i class="fas fa-key"></i></span>
+							</div>
+							<input id="pass" type="password" name="" class="form-control input_pass" value="" placeholder="Password">
+						</div>
+						<div class="form-group">
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input" id="customControlInline">
+								<label class="custom-control-label" for="customControlInline">Ricordami</label>
+							</div>
+						</div>
+							<div class="d-flex justify-content-center mt-3 login_container">
+				 	<button type="button" id="logbtn" tipo="login" name="button" class="btn login_btn">Accedi</button>
+				   </div>
+					</form>
+				</div>
+		
+				<div class="mt-4">
+					<div class="d-flex justify-content-center links">
+						Non hai un account? <a href="http://localhost:3000/login.html?newuser=si" class="ml-2">Registrati</a>
+					</div>
+					<div class="d-flex justify-content-center links">
+						<!-- <a href="#">Password dimenticata?</a> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  </body>
+  <script src="login.js"></script>
+</html>
