@@ -49,8 +49,17 @@ function renderCountdown(dateStart, dateEnd) {
 $(document).ready(() => {
   var user=Cookies.get('user')
   if(user!=""){
-    $("#dropdownMenuButton1").append("<i class='fa fa-user'></i><span>"+user.split("@")[0]+"</span>")
-   }
+    var wid=$(document).width()
+    var user2=""
+     if(wid<500){
+   
+      user2=user.substring(0,4)+"..."
+     }else{
+      user2=user
+     }
+   $("#dropdownMenuButton1").append("<i class='fa fa-user'></i><span>"+user2.split("@")[0]+"</span>")
+  }
+
   
   $("body").keypress(function (e) {
     var key = e.which;
@@ -58,7 +67,7 @@ $(document).ready(() => {
     if (key == 13) {
       var search = $("#searchbar").val();
       if (search != "") {
-        location.href = "http://localhost:3000/anime.html?src=" + search;
+        location.href = "https://AniFab.fabiogerman.repl.co/anime.html?src=" + search;
       } else {
         alert("Parole mancanti");
       }
@@ -68,7 +77,7 @@ $(document).ready(() => {
   $("#search").click(() => {
     var search = $("#searchbar").val();
     if (search != "") {
-      location.href = "http://localhost:3000/anime.html?src=" + search;
+      location.href = "https://AniFab.fabiogerman.repl.co/anime.html?src=" + search;
     } else {
       alert("Parole mancanti");
     }
@@ -152,25 +161,6 @@ function scriviminuto(user){
 
 }
 
-function colorchange(color){
-  if(color=="light"){
-    $("#sett").html(
-    
-      '<button style="margin-right:5px" onclick="colorchange(`dark`)"  id="colormode" class="btn btn-sm btn-light"><i  class="fa fa-sun"></i>Light mode</button>'
-      
-    )
-    $("body").css("background-color","#121212")
-  }else{
-    $("#sett").html(
-    
-      '<button style="margin-right:5px" onclick="colorchange(`light`)" color="light" id="colormode" class="btn btn-sm btn-dark"><i  class="fa fa-moon"></i>dark mode</button>'
-     
-      
-    )
-    $("body").css("background-color","#568ea3")
-  }
 
-
-}
 
 

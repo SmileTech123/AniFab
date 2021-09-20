@@ -1,3 +1,4 @@
+
 html{
 
   height: 100%;
@@ -108,6 +109,12 @@ h3 {
   background: #266e88 !important;
   color: white !important;
 }
+.inner{
+    display:inline-grid;
+  margin:10px;
+  text-align:center;
+  width:250px
+}
 .login_btn:focus {
   box-shadow: none !important;
   outline: 0px !important;
@@ -132,4 +139,33 @@ h3 {
 
 .dropdown-item{
   color: black!important;
+}
+@media only screen and (max-width: 600px) {
+.wrap{
+  font-size: 50px;
+}
+.poster {
+    width: 100px;
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+}
+
+.imgposter{
+      width: 100px;
+    height: 160px;
+    border-radius: 10px;
+}
+.inner{
+  display:inline-grid;
+  margin:10px;
+  text-align:center;
+  width:150px
+}
+
+.center {
+  /* text-align: center; */
+ width: 100%;
+  margin: 0 auto;
+}
 }

@@ -15,7 +15,7 @@ $(document).ready(()=>{
         user=Cookies.get('user')
     }
     if(user!=undefined){
-        location.href="http://localhost:3000/anime.html"
+        location.href="https://AniFab.fabiogerman.repl.co/anime.html"
     }
     $("#logbtn").click(()=>{
         var tipo= $("#logbtn").attr("tipo")
@@ -23,11 +23,15 @@ $(document).ready(()=>{
         var pass=$("#pass").val()
         console.log(user,pass)
         if(user == "" || pass == ""){
-            alert("utente o password vuoti")
+                  $("#al").addClass("alert-danger")
+                      $("#al").css("display","block")
+                          $("#al").text("Utente o password vuoti")
             return
         }
         if(!emailIsValid(user)){
-            alert("Email non valida")
+                  $("#al").addClass("alert-danger")
+                      $("#al").css("display","block")
+                          $("#al").text("Email non valida")
             return
         }
 
@@ -46,18 +50,29 @@ $(document).ready(()=>{
                    // 
                     
                 
-                    location.href="http://localhost:3000/anime.html"
+                    location.href="https://AniFab.fabiogerman.repl.co/anime.html"
                 }else{
-                    alert("Errore utente errato o non trovato")
+                    $("#al").addClass("alert-danger")
+                      $("#al").css("display","block")
+                          $("#al").text("Errore utente errato o non trovato")
+                    
                 }
             })
         }else{
             $.get("/reguser?user="+user+"&pass="+pass,function(dati){
                 if(dati.reg){
-                    alert("Registrazione avvenuta con successo")
-                    location.href="http://localhost:3000/login.html"
+                   $("#al").removeClass("alert-danger")
+                  $("#al").addClass("alert-success")
+                      $("#al").css("display","block")
+                          $("#al").text("Registrazione avvenuta con successo!")
+                    //alert("Registrazione avvenuta con successo")
+                    setTimeout(function(){  location.href="https://AniFab.fabiogerman.repl.co/login.html" }, 1500);
+                   
                 }else{
-                    alert("Errore registrazione non riuscita")
+                   $("#al").addClass("alert-danger")
+                      $("#al").css("display","block")
+                          $("#al").text("Errore registrazione")
+                    //alert("Errore registrazione non riuscita")
                 }
             })
         }

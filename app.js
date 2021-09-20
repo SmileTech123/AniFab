@@ -9,7 +9,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
 var apps = express();
-const { app, BrowserWindow,globalShortcut } = require("electron");
+//const { app, BrowserWindow,globalShortcut } = require("electron");
 
 const { use } = require("./routes/index");
 var db = new sqlite3.Database("anime.db", (err, room) => {
@@ -64,10 +64,10 @@ function createWindow() {
   //win.webContents.openDevTools();
   win.loadURL("http://localhost:3000");
 }
-app.setAppUserModelId(process.execPath);
-app.whenReady().then(() => {
-  createWindow();
-});
+// app.setAppUserModelId(process.execPath);
+// app.whenReady().then(() => {
+//   createWindow();
+// });
 // view engine setup
 apps.set("views", path.join(__dirname, "views"));
 apps.set("view engine", "jade");

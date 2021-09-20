@@ -4,7 +4,7 @@
   "private": true,
   "main": "app.js",
   "scripts": {
-    "start": "electron . --disable-gpu"
+    "start": "node app.js"
   },
   "build": {
     "appId": "com.anifab.app",
