@@ -33,13 +33,16 @@ db.run("CREATE TABLE users (user text,password text)", (err) => {
     console.log("Tabella Creata");
   }
 });
-db.run("CREATE TABLE lastseen (user text,imglink text,animelink text,titolo text,episodio text)", (err) => {
-  if (err) {
-    console.log("Tabella già esistente");
-  } else {
-    console.log("Tabella Creata");
+db.run(
+  "CREATE TABLE lastseen (user text,imglink text,animelink text,titolo text,episodio text)",
+  (err) => {
+    if (err) {
+      console.log("Tabella già esistente");
+    } else {
+      console.log("Tabella Creata");
+    }
   }
-});
+);
 var port = normalizePort(process.env.PORT || "3000");
 apps.set("port", port);
 
@@ -50,17 +53,16 @@ apps.set("port", port);
 var server = http.createServer(apps);
 
 function createWindow() {
-
   const win = new BrowserWindow({
     width: 1280,
     height: 720,
     autoHideMenuBar: true,
     icon: __dirname + "/anifablogo.png",
   });
-  globalShortcut.register('f5', function() {
-		console.log('f5 is pressed')
-		win.reload()
-	})
+  globalShortcut.register("f5", function () {
+    console.log("f5 is pressed");
+    win.reload();
+  });
   //win.webContents.openDevTools();
   win.loadURL("http://localhost:3000");
 }
@@ -93,154 +95,190 @@ apps.get("/homepage", async function (req, res) {
   res.send(resp);
 });
 
+apps.get("/lastseen", function (req, res) {
+  var user = req.query.user;
+  var img = req.query.linkimg;
+  var titolo = req.query.titolo;
+  var link = req.query.link;
+  var episodio = req.query.episodio;
+  var sql = "";
 
-apps.get("/lastseen",function(req,res){
-  var user=req.query.user
-  var img=req.query.linkimg
-  var titolo=req.query.titolo
-  var link=req.query.link
-  var episodio = req.query.episodio
-  var sql=""
-
-  db.all("select * from lastseen where titolo='" + titolo + "' and user='"+user+"'", (err, rows) => {
-   
-    if (rows.length <= 0) {
-      db.run(
-        "insert into lastseen values('" + user + "','" + img + "','"+link+"','"+titolo+"','"+episodio+"')",
-        (err) => {
-          if (err) {
-            console.log("non inserito" + err);
-           
-          } else {
-            console.log("inserito");
-         
+  db.all(
+    "select * from lastseen where titolo='" +
+      titolo +
+      "' and user='" +
+      user +
+      "'",
+    (err, rows) => {
+      if (rows.length <= 0) {
+        db.run(
+          "insert into lastseen values('" +
+            user +
+            "','" +
+            img +
+            "','" +
+            link +
+            "','" +
+            titolo +
+            "','" +
+            episodio +
+            "')",
+          (err) => {
+            if (err) {
+              console.log("non inserito" + err);
+            } else {
+              console.log("inserito");
+            }
           }
-        }
-      );
-  
-    } else {
-      db.run(
-        "update lastseen SET episodio='" + episodio + "',animelink='"+link+"' where titolo='" + titolo + "' and user='"+user+"'",
-        (err) => {
-    
-          if (err) {
-            console.log("non aggioranto" + err);
-            return;
-          } else {
-            //console.log(new Date().getSeconds()+" "+new Date().getMinutes()+" aggioranto");
-            return;
+        );
+      } else {
+        db.run(
+          "update lastseen SET episodio='" +
+            episodio +
+            "',animelink='" +
+            link +
+            "' where titolo='" +
+            titolo +
+            "' and user='" +
+            user +
+            "'",
+          (err) => {
+            if (err) {
+              console.log("non aggioranto" + err);
+              return;
+            } else {
+              //console.log(new Date().getSeconds()+" "+new Date().getMinutes()+" aggioranto");
+              return;
+            }
           }
-        }
-      );
+        );
+      }
     }
-   
+  );
+  res.json("fine");
+});
+
+apps.get("/lastseenget", function (req, res) {
+  var user = req.query.user;
+  db.all(
+    "Select * from lastseen where user='" + user + "' Limit 10",
+    (err, rows) => {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(rows);
+      }
+    }
+  );
+});
+apps.get("/reguser", function (req, res) {
+  var user = req.query.user;
+  var pass = req.query.pass;
+  db.get("select * from users where user='" + user + "'", (err, row) => {
+    console.log(row, err);
+    if (row == undefined) {
+      db.run(
+        "insert into users values('" + user + "','" + pass + "')",
+        (err) => {
+          if (err) {
+            console.log("utente non inserito" + err);
+            res.json({ reg: false });
+          } else {
+            console.log("utente inserito");
+            res.json({ reg: true });
+          }
+        }
+      );
+    } else {
+      res.json({ reg: false });
+    }
   });
-  res.json("fine")
-})
+});
 
-apps.get("/lastseenget",function(req,res){
-  var user=req.query.user
-  db.all("Select * from lastseen where user='"+user+"'",(err,rows)=>{
-    if(err){
-      res.json(err)
-    }else{
-      res.json(rows)
-    }
-  })
-})
-apps.get("/reguser",function(req,res){
-  var user=req.query.user
-  var pass=req.query.pass
-  db.get("select * from users where user='"+user+"'",(err,row)=>{
-    console.log(row,err)
-    if (row==undefined) {
-      db.run("insert into users values('"+user+"','"+pass+"')",(err)=>{
-        if (err) {
-          console.log("utente non inserito" + err);
-          res.json({"reg":false})
-        } else {
-          console.log("utente inserito");
-          res.json({"reg":true})
-        }
-    
-      })
-    }else{
-      res.json({"reg":false})
-    }
-  })
- 
-})
+apps.get("/loguser", function (req, res) {
+  var user = req.query.user;
+  var pass = req.query.pass;
 
-
-apps.get("/loguser",function(req,res){
-  var user=req.query.user
-  var pass=req.query.pass
- 
-  var sql = "select * from users where user='"+user+"' and password='"+pass+"'"
-  console.log(user,pass,sql)
-  db.get(sql,(err,row)=>{
-    console.log(row,err)
-    if (row==undefined) {
-     
-      res.json({"auth":false})
+  var sql =
+    "select * from users where user='" + user + "' and password='" + pass + "'";
+  console.log(user, pass, sql);
+  db.get(sql, (err, row) => {
+    console.log(row, err);
+    if (row == undefined) {
+      res.json({ auth: false });
     } else {
-  
-      res.json({"auth":true})
+      res.json({ auth: true });
     }
-
-  })
-})
+  });
+});
 
 apps.get("/writeminutes", function (req, res) {
-
   var id = req.query.id;
   var user = req.query.user;
 
   var minute = req.query.minute;
   minute = minute + "";
-  db.all("select * from anime where id='" + id + "' and user='"+user+"'", (err, rows) => {
-    console.log(rows)
-    if (rows.length <= 0) {
-      db.run(
-        "insert into anime values('" + id + "','" + minute + "','"+user+"')",
-        (err) => {
-          if (err) {
-            console.log("non inserito" + err);
-           
-          } else {
-            console.log("inserito");
-         
+  db.all(
+    "select * from anime where id='" + id + "' and user='" + user + "'",
+    (err, rows) => {
+      console.log(rows);
+      if (rows.length <= 0) {
+        db.run(
+          "insert into anime values('" +
+            id +
+            "','" +
+            minute +
+            "','" +
+            user +
+            "')",
+          (err) => {
+            if (err) {
+              console.log("non inserito" + err);
+            } else {
+              console.log("inserito");
+            }
           }
-        }
-      );
-  
-    } else {
-      db.run(
-        "update anime SET minute='" + minute + "' where id='" + id + "' and user='"+user+"'",
-        (err) => {
-    
-          if (err) {
-            console.log("non aggioranto" + err);
-            return;
-          } else {
-            console.log(new Date().getSeconds()+" "+new Date().getMinutes()+" aggioranto");
-            return;
+        );
+      } else {
+        db.run(
+          "update anime SET minute='" +
+            minute +
+            "' where id='" +
+            id +
+            "' and user='" +
+            user +
+            "'",
+          (err) => {
+            if (err) {
+              console.log("non aggioranto" + err);
+              return;
+            } else {
+              console.log(
+                new Date().getSeconds() +
+                  " " +
+                  new Date().getMinutes() +
+                  " aggioranto"
+              );
+              return;
+            }
           }
-        }
-      );
+        );
+      }
     }
-   
-  });
+  );
 
-  res.json("Fine")
+  res.json("Fine");
 });
 
 apps.get("/loadminutes", function (req, res) {
   var id = req.query.id;
   var user = req.query.user;
-  db.get("select minute from anime where id='" + id + "' and user='"+user+"'", (err, row) => {
-    res.json(row);
-  });
+  db.get(
+    "select minute from anime where id='" + id + "' and user='" + user + "'",
+    (err, row) => {
+      res.json(row);
+    }
+  );
 });
 
 apps.get("/getlink", async function (req, res) {

@@ -1,6 +1,4 @@
-
-html{
-
+html {
   height: 100%;
 }
 body {
@@ -16,16 +14,14 @@ body {
   width: 80%;
   margin: 0 auto;
 }
-.typewrite{
+.typewrite {
   text-decoration: none;
-  
 }
-.wrap{
+.wrap {
   font-size: 110px;
 }
-.mids{
+.mids {
   height: 100vh;
-
 
   display: flex;
   flex-direction: column;
@@ -49,6 +45,34 @@ body {
 }
 a {
   color: seashell !important;
+}
+
+.sett {
+  margin: 10px;
+  font-size: 20px;
+  text-align: center;
+}
+.form-check {
+  display: inline-block !important;
+  margin-right: 15px !important;
+}
+.itemsett {
+  background-color: #424242;
+  border-radius: 10px;
+  border: 2px solid white;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  border-radius: 10px;
+  bottom: 0;
+  height: 50px;
+  text-align: center;
+  width: 100%;
+  background-color: #424242;
+  border: 2px solid white;
+  color: white;
+  text-align: center;
 }
 
 .pagination {
@@ -80,10 +104,11 @@ h3 {
   flex-direction: column;
   padding: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
-
 }
 .brand_logo_container {
   position: absolute;
@@ -109,11 +134,11 @@ h3 {
   background: #266e88 !important;
   color: white !important;
 }
-.inner{
-    display:inline-grid;
-  margin:10px;
-  text-align:center;
-  width:250px
+.inner {
+  display: inline-grid;
+  margin: 10px;
+  text-align: center;
+  width: 250px;
 }
 .login_btn:focus {
   box-shadow: none !important;
@@ -133,39 +158,39 @@ h3 {
   box-shadow: none !important;
   outline: 0px !important;
 }
-.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
   background-color: #c0392b !important;
 }
 
-.dropdown-item{
-  color: black!important;
+.dropdown-item {
+  color: black !important;
 }
 @media only screen and (max-width: 600px) {
-.wrap{
-  font-size: 50px;
-}
-.poster {
+  .wrap {
+    font-size: 50px;
+  }
+  .poster {
     width: 100px;
     display: inline-block;
     margin: 10px;
     text-align: center;
-}
+  }
 
-.imgposter{
-      width: 100px;
+  .imgposter {
+    width: 100px;
     height: 160px;
     border-radius: 10px;
-}
-.inner{
-  display:inline-grid;
-  margin:10px;
-  text-align:center;
-  width:150px
-}
+  }
+  .inner {
+    display: inline-grid;
+    margin: 10px;
+    text-align: center;
+    width: 150px;
+  }
 
-.center {
-  /* text-align: center; */
- width: 100%;
-  margin: 0 auto;
-}
+  .center {
+    /* text-align: center; */
+    width: 100%;
+    margin: 0 auto;
+  }
 }

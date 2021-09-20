@@ -4,7 +4,6 @@ var episodio = params.get("episode");
 var linkimg = params.get("img");
 var titolo = params.get("titolo");
 
-
 function renderCountdown(dateStart, dateEnd) {
   let currentDate = dateStart.getTime();
   let targetDate = dateEnd.getTime(); // set the countdown date
@@ -47,27 +46,27 @@ function renderCountdown(dateStart, dateEnd) {
 }
 
 $(document).ready(() => {
-  var user=Cookies.get('user')
-  if(user!=""){
-    var wid=$(document).width()
-    var user2=""
-     if(wid<500){
-   
-      user2=user.substring(0,4)+"..."
-     }else{
-      user2=user
-     }
-   $("#dropdownMenuButton1").append("<i class='fa fa-user'></i><span>"+user2.split("@")[0]+"</span>")
+  var user = Cookies.get("user");
+  if (user != "") {
+    var wid = $(document).width();
+    var user2 = "";
+    if (wid < 500) {
+      user2 = user.substring(0, 4) + "...";
+    } else {
+      user2 = user;
+    }
+    $("#dropdownMenuButton1").append(
+      "<i class='fa fa-user'></i><span>" + user2.split("@")[0] + "</span>"
+    );
   }
 
-  
   $("body").keypress(function (e) {
     var key = e.which;
     console.log("aaa");
     if (key == 13) {
       var search = $("#searchbar").val();
       if (search != "") {
-        location.href = "https://AniFab.fabiogerman.repl.co/anime.html?src=" + search;
+        location.href = "/anime.html?src=" + search;
       } else {
         alert("Parole mancanti");
       }
@@ -77,37 +76,61 @@ $(document).ready(() => {
   $("#search").click(() => {
     var search = $("#searchbar").val();
     if (search != "") {
-      location.href = "https://AniFab.fabiogerman.repl.co/anime.html?src=" + search;
+      location.href = "/anime.html?src=" + search;
     } else {
       alert("Parole mancanti");
     }
   });
 
-  $.get("/lastseen?user="+user+"&linkimg="+linkimg+"&titolo="+titolo+"&link="+link+"&episodio="+episodio,function(data){
-    console.log(data)
-        console.log("/lastseen?user="+user+"&linkimg="+linkimg+"&titolo="+titolo+"&link="+link+"&episodio="+episodio)
-  })
+  $.get(
+    "/lastseen?user=" +
+      user +
+      "&linkimg=" +
+      linkimg +
+      "&titolo=" +
+      titolo +
+      "&link=" +
+      link +
+      "&episodio=" +
+      episodio,
+    function (data) {
+      console.log(data);
+      console.log(
+        "/lastseen?user=" +
+          user +
+          "&linkimg=" +
+          linkimg +
+          "&titolo=" +
+          titolo +
+          "&link=" +
+          link +
+          "&episodio=" +
+          episodio
+      );
+    }
+  );
 
   $.get("/getlink?link=" + link, function (data) {
     var video = $(data).find("#alternativeDownloadLink").attr("href");
     var episodes = $(data).find(".episodes.range.active")[0];
     episodes = $(episodes).find(".episode");
 
-   var titolo2 = titolo+ " - Episodio " + episodio;
-    var wid=$(document).width()
-    if(wid>500){
-      wid=wid/2
-    }else{
-      wid=wid-20
+    var titolo2 = titolo + " - Episodio " + episodio;
+    var wid = $(document).width();
+    if (wid > 500) {
+      wid = wid / 2;
+    } else {
+      wid = wid - 20;
     }
-  
 
     $(".center2").append(
       "<div>" +
         "<h4 style='margin-top:10px'>" +
         titolo2 +
         "</h4>" +
-        '<video  style="margin-top:30px" width="'+ wid +'" controls><source src="' +
+        '<video  style="margin-top:30px" width="' +
+        wid +
+        '" controls><source src="' +
         video +
         '" type="video/mp4"></video>'
     );
@@ -115,17 +138,36 @@ $(document).ready(() => {
       const itm = episodes[i];
       var href = $(itm).find("a").attr("href");
       var number = $(itm).find("a").text();
-    
-      if(number==episodio){
+
+      if (number == episodio) {
         $(".pagination").append(
-          '<li class="page-item"><a style="background-color:cyan;" class="page-link" href="guarda.html?link=' +href +'&episode=' +number +'&titolo='+titolo+'&imglink='+linkimg+'">'+number+'</a></li>'
+          '<li class="page-item"><a style="background-color:cyan;" class="page-link" href="guarda.html?link=' +
+            href +
+            "&episode=" +
+            number +
+            "&titolo=" +
+            titolo +
+            "&imglink=" +
+            linkimg +
+            '">' +
+            number +
+            "</a></li>"
         );
-      }else{
+      } else {
         $(".pagination").append(
-          '<li class="page-item"><a class="page-link" href="guarda.html?link=' +href +'&episode=' +number +'&titolo='+titolo+'&imglink='+linkimg+'">'+number+'</a></li>'
+          '<li class="page-item"><a class="page-link" href="guarda.html?link=' +
+            href +
+            "&episode=" +
+            number +
+            "&titolo=" +
+            titolo +
+            "&imglink=" +
+            linkimg +
+            '">' +
+            number +
+            "</a></li>"
         );
       }
-      
     }
     var nextep = $(data).find("#next-episode");
     if (nextep[0] != undefined) {
@@ -137,31 +179,22 @@ $(document).ready(() => {
     $("body").click(() => {
       console.log();
     });
-    $.get("/loadminutes?id=" + link+"&user="+user, function (data) {
-     
+    $.get("/loadminutes?id=" + link + "&user=" + user, function (data) {
       console.log(data);
       $("video")[0].currentTime = parseFloat(data.minute);
     });
-   
+
     setInterval(() => {
-      scriviminuto(user)
+      scriviminuto(user);
     }, 10000);
- 
-  
- 
   });
 });
 
-function scriviminuto(user){
+function scriviminuto(user) {
   try {
     var minute = $("video")[0].currentTime;
-    $.get("/writeminutes?id=" + link + "&minute=" + minute+"&user="+user);
+    $.get("/writeminutes?id=" + link + "&minute=" + minute + "&user=" + user);
   } catch (error) {
-   alert(error) 
+    alert(error);
   }
-
 }
-
-
-
-
