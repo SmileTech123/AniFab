@@ -1,3 +1,12 @@
+$(document).ready(()=>{
+    var user = Cookies.get("user");
+    $.get("/setting?user="+user,function(dati){
+        dati=JSON.parse(dati)
+        if(dati.intro!="S"){
+         location.href="login.html"
+        }
+    })
+})
 var i =0
 var TxtType = function(el, toRotate, period) {
     this.toRotate = toRotate;

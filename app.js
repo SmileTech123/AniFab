@@ -26,7 +26,7 @@ db.run("CREATE TABLE anime (id text,minute text,user text)", (err) => {
     console.log("Tabella Creata");
   }
 });
-db.run("CREATE TABLE users (user text,password text)", (err) => {
+db.run("CREATE TABLE users (user text,password text,setting text)", (err) => {
   if (err) {
     console.log("Tabella già esistente");
   } else {
@@ -171,14 +171,37 @@ apps.get("/lastseenget", function (req, res) {
     }
   );
 });
+
+apps.get("/setting",function(req,res){
+  var user = req.query.user;
+  db.get("select setting from users where user='" + user + "'", (err, row) => {
+    //console.log(row)
+    res.json(row.setting)
+
+  })
+})
+
+apps.get("/writesetting",function(req,res){
+  var user = req.query.user;
+  var sett = req.query.sett;
+  console.log(sett)
+  db.run("Update users set setting='"+sett+"' where user='"+user+"'", (err) => {
+    console.log(err)
+    res.json("fatto")
+
+  })
+})
+
+
 apps.get("/reguser", function (req, res) {
   var user = req.query.user;
   var pass = req.query.pass;
   db.get("select * from users where user='" + user + "'", (err, row) => {
     console.log(row, err);
+    var settdefault='{"intro":"S"}'
     if (row == undefined) {
       db.run(
-        "insert into users values('" + user + "','" + pass + "')",
+        "insert into users values('" + user + "','" + pass + "',"+settdefault+")",
         (err) => {
           if (err) {
             console.log("utente non inserito" + err);
