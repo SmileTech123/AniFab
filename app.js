@@ -101,6 +101,7 @@ apps.get("/lastseen",function(req,res){
   var link=req.query.link
   var episodio = req.query.episodio
   var sql=""
+
   db.all("select * from lastseen where titolo='" + titolo + "' and user='"+user+"'", (err, rows) => {
    
     if (rows.length <= 0) {
@@ -119,7 +120,7 @@ apps.get("/lastseen",function(req,res){
   
     } else {
       db.run(
-        "update lastseen SET episodio='" + episodio + "' where titolo='" + titolo + "' and user='"+user+"'",
+        "update lastseen SET episodio='" + episodio + "',animelink='"+link+"' where titolo='" + titolo + "' and user='"+user+"'",
         (err) => {
     
           if (err) {

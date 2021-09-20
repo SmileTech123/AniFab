@@ -45,7 +45,7 @@ $(document).ready(() => {
       "</a>"+
           "</a>"+
             "<a style='display: block;'>"+ 
-            title +"</a></div>")
+            titolofull +"</a></div>")
       });
       
     }

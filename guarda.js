@@ -85,6 +85,7 @@ $(document).ready(() => {
 
   $.get("/lastseen?user="+user+"&linkimg="+linkimg+"&titolo="+titolo+"&link="+link+"&episodio="+episodio,function(data){
     console.log(data)
+        console.log("/lastseen?user="+user+"&linkimg="+linkimg+"&titolo="+titolo+"&link="+link+"&episodio="+episodio)
   })
 
   $.get("/getlink?link=" + link, function (data) {
