@@ -1,5 +1,17 @@
 $(document).ready(()=>{
     var user = Cookies.get("user");
+      if (user != "") {
+    var wid = $(document).width();
+    var user2 = "";
+    if (wid < 500) {
+      user2 = user.substring(0, 4) + "...";
+    } else {
+      user2 = user;
+    }
+    $("#dropdownMenuButton1").append(
+      "<i class='fa fa-user'></i><span>" + user2.split("@")[0] + "</span>"
+    );
+  }
     console.log(user)
     $.get("/setting?user="+user,function(dati){
         dati=JSON.parse(dati)

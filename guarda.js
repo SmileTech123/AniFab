@@ -60,6 +60,8 @@ $(document).ready(() => {
     );
   }
 
+
+
   $("body").keypress(function (e) {
     var key = e.which;
     console.log("aaa");
@@ -128,7 +130,7 @@ $(document).ready(() => {
         "<h4 style='margin-top:10px'>" +
         titolo2 +
         "</h4>" +
-        '<video  style="margin-top:30px" width="' +
+        '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
         wid +
         '" controls><source src="' +
         video +
@@ -188,6 +190,30 @@ $(document).ready(() => {
       scriviminuto(user);
     }, 10000);
   });
+document.addEventListener("fullscreenchange", function() {
+   var vid=$("video")[0]
+   $(vid).css("border","0px")
+});
+document.addEventListener("mozfullscreenchange", function() {
+   var vid=$("video")[0]
+   $(vid).css("border","0px")
+});
+document.addEventListener("webkitfullscreenchange", function() {
+    var vid=$("video")[0]
+  if( window.innerHeight == screen.height) {
+      $(vid).css("border","0px")
+}else{
+   $(vid).css("border","2px solid white")
+}
+  
+  
+ 
+});
+document.addEventListener("msfullscreenchange", function() {
+     var vid=$("video")[0]
+   $(vid).css("border","0px")
+});
+
 });
 
 function scriviminuto(user) {

@@ -5,35 +5,30 @@ var fetch = require("node-fetch");
 var http = require("http");
 var sqlite3 = require("sqlite3");
 var fs = require("fs");
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-
 var apps = express();
-//const { app, BrowserWindow,globalShortcut } = require("electron");
 
-const { use } = require("./routes/index");
-var db = new sqlite3.Database("anime.db", (err, room) => {
+var db2 = new sqlite3.Database("anime.db", (err, room) => {
   if (err) {
     console.log("errore");
     return;
   }
   console.log("connesso");
 });
-db.run("CREATE TABLE anime (id text,minute text,user text)", (err) => {
+db2.run("CREATE TABLE anime (id text,minute text,user text)", (err) => {
   if (err) {
     console.log("Tabella già esistente");
   } else {
     console.log("Tabella Creata");
   }
 });
-db.run("CREATE TABLE users (user text,password text,setting text)", (err) => {
+db2.run("CREATE TABLE users (user text,password text,setting text)", (err) => {
   if (err) {
     console.log("Tabella già esistente");
   } else {
     console.log("Tabella Creata");
   }
 });
-db.run(
+db2.run(
   "CREATE TABLE lastseen (user text,imglink text,animelink text,titolo text,episodio text)",
   (err) => {
     if (err) {
@@ -43,6 +38,7 @@ db.run(
     }
   }
 );
+db2.close();
 var port = normalizePort(process.env.PORT || "3000");
 apps.set("port", port);
 
@@ -79,8 +75,7 @@ apps.use(express.urlencoded({ extended: false }));
 
 apps.use(express.static(path.join(__dirname, "/")));
 
-apps.use("/", indexRouter);
-apps.use("/users", usersRouter);
+
 apps.get("/homepage", async function (req, res) {
   var src = req.query.src;
   console.log(src);
@@ -96,6 +91,13 @@ apps.get("/homepage", async function (req, res) {
 });
 
 apps.get("/lastseen", function (req, res) {
+  var db = new sqlite3.Database("anime.db", (err, room) => {
+  if (err) {
+    console.log("errore");
+    return;
+  }
+  console.log("connesso");
+});
   var user = req.query.user;
   var img = req.query.linkimg;
   var titolo = req.query.titolo;
@@ -156,9 +158,17 @@ apps.get("/lastseen", function (req, res) {
     }
   );
   res.json("fine");
+  db.close();
 });
 
 apps.get("/lastseenget", function (req, res) {
+    var db = new sqlite3.Database("anime.db", (err, room) => {
+  if (err) {
+    console.log("errore");
+    return;
+  }
+  console.log("connesso");
+});
   var user = req.query.user;
   db.all(
     "Select * from lastseen where user='" + user + "' Limit 10",
@@ -170,30 +180,57 @@ apps.get("/lastseenget", function (req, res) {
       }
     }
   );
+  db.close();
 });
 
 apps.get("/setting",function(req,res){
+    var db = new sqlite3.Database("anime.db", (err, room) => {
+  if (err) {
+    console.log("errore");
+    return;
+  }
+  console.log("connesso");
+});
   var user = req.query.user;
   db.get("select setting from users where user='" + user + "'", (err, row) => {
-    //console.log(row)
-    res.json(row.setting)
+    
+    if(row!=undefined){
+      res.json(row.setting)
+    }
+   // 
 
   })
+  db.close()
 })
 
 apps.get("/writesetting",function(req,res){
+    var db = new sqlite3.Database("anime.db", (err, room) => {
+  if (err) {
+    console.log("errore");
+    return;
+  }
+  console.log("connesso");
+});
   var user = req.query.user;
   var sett = req.query.sett;
   console.log(sett)
   db.run("Update users set setting='"+sett+"' where user='"+user+"'", (err) => {
     console.log(err)
     res.json("fatto")
-
+ 
   })
+  db.close();
 })
 
 
 apps.get("/reguser", function (req, res) {
+    var db = new sqlite3.Database("anime.db", (err, room) => {
+  if (err) {
+    console.log("errore");
+    return;
+  }
+  console.log("connesso");
+});
   var user = req.query.user;
   var pass = req.query.pass;
   db.get("select * from users where user='" + user + "'", (err, row) => {
@@ -216,9 +253,17 @@ apps.get("/reguser", function (req, res) {
       res.json({ reg: false });
     }
   });
+  db.close()
 });
 
 apps.get("/loguser", function (req, res) {
+      var db = new sqlite3.Database("anime.db", (err, room) => {
+  if (err) {
+    console.log("errore");
+    return;
+  }
+  console.log("connesso");
+});
   var user = req.query.user;
   var pass = req.query.pass;
 
@@ -233,9 +278,17 @@ apps.get("/loguser", function (req, res) {
       res.json({ auth: true });
     }
   });
+  db.close()
 });
 
 apps.get("/writeminutes", function (req, res) {
+      var db = new sqlite3.Database("anime.db", (err, room) => {
+  if (err) {
+    console.log("errore");
+    return;
+  }
+  console.log("connesso");
+});
   var id = req.query.id;
   var user = req.query.user;
 
@@ -291,9 +344,17 @@ apps.get("/writeminutes", function (req, res) {
   );
 
   res.json("Fine");
+  db.close()
 });
 
 apps.get("/loadminutes", function (req, res) {
+      var db = new sqlite3.Database("anime.db", (err, room) => {
+  if (err) {
+    console.log("errore");
+    return;
+  }
+  console.log("connesso");
+});
   var id = req.query.id;
   var user = req.query.user;
   db.get(
@@ -302,6 +363,7 @@ apps.get("/loadminutes", function (req, res) {
       res.json(row);
     }
   );
+  db.close()
 });
 
 apps.get("/getlink", async function (req, res) {
