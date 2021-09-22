@@ -5,6 +5,7 @@ var fetch = require("node-fetch");
 var http = require("http");
 var sqlite3 = require("sqlite3");
 var fs = require("fs");
+const { traceProcessWarnings } = require("process");
 var apps = express();
 
 var db2 = new sqlite3.Database("anime.db", (err, room) => {
@@ -29,7 +30,7 @@ db2.run("CREATE TABLE users (user text,password text,setting text)", (err) => {
   }
 });
 db2.run(
-  "CREATE TABLE lastseen (user text,imglink text,animelink text,titolo text,episodio text)",
+  "CREATE TABLE lastseen (data numeric,user text,imglink text,animelink text,titolo text,episodio text)",
   (err) => {
     if (err) {
       console.log("Tabella già esistente");
@@ -123,9 +124,12 @@ apps.get("/lastseen", function (req, res) {
       user +
       "'",
     (err, rows) => {
+      var td = new Date().getTime();
       if (rows.length <= 0) {
         db.run(
-          "insert into lastseen values('" +
+          "insert into lastseen values(" +
+            td +
+            ",'" +
             user +
             "','" +
             img +
@@ -150,7 +154,9 @@ apps.get("/lastseen", function (req, res) {
             episodio +
             "',animelink='" +
             link +
-            "' where titolo='" +
+            "',data=" +
+            td +
+            " where titolo='" +
             titolo +
             "' and user='" +
             user +
@@ -182,13 +188,64 @@ apps.get("/lastseenget", function (req, res) {
   });
   var user = req.query.user;
   db.all(
-    "Select * from lastseen where user='" + user + "' Limit 10",
+    "Select * from lastseen where user='" +
+      user +
+      "'  ORDER by Data DESC Limit 10",
     (err, rows) => {
       if (err) {
         res.json(err);
       } else {
         res.json(rows);
       }
+    }
+  );
+  db.close();
+});
+
+apps.get("/eliminalastseen", function (req, res) {
+  var db = new sqlite3.Database("anime.db", (err, room) => {
+    if (err) {
+      console.log("errore");
+      return;
+    }
+    console.log("connesso");
+  });
+  var id = req.query.id;
+  var user = req.query.user;
+  console.log(id, user);
+  db.run(
+    "delete from lastseen where Data=" + id + " and user='" + user + "'",
+    (err) => {
+      res.json("fatto");
+    }
+  );
+  db.close();
+});
+
+apps.get("/managelastseen", function (req, res) {
+  var db = new sqlite3.Database("anime.db", (err, room) => {
+    if (err) {
+      console.log("errore");
+      return;
+    }
+    console.log("connesso");
+  });
+  var user = req.query.user;
+  var page = req.query.page;
+  var off = 10 * parseInt(page) - 10;
+  db.all(
+    "SELECT * from lastseen where user='" +
+      user +
+      "' ORDER by Data DESC LIMIT 10 OFFSET " +
+      off,
+    (err, rows) => {
+      db.get(
+        "SELECT count(*) as tot from lastseen where user='" + user + "'",
+        (err, row) => {
+          var totpage = Math.round(row.tot / 10 + 0.4999);
+          res.json({ totpagine: totpage, righe: rows });
+        }
+      );
     }
   );
   db.close();
@@ -246,11 +303,11 @@ apps.get("/reguser", function (req, res) {
   db.get("select * from users where user='" + user + "'", (err, row) => {
     console.log(row, err);
     var settdefault = '{"intro":"S"}';
-     var qry = db.prepare("insert into users values(?,?,?)");
+    var qry = db.prepare("insert into users values(?,?,?)");
     if (row == undefined) {
-      qry.run(user,pass,settdefault)
-      qry.finalize()
-       res.json({ reg: true });
+      qry.run(user, pass, settdefault);
+      qry.finalize();
+      res.json({ reg: true });
     } else {
       res.json({ reg: false });
     }
@@ -299,7 +356,6 @@ apps.get("/writeminutes", function (req, res) {
   db.all(
     "select * from anime where id='" + id + "' and user='" + user + "'",
     (err, rows) => {
-      console.log(rows);
       if (rows.length <= 0) {
         db.run(
           "insert into anime values('" +
