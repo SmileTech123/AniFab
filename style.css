@@ -75,6 +75,25 @@ a {
   text-align: center;
 }
 
+.sugg {
+  background-color: white;
+  position: absolute;
+  top: 50px;
+  border-radius: 3px;
+  -ms-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 3px rgb(0 0 0 / 50%);
+  overflow: hidden;
+  color: black;
+  z-index: 999;
+  width: 208px;
+}
+.itmsugg {
+  margin: 5px;
+  border: 2px solid black;
+  border-radius: 3px;
+}
+
 .pagination {
   justify-content: center !important;
 }
@@ -166,6 +185,19 @@ h3 {
   color: black !important;
 }
 @media only screen and (max-width: 600px) {
+  .sugg {
+    background-color: white;
+    position: absolute;
+    top: 93px;
+    border-radius: 3px;
+    -ms-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+    -o-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 3px rgb(0 0 0 / 50%);
+    overflow: hidden;
+    color: black;
+    z-index: 999;
+    width: 157px;
+  }
   .wrap {
     font-size: 50px;
   }

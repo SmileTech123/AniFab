@@ -108,7 +108,7 @@ $(document).ready(() => {
 
   $("body").keypress(function (e) {
     var key = e.which;
-    console.log("aaa");
+
     if (key == 13) {
       var search = $("#searchbar").val();
       if (search != "") {
@@ -125,6 +125,27 @@ $(document).ready(() => {
       location.href = "/anime.html?src=" + search;
     } else {
       alert("Parole mancanti");
+    }
+  });
+
+  $("#searchbar").on("input", function () {
+    var search = $("#searchbar").val();
+    $(".sugg").html("");
+    if (search.length >= 3) {
+      $.get("/instsearch?src=" + search, function (dati) {
+        for (let i = 0; i < dati.results.length; i++) {
+          const itm = dati.results[i];
+          $(".sugg").append(
+            '<a style="color:black!important" href="/anime.html?src=' +
+              itm.title +
+              '"><div class="itmsugg"><img style="height:70px" src="' +
+              itm.image_url +
+              '" width="50" ><label style="display: inline-block;position: absolute;">' +
+              itm.title +
+              "</label></div></a>"
+          );
+        }
+      });
     }
   });
 });
