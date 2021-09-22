@@ -246,25 +246,11 @@ apps.get("/reguser", function (req, res) {
   db.get("select * from users where user='" + user + "'", (err, row) => {
     console.log(row, err);
     var settdefault = '{"intro":"S"}';
+     var qry = db.prepare("insert into users values(?,?,?)");
     if (row == undefined) {
-      db.run(
-        "insert into users values('" +
-          user +
-          "','" +
-          pass +
-          "'," +
-          settdefault +
-          ")",
-        (err) => {
-          if (err) {
-            console.log("utente non inserito" + err);
-            res.json({ reg: false });
-          } else {
-            console.log("utente inserito");
-            res.json({ reg: true });
-          }
-        }
-      );
+      qry.run(user,pass,settdefault)
+      qry.finalize()
+       res.json({ reg: true });
     } else {
       res.json({ reg: false });
     }
