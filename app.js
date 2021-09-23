@@ -102,6 +102,24 @@ apps.get("/homepage", async function (req, res) {
   res.send(resp);
 });
 
+apps.get("/animelook", function (req, res) {
+  var db = new sqlite3.Database("anime.db", (err, room) => {
+    if (err) {
+      console.log("errore");
+      return;
+    }
+    console.log("connesso");
+  });
+  var user = req.query.user;
+  db.all(
+    "SELECT minute,id from anime where user='" + user + "'",
+    (err, rows) => {
+      console.log(err, rows, user);
+      res.json(rows);
+    }
+  );
+});
+
 apps.get("/lastseen", function (req, res) {
   var db = new sqlite3.Database("anime.db", (err, room) => {
     if (err) {

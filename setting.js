@@ -64,6 +64,28 @@ $(document).ready(() => {
     }
   });
 
+  $.get("/animelook?user=" + user, function (dati) {
+    console.log(dati);
+    var secondi = 0;
+    var anime = [];
+    dati.forEach((itm) => {
+      secondi = secondi + parseFloat(itm.minute);
+      var act = itm.id.split("/")[2];
+      if (!anime.includes(act)) {
+        anime.push(act);
+      }
+    });
+    var totdata = secondsToDhms(secondi);
+
+    $("#animelook").html(
+      "<label>Totale anime guardati</label><h4>Hai guardato <b>" +
+        anime.length +
+        "</b> anime per un totale di <b>" +
+        totdata +
+        "</b></h4>"
+    );
+  });
+
   $.get("/managelastseen?user=" + user + "&page=" + page, function (dati) {
     console.log(dati);
     $("#tablebody").html("");
@@ -116,4 +138,18 @@ $(document).ready(() => {
 function elimina(id, user) {
   $.get("/eliminalastseen?user=" + user + "&id=" + id, function (dati) {});
   $("#id-" + id).remove();
+}
+
+function secondsToDhms(seconds) {
+  seconds = Number(seconds);
+  var d = Math.floor(seconds / (3600 * 24));
+  var h = Math.floor((seconds % (3600 * 24)) / 3600);
+  var m = Math.floor((seconds % 3600) / 60);
+  var s = Math.floor(seconds % 60);
+
+  var dDisplay = d > 0 ? d + (d == 1 ? " giorno " : " giorni ") : "";
+  var hDisplay = h > 0 ? h + (h == 1 ? " ora " : " ore ") : "";
+  var mDisplay = m > 0 ? m + (m == 1 ? " minuto " : " minuti ") : "";
+  var sDisplay = s > 0 ? s + (s == 1 ? " secondo" : " secondi") : "";
+  return dDisplay + hDisplay + mDisplay + sDisplay;
 }
