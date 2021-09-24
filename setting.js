@@ -1,3 +1,20 @@
+function readURL(input, user) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+      $(".profile").attr("src", e.target.result);
+      var obj = {
+        filename: user,
+        file: e.target.result,
+      };
+      $.post("/writeimage", obj, function (dati) {});
+    };
+
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
 $(document).ready(() => {
   const params = new URLSearchParams(window.location.search);
   var page = params.get("page");
@@ -15,10 +32,21 @@ $(document).ready(() => {
       user2 = user;
     }
     $("#dropdownMenuButton1").append(
-      "<i class='fa fa-user'></i><span>" + user2.split("@")[0] + "</span>"
+      "<img class='profilebar' src='public/images/Defaultuser.png'><span>" +
+        user2.split("@")[0] +
+        "</span>"
     );
   }
   console.log(user);
+
+  $("#image").change(function () {
+    readURL(this, user.split("@")[0]);
+  });
+  $.get("/getimage?user=" + user.split("@")[0], function (dati) {
+    $(".profile").attr("src", dati.src);
+    $(".profilebar").attr("src", dati.src);
+  });
+
   $.get("/setting?user=" + user, function (dati) {
     dati = JSON.parse(dati);
     if (dati.intro == "S") {
@@ -39,7 +67,7 @@ $(document).ready(() => {
           "</label>" +
           "</div>" +
           "</div>" +
-          "<br></br>"
+          "<br>"
       );
     } else {
       $(".sett").append(
@@ -59,7 +87,7 @@ $(document).ready(() => {
           "</label>" +
           "</div>" +
           "</div>" +
-          "<br></br>"
+          "<br>"
       );
     }
   });

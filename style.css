@@ -51,6 +51,7 @@ a {
   margin: 10px;
   font-size: 20px;
   text-align: center;
+  padding-bottom: 100px;
 }
 .form-check {
   display: inline-block !important;
@@ -184,6 +185,19 @@ h3 {
 .dropdown-item {
   color: black !important;
 }
+.profile {
+  width: 130px;
+  border: 4px solid white;
+  border-radius: 100px;
+}
+
+.profilebar {
+  width: 35px;
+  border: 2px solid white;
+  border-radius: 100px;
+  margin-right: 10px;
+}
+
 @media only screen and (max-width: 600px) {
   .sugg {
     background-color: white;
@@ -200,6 +214,32 @@ h3 {
   }
   .wrap {
     font-size: 50px;
+  }
+  .profile {
+    width: 100px;
+    border: 4px solid white;
+    border-radius: 60px;
+  }
+
+  .profilebar {
+    width: 35px;
+    border: 2px solid white;
+    border-radius: 100px;
+    margin-right: 10px;
+  }
+
+  .footer {
+    position: fixed;
+    left: 0;
+    border-radius: 10px;
+    bottom: 0;
+    height: 50px;
+    text-align: center;
+    width: 90%;
+    background-color: #424242;
+    border: 2px solid white;
+    color: white;
+    text-align: center;
   }
   .poster {
     width: 100px;

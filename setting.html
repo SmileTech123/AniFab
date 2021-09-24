@@ -46,9 +46,10 @@
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 
               </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" href="/setting.html">Impostazioni</a></li>
-                <li><a class="dropdown-item" href="/login.html?disconn=si">Esci</a></li>
+              <ul class="dropdown-menu" style="right:0!important;left:-50%!important" aria-labelledby="dropdownMenuButton1">
+                <!-- <li><a class="dropdown-item" href="/friends.html"><i style="padding-right: 5px;" class="fa fa-users"></i>Amici</a></li> -->
+                <li><a class="dropdown-item" href="/setting.html"><i style="padding-right: 5px;" class="fa fa-cog"></i>Impostazioni</a></li>
+                <li><a class="dropdown-item" href="/login.html?disconn=si"><i style="padding-right: 5px;" class="fa fa-sign-out-alt"></i>Esci</a></li>
               </ul>
             </div>
           </form>
@@ -58,6 +59,14 @@
     <h2 style="text-align: center;">Impostazioni</h2>
     <br>
     <div class="sett">
+      <div class="itemsett">
+        <label>Carica immagine profilo</label>
+        <br>
+        <img class="profile" src="">
+        <br>
+        <input type="file" id="image"  accept="image/png, image/jpeg" accept="image/png, image/jpeg">
+      </div>
+      <br>
       <div id="animelook" class="itemsett">
       
       </div>
@@ -86,7 +95,7 @@
               </nav>
         </div>
         <br>
-        <br>
+       
     </div>
     <div class="footer">
        

@@ -56,12 +56,16 @@ $(document).ready(() => {
       user2 = user;
     }
     $("#dropdownMenuButton1").append(
-      "<i class='fa fa-user'></i><span>" + user2.split("@")[0] + "</span>"
+      "<img class='profilebar' src='public/images/Defaultuser.png'><span>" +
+        user2.split("@")[0] +
+        "</span>"
     );
   }
 
-
-
+  $.get("/getimage?user=" + user.split("@")[0], function (dati) {
+    $(".profile").attr("src", dati.src);
+    $(".profilebar").attr("src", dati.src);
+  });
   $("body").keypress(function (e) {
     var key = e.which;
     console.log("aaa");
@@ -190,30 +194,26 @@ $(document).ready(() => {
       scriviminuto(user);
     }, 10000);
   });
-document.addEventListener("fullscreenchange", function() {
-   var vid=$("video")[0]
-   $(vid).css("border","0px")
-});
-document.addEventListener("mozfullscreenchange", function() {
-   var vid=$("video")[0]
-   $(vid).css("border","0px")
-});
-document.addEventListener("webkitfullscreenchange", function() {
-    var vid=$("video")[0]
-  if( window.innerHeight == screen.height) {
-      $(vid).css("border","0px")
-}else{
-   $(vid).css("border","2px solid white")
-}
-  
-  
- 
-});
-document.addEventListener("msfullscreenchange", function() {
-     var vid=$("video")[0]
-   $(vid).css("border","0px")
-});
-
+  document.addEventListener("fullscreenchange", function () {
+    var vid = $("video")[0];
+    $(vid).css("border", "0px");
+  });
+  document.addEventListener("mozfullscreenchange", function () {
+    var vid = $("video")[0];
+    $(vid).css("border", "0px");
+  });
+  document.addEventListener("webkitfullscreenchange", function () {
+    var vid = $("video")[0];
+    if (window.innerHeight == screen.height) {
+      $(vid).css("border", "0px");
+    } else {
+      $(vid).css("border", "2px solid white");
+    }
+  });
+  document.addEventListener("msfullscreenchange", function () {
+    var vid = $("video")[0];
+    $(vid).css("border", "0px");
+  });
 });
 
 function scriviminuto(user) {

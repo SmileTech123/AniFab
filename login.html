@@ -51,12 +51,15 @@
 							<input id="user" type="email" name="" class="form-control input_user" value="" placeholder="Email">
 						</div>
 						<div class="input-group mb-2">
-							<div class="input-group-append">
+							<div class="input-group-prepend">
 								<span  style="font-size: 26px;" class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
 							<input id="pass" type="password" name="" class="form-control input_pass" value="" placeholder="Password">
+							<div class="input-group-append">
+								<span id="vispass" vis="no" style="font-size: 26px;border-radius: 0.25rem 0.25rem 0.25rem !important;" class="input-group-text"><i class="fas fa-eye"></i></span>
+							</div>
 						</div>
-						<div class="form-group">
+						<div id="remember" class="form-group">
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="customControlInline">
 								<label class="custom-control-label" for="customControlInline">Ricordami</label>
@@ -69,7 +72,7 @@
 				</div>
 		
 				<div class="mt-4">
-					<div class="d-flex justify-content-center links">
+					<div id="labelreg" class="d-flex justify-content-center links">
 						Non hai un account? <a href="/login.html?newuser=si" class="ml-2">Registrati</a>
 					</div>
 					<div class="d-flex justify-content-center links">

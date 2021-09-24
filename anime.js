@@ -10,7 +10,9 @@ $(document).ready(() => {
       user2 = user;
     }
     $("#dropdownMenuButton1").append(
-      "<i class='fa fa-user'></i><span>" + user2.split("@")[0] + "</span>"
+      "<img class='profilebar' src='public/images/Defaultuser.png'><span>" +
+        user2.split("@")[0] +
+        "</span>"
     );
   }
 
@@ -61,6 +63,10 @@ $(document).ready(() => {
   }
   $("#searchbar").val(src);
 
+  $.get("/getimage?user=" + user.split("@")[0], function (dati) {
+    $(".profile").attr("src", dati.src);
+    $(".profilebar").attr("src", dati.src);
+  });
   $.get("/homepage?src=" + src, function (data) {
     var lista = $(data).find(".film-list");
 

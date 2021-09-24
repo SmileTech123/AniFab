@@ -11,7 +11,9 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script> -->
+    
     <link rel="stylesheet" href="style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,8 +50,10 @@
                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                   
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="?disconn=si">Esci</a></li>
+                <ul class="dropdown-menu" style="right:0!important;left:-50%!important" aria-labelledby="dropdownMenuButton1">
+                  <!-- <li><a class="dropdown-item" href="/friends.html"><i style="padding-right: 5px;" class="fa fa-users"></i>Amici</a></li> -->
+                  <li><a class="dropdown-item" href="/setting.html"><i style="padding-right: 5px;" class="fa fa-cog"></i>Impostazioni</a></li>
+                  <li><a class="dropdown-item" href="/login.html?disconn=si"><i style="padding-right: 5px;" class="fa fa-sign-out-alt"></i>Esci</a></li>
                 </ul>
               </div>
             </div>

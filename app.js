@@ -5,7 +5,9 @@ var fetch = require("node-fetch");
 var http = require("http");
 var sqlite3 = require("sqlite3");
 var fs = require("fs");
+var conv = require("base64-arraybuffer");
 const { traceProcessWarnings } = require("process");
+// const { app } = require("electron/main");
 var apps = express();
 
 var db2 = new sqlite3.Database("anime.db", (err, room) => {
@@ -87,10 +89,51 @@ apps.get("/instsearch", async function (req, res) {
 
   res.json(animejson);
 });
+function decodeBase64Image(dataString) {
+  var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+    response = {};
+
+  if (matches.length !== 3) {
+    return new Error("Invalid input string");
+  }
+
+  response.type = matches[1];
+  response.data = new Buffer(matches[2], "base64");
+
+  return response;
+}
+
+apps.get("/getimage", function (req, res) {
+  var user = req.query.user;
+  console.log(
+    "/public/images/" + user + ".png",
+    fs.existsSync("public/images/" + user + ".png")
+  );
+  if (fs.existsSync("public/images/" + user + ".png")) {
+    res.json({ src: "public/images/" + user + ".png" });
+    console.log("ciao");
+  } else {
+    res.json({ src: "public/images/Defaultuser.png" });
+    console.log("ciao1");
+  }
+});
+
+apps.post("/writeimage", function (req, res) {
+  var filename = req.body.filename;
+  var bs64 = req.body.file;
+  console.log(filename);
+  var data = bs64.replace(/^data:image\/\w+;base64,/, "");
+  fs.writeFile(
+    "public/images/" + filename + ".png",
+    data,
+    { encoding: "base64" },
+    function (err) {}
+  );
+});
 
 apps.get("/homepage", async function (req, res) {
   var src = req.query.src;
-  console.log(src);
+
   var resp = "";
   if (src != "") {
     resp = await fetch("https://www.animeworld.tv/search?keyword=" + src);
@@ -114,7 +157,6 @@ apps.get("/animelook", function (req, res) {
   db.all(
     "SELECT minute,id from anime where user='" + user + "'",
     (err, rows) => {
-      console.log(err, rows, user);
       res.json(rows);
     }
   );
@@ -230,7 +272,7 @@ apps.get("/eliminalastseen", function (req, res) {
   });
   var id = req.query.id;
   var user = req.query.user;
-  console.log(id, user);
+
   db.run(
     "delete from lastseen where Data=" + id + " and user='" + user + "'",
     (err) => {
@@ -297,7 +339,7 @@ apps.get("/writesetting", function (req, res) {
   });
   var user = req.query.user;
   var sett = req.query.sett;
-  console.log(sett);
+
   db.run(
     "Update users set setting='" + sett + "' where user='" + user + "'",
     (err) => {
@@ -319,7 +361,6 @@ apps.get("/reguser", function (req, res) {
   var user = req.query.user;
   var pass = req.query.pass;
   db.get("select * from users where user='" + user + "'", (err, row) => {
-    console.log(row, err);
     var settdefault = '{"intro":"S"}';
     var qry = db.prepare("insert into users values(?,?,?)");
     if (row == undefined) {
@@ -346,9 +387,8 @@ apps.get("/loguser", function (req, res) {
 
   var sql =
     "select * from users where user='" + user + "' and password='" + pass + "'";
-  console.log(user, pass, sql);
+
   db.get(sql, (err, row) => {
-    console.log(row, err);
     if (row == undefined) {
       res.json({ auth: false });
     } else {
@@ -402,15 +442,8 @@ apps.get("/writeminutes", function (req, res) {
             "'",
           (err) => {
             if (err) {
-              console.log("non aggioranto" + err);
               return;
             } else {
-              console.log(
-                new Date().getSeconds() +
-                  " " +
-                  new Date().getMinutes() +
-                  " aggioranto"
-              );
               return;
             }
           }

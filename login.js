@@ -7,6 +7,10 @@ $(document).ready(() => {
   if (newuser != null) {
     $("#logbtn").text("Registrati");
     $("#logbtn").attr("tipo", "registrazione");
+    $("#remember").remove();
+    $("#labelreg").html(
+      'Hai un account? <a href="/login.html" class="ml-2">Accedi</a>'
+    );
   }
   if (disconn != null) {
     Cookies.remove("user");
@@ -17,6 +21,19 @@ $(document).ready(() => {
   if (user != undefined) {
     location.href = "/anime.html";
   }
+
+  $("#vispass").click(() => {
+    var vis = $("#vispass").attr("vis");
+    if (vis == "si") {
+      $("#vispass").html('<i class="fa fa-eye"></i>');
+      $("#vispass").attr("vis", "no");
+      $("#pass").attr("type", "password");
+    } else {
+      $("#vispass").html('<i class="fa fa-eye-slash"></i>');
+      $("#vispass").attr("vis", "si");
+      $("#pass").attr("type", "text");
+    }
+  });
   $("#logbtn").click(() => {
     var tipo = $("#logbtn").attr("tipo");
     var user = $("#user").val();
