@@ -3,7 +3,7 @@ var link = params.get("link");
 var episodio = params.get("episode");
 var linkimg = params.get("img");
 var titolo = params.get("titolo");
-
+var socket = io();
 function renderCountdown(dateStart, dateEnd) {
   let currentDate = dateStart.getTime();
   let targetDate = dateEnd.getTime(); // set the countdown date
@@ -66,6 +66,16 @@ $(document).ready(() => {
     $(".profile").attr("src", dati.src);
     $(".profilebar").attr("src", dati.src);
   });
+
+  socket.on("friendarrive", function (dati) {
+    console.log(dati);
+    if (dati.touser == user) {
+      var tst = document.getElementById("liveToast");
+      var toast = new bootstrap.Toast(tst);
+      toast.show();
+    }
+  });
+
   $("body").keypress(function (e) {
     var key = e.which;
     console.log("aaa");

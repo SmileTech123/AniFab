@@ -198,6 +198,26 @@ h3 {
   margin-right: 10px;
 }
 
+.friend {
+  border: 2px solid white;
+  width: 200px;
+  display: inline-table;
+  height: 160px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.searchfriend {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.friendimg {
+  border: 2px solid white;
+  width: 100px;
+  border-radius: 110px;
+}
+
 @media only screen and (max-width: 600px) {
   .sugg {
     background-color: white;
@@ -219,6 +239,21 @@ h3 {
     width: 100px;
     border: 4px solid white;
     border-radius: 60px;
+  }
+
+  .friendimg {
+    border: 2px solid white;
+    width: 70px;
+    border-radius: 110px;
+  }
+
+  .friend {
+    border: 2px solid white;
+    width: 200px;
+    display: inline-table;
+    height: 130px;
+    margin: 10px;
+    border-radius: 10px;
   }
 
   .profilebar {

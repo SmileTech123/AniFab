@@ -1,4 +1,4 @@
-function readURL(input, user) {
+function readURL(input, user, fulluser) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
 
@@ -7,6 +7,7 @@ function readURL(input, user) {
       var obj = {
         filename: user,
         file: e.target.result,
+        user: fulluser,
       };
       $.post("/writeimage", obj, function (dati) {});
     };
@@ -40,7 +41,7 @@ $(document).ready(() => {
   console.log(user);
 
   $("#image").change(function () {
-    readURL(this, user.split("@")[0]);
+    readURL(this, user.split("@")[0], user);
   });
   $.get("/getimage?user=" + user.split("@")[0], function (dati) {
     $(".profile").attr("src", dati.src);

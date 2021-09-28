@@ -50,7 +50,9 @@ apps.set("port", port);
  */
 
 var server = http.createServer(apps);
-
+const { Server } = require("socket.io");
+const { ajaxSetup } = require("jquery");
+const io = new Server(server);
 function createWindow() {
   const win = new BrowserWindow({
     width: 1280,
@@ -65,6 +67,15 @@ function createWindow() {
   //win.webContents.openDevTools();
   win.loadURL("http://localhost:3000");
 }
+
+io.on("connection", (socket) => {
+  console.log("a user connected");
+
+  socket.on("friendRequest", (friend) => {
+    io.emit("friendarrive", friend);
+  });
+});
+
 // app.setAppUserModelId(process.execPath);
 // app.whenReady().then(() => {
 //   createWindow();
@@ -77,6 +88,153 @@ apps.use(express.json());
 apps.use(express.urlencoded({ extended: false }));
 
 apps.use(express.static(path.join(__dirname, "/")));
+
+apps.get("/srcuser", function (req, res) {
+  var user = req.query.user;
+  var sql = "SELECT * from users where users.user like '%" + user + "%'";
+  console.log(sql);
+  var obj = { users: [] };
+
+  var db = new sqlite3.Database("anime.db", (err, room) => {
+    if (err) {
+      console.log("errore");
+      return;
+    }
+    console.log("connesso");
+  });
+  db.all(sql, (err, rows) => {
+    for (let i = 0; i < rows.length; i++) {
+      const itm = rows[i];
+      var sql2 =
+        "SELECT * from friendrequest where friendrequest.touser = '" +
+        itm.user +
+        "'";
+      db.get(sql2, (err, row) => {
+        if (row == undefined) {
+          console.log("sono qui");
+          obj.users.push({ user: itm.user, icon: itm.icon, type: "R" });
+          console.log(itm.user);
+        } else {
+          if (row.type == "pending") {
+            obj.users.push({ user: itm.user, icon: itm.icon, type: "P" });
+          } else if (row.type == "accepted") {
+            obj.users.push({ user: itm.user, icon: itm.icon, type: "A" });
+          } else {
+            obj.users.push({ user: itm.user, icon: itm.icon, type: "R" });
+          }
+        }
+      });
+    }
+    setTimeout(function () {
+      res.json(obj);
+    }, 100);
+  });
+});
+
+apps.get("/inviareq", function (req, res) {
+  var user = req.query.user;
+  var touser = req.query.touser;
+  var db = new sqlite3.Database("anime.db", (err, room) => {
+    if (err) {
+      console.log("errore");
+      return;
+    }
+    console.log("connesso");
+  });
+  var sql =
+    "select * from friendrequest where user='" +
+    user +
+    "' and touser='" +
+    touser +
+    "'";
+  db.all(sql, (err, rows) => {
+    if (rows.length == 0) {
+      db.run(
+        "insert into friendrequest values('" +
+          user +
+          "','" +
+          touser +
+          "','pending')"
+      );
+    }
+  });
+});
+
+apps.get("/updatefriendrequest", function (req, res) {
+  var user = req.query.user;
+  var touser = req.query.touser;
+  var type = req.query.type;
+  var db = new sqlite3.Database("anime.db", (err, room) => {
+    if (err) {
+      console.log("errore");
+      return;
+    }
+    console.log("connesso");
+  });
+  var user = req.query.user;
+  var sql =
+    "update friendrequest set type='" +
+    type +
+    "' where touser='" +
+    touser +
+    "' and user = '" +
+    user +
+    "'";
+  var sql2 =
+    "insert into friendrequest values('" +
+    touser +
+    "','" +
+    user +
+    "','accepted')";
+  db.run(sql, (err) => {});
+  if (type == "accepted") {
+    db.run(sql2, (err) => {});
+  }
+  res.json("fatto");
+  db.close();
+});
+
+apps.get("/getfriendsreq", function (req, res) {
+  var db = new sqlite3.Database("anime.db", (err, room) => {
+    if (err) {
+      console.log("errore");
+      return;
+    }
+    console.log("connesso");
+  });
+  var user = req.query.user;
+  var sql =
+    "SELECT friendrequest.user,users.icon,friendrequest.type from friendrequest inner JOIN users on friendrequest.user = users.user where friendrequest.touser='" +
+    user +
+    "' and friendrequest.type = 'pending'";
+
+  console.log(sql);
+  db.all(sql, (err, rows) => {
+    res.json(rows);
+  });
+  db.close();
+});
+
+apps.get("/getfriends", function (req, res) {
+  var db = new sqlite3.Database("anime.db", (err, room) => {
+    if (err) {
+      console.log("errore");
+      return;
+    }
+    console.log("connesso");
+  });
+  var user = req.query.user;
+  var sql =
+    "SELECT friendrequest.touser,users.icon,friendrequest.type  from friendrequest inner JOIN users on friendrequest.touser = users.user where friendrequest.user='" +
+    user +
+    "' and friendrequest.type <> 'close'";
+
+  console.log(sql);
+  db.all(sql, (err, rows) => {
+    res.json(rows);
+  });
+  db.close();
+});
 
 apps.get("/instsearch", async function (req, res) {
   var src = req.query.src;
@@ -121,6 +279,7 @@ apps.get("/getimage", function (req, res) {
 apps.post("/writeimage", function (req, res) {
   var filename = req.body.filename;
   var bs64 = req.body.file;
+  var user = req.body.user;
   console.log(filename);
   var data = bs64.replace(/^data:image\/\w+;base64,/, "");
   fs.writeFile(
@@ -129,6 +288,35 @@ apps.post("/writeimage", function (req, res) {
     { encoding: "base64" },
     function (err) {}
   );
+  var db = new sqlite3.Database("anime.db", (err, room) => {
+    if (err) {
+      console.log("errore");
+      return;
+    }
+    console.log("connesso");
+  });
+  console.log(
+    "update users set icon='" +
+      "public/images/" +
+      filename +
+      ".png" +
+      "' where user='" +
+      user +
+      "'"
+  );
+  db.run(
+    "update users set icon='" +
+      "public/images/" +
+      filename +
+      ".png" +
+      "' where user='" +
+      user +
+      "'",
+    (err) => {
+      console.log(err);
+    }
+  );
+  db.close();
 });
 
 apps.get("/homepage", async function (req, res) {

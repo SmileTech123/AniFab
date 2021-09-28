@@ -1,6 +1,8 @@
 $(document).ready(() => {
   var user = Cookies.get("user");
+  var socket = io();
 
+  //socket.emit("friendRequest", { nome: "Fabio" });
   if (user != "") {
     var wid = $(document).width();
     var user2 = "";
@@ -109,6 +111,25 @@ $(document).ready(() => {
             "</a></div>"
         );
       }
+    }
+  });
+
+  socket.on("friendarrive", function (dati) {
+    console.log(dati);
+    if (dati.touser == user) {
+      var tst = document.getElementById("liveToast");
+      var toast = new bootstrap.Toast(tst);
+      toast.show();
+    }
+  });
+
+  $.get("/getfriendsreq?user=" + user, function (dati) {
+    console.log(dati);
+    console.log(dati.length, "sadasdasdasdasd");
+    if (dati.length > 0) {
+      var tst = document.getElementById("liveToast");
+      var toast = new bootstrap.Toast(tst);
+      toast.show();
     }
   });
 
