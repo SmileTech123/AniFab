@@ -176,13 +176,17 @@ apps.get("/lastseen", function (req, res) {
   var link = req.query.link;
   var episodio = req.query.episodio;
   var sql = "";
-
-  db.all(
-    "select * from lastseen where titolo='" +
+  console.log(user,"ciaooooo", 'select * from lastseen where titolo="' +
       titolo +
-      "' and user='" +
+      '" and user=' +
       user +
-      "'",
+      '"')
+  db.all(
+    'select * from lastseen where titolo="' +
+      titolo +
+      '" and user="' +
+      user +
+      '"',
     (err, rows) => {
       var td = new Date().getTime();
       if (rows.length <= 0) {
@@ -362,9 +366,9 @@ apps.get("/reguser", function (req, res) {
   var pass = req.query.pass;
   db.get("select * from users where user='" + user + "'", (err, row) => {
     var settdefault = '{"intro":"S"}';
-    var qry = db.prepare("insert into users values(?,?,?)");
+    var qry = db.prepare("insert into users values(?,?,?,?)");
     if (row == undefined) {
-      qry.run(user, pass, settdefault);
+      qry.run(user, pass, settdefault,"public/images/Defaultuser.png");
       qry.finalize();
       res.json({ reg: true });
     } else {
