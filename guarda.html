@@ -51,7 +51,7 @@
                   
                 </button>
                 <ul class="dropdown-menu" style="right:0!important;left:-50%!important" aria-labelledby="dropdownMenuButton1">
-                  <!-- <li><a class="dropdown-item" href="/friends.html"><i style="padding-right: 5px;" class="fa fa-users"></i>Amici</a></li> -->
+                  <li><a class="dropdown-item" href="/friends.html"><i style="padding-right: 5px;" class="fa fa-users"></i>Amici</a></li>
                   <li><a class="dropdown-item" href="/setting.html"><i style="padding-right: 5px;" class="fa fa-cog"></i>Impostazioni</a></li>
                   <li><a class="dropdown-item" href="/login.html?disconn=si"><i style="padding-right: 5px;" class="fa fa-sign-out-alt"></i>Esci</a></li>
                 </ul>
@@ -70,6 +70,19 @@
     </div>
    
     <div id="time-elapsed"></div>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <img width="30" src="anifablogo.png" class="rounded me-2" alt="...">
+          <strong class="me-auto">Richiesta di amicizia</strong>
+          
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div style="background-color:#0f1217" class="toast-body">
+          Hai nuove richieste di amicizia, controlla subito!
+        </div>
+      </div>
+    </div>
   </body>
   <script src="guarda.js"></script>
 </html>

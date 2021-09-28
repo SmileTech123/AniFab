@@ -18,6 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script type="module" src="node_modules/js-cookie/dist/js.cookie.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <script src="node_modules/socket.io/client-dist/socket.io.min.js"></script>
     <title>AniFab</title>
   </head>
   <body>
@@ -30,15 +31,30 @@
             AniFab
           
         </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/friends.html">Lista amici</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/findfriends.html">Cerca amici</a>
+              </li>
+            </ul>
+        </div>
        
           <div class="d-flex">
             <input
+            autocomplete="off"
               class="form-control me-2"
               type="search"
               placeholder="Cerca"
               aria-label="Search"
               id="searchbar"
             />
+            <div class="sugg">
+          
+             
+            </div>
             <button id="search" class="btn btn-primary" type="button">
               Cerca
             </button>
@@ -56,51 +72,15 @@
         </div>
       </div>
     </nav>
-    <h2 style="text-align: center;">Impostazioni</h2>
-    <br>
-    <div class="sett">
-      <div class="itemsett">
-        <label>Carica immagine profilo</label>
-        <br>
-        <img class="profile" src="">
-        <br>
-        <input type="file" id="image"  accept="image/png, image/jpeg" accept="image/png, image/jpeg">
-      </div>
-      <br>
-      <div id="animelook" class="itemsett">
-      
-      </div>
-      <br>
-        <div class="itemsett">
-            <label>Tabella Ultimi visti</label>
-            <br>
-            <br>
-            <table  class="table table-striped table-dark table-sm">
-                <thead>
-                  <tr>
-               
-                    <th scope="col">Titolo</th>
-                    <th scope="col">Episodio</th>
-                    <th scope="col">Azioni</th>
-                  </tr>
-                </thead>
-                <tbody id="tablebody">
-                </tbody>
-              </table>
-              <nav aria-label="Page navigation example">
-                <ul class="pagination">
-            
-            
-                </ul>
-              </nav>
-        </div>
-        <br>
-       
+    <div id="friendlst" class="center2">
+      <h2 id='lst' style="color: white;margin-top: 0;">I tuoi amici</h2>
+
     </div>
-    <div class="footer">
-       
-       <button id="salva" class="btn btn-primary">Salva</button>
-    </div>
+    <hr>
+    <div id="reqlist" class="center2">
+        <h2 id='lst' style="color: white;margin-top: 0;">Richieste d' amicizia</h2>
+  
+      </div>
   </body>
-  <script src="setting.js"></script>
+  <script src="friends.js"></script>
 </html>
