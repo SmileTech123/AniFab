@@ -91,7 +91,7 @@ apps.use(express.static(path.join(__dirname, "/")));
 
 apps.get("/srcuser", function (req, res) {
   var user = req.query.user;
-  var touser=req.query.touser
+  var touser = req.query.touser;
   var sql = "SELECT * from users where users.user like '%" + user + "%'";
   console.log(sql);
   var obj = { users: [] };
@@ -106,11 +106,13 @@ apps.get("/srcuser", function (req, res) {
   db.all(sql, (err, rows) => {
     for (let i = 0; i < rows.length; i++) {
       const itm = rows[i];
-    
+
       var sql2 =
         "SELECT * from friendrequest where friendrequest.touser = '" +
         itm.user +
-        "' and friendrequest.user='"+touser+"'";
+        "' and friendrequest.user='" +
+        touser +
+        "'";
       db.get(sql2, (err, row) => {
         if (row == undefined) {
           console.log("sono qui");
@@ -365,12 +367,17 @@ apps.get("/lastseen", function (req, res) {
   var titolo = req.query.titolo;
   var link = req.query.link;
   var episodio = req.query.episodio;
+  var rangeid = req.query.rangeid;
   var sql = "";
-  console.log(user,"ciaooooo", 'select * from lastseen where titolo="' +
+  console.log(
+    user,
+    "ciaooooo",
+    'select * from lastseen where titolo="' +
       titolo +
       '" and user=' +
       user +
-      '"')
+      '"'
+  );
   db.all(
     'select * from lastseen where titolo="' +
       titolo +
@@ -393,6 +400,8 @@ apps.get("/lastseen", function (req, res) {
             titolo +
             "','" +
             episodio +
+            "','" +
+            rangeid +
             "')",
           (err) => {
             if (err) {
@@ -410,7 +419,9 @@ apps.get("/lastseen", function (req, res) {
             link +
             "',data=" +
             td +
-            " where titolo='" +
+            ",rangeid='" +
+            rangeid +
+            "' where titolo='" +
             titolo +
             "' and user='" +
             user +
@@ -558,7 +569,7 @@ apps.get("/reguser", function (req, res) {
     var settdefault = '{"intro":"S"}';
     var qry = db.prepare("insert into users values(?,?,?,?)");
     if (row == undefined) {
-      qry.run(user, pass, settdefault,"public/images/Defaultuser.png");
+      qry.run(user, pass, settdefault, "public/images/Defaultuser.png");
       qry.finalize();
       res.json({ reg: true });
     } else {

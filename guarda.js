@@ -4,6 +4,7 @@ var episodio = params.get("episode");
 var linkimg = params.get("img");
 var titolo = params.get("titolo");
 var socket = io();
+var rangeid = params.get("rangeid");
 function renderCountdown(dateStart, dateEnd) {
   let currentDate = dateStart.getTime();
   let targetDate = dateEnd.getTime(); // set the countdown date
@@ -108,7 +109,9 @@ $(document).ready(() => {
       "&link=" +
       link +
       "&episodio=" +
-      episodio,
+      episodio +
+      "&rangeid=" +
+      rangeid,
     function (data) {
       console.log(data);
       console.log(
@@ -128,8 +131,17 @@ $(document).ready(() => {
 
   $.get("/getlink?link=" + link, function (data) {
     var video = $(data).find("#alternativeDownloadLink").attr("href");
-    var episodes = $(data).find(".episodes.range.active")[0];
+    if (rangeid == null) {
+      rangeid = 0;
+    }
+    var episodes = $(data).find(
+      ".episodes.range[data-range-id=" + rangeid + "]"
+    )[0];
     episodes = $(episodes).find(".episode");
+    console.log(episodes);
+
+    var rangeepisodi = $(data).find(".range")[0];
+    var rangeepisodilen = $(rangeepisodi).children().length;
 
     var titolo2 = titolo + " - Episodio " + episodio;
     var wid = $(document).width();
@@ -150,6 +162,43 @@ $(document).ready(() => {
         video +
         '" type="video/mp4"></video>'
     );
+    if (rangeepisodilen > 0) {
+      var ranges = $(rangeepisodi).children();
+      for (let i = 0; i < ranges.length; i++) {
+        const itm = ranges[i];
+        var txt = $(itm).text();
+
+        var href = location.href.split("&");
+        href =
+          href[0] +
+          "&" +
+          href[1] +
+          "&" +
+          href[2] +
+          "&" +
+          href[3] +
+          "&rangeid=" +
+          $(itm).attr("data-range-id");
+        console.log(href);
+        if (rangeid == $(itm).attr("data-range-id")) {
+          $(".range").append(
+            '<a href="' +
+              href +
+              '" style="margin: 5px;" class="btn btn-sm btn-primary">' +
+              txt +
+              "</a>"
+          );
+        } else {
+          $(".range").append(
+            '<a href="' +
+              href +
+              '" style="margin: 5px;" class="btn btn-sm btn-secondary">' +
+              txt +
+              "</a>"
+          );
+        }
+      }
+    }
     for (let i = 0; i < episodes.length; i++) {
       const itm = episodes[i];
       var href = $(itm).find("a").attr("href");
@@ -165,6 +214,8 @@ $(document).ready(() => {
             titolo +
             "&imglink=" +
             linkimg +
+            "&rangeid=" +
+            rangeid +
             '">' +
             number +
             "</a></li>"
@@ -179,6 +230,8 @@ $(document).ready(() => {
             titolo +
             "&imglink=" +
             linkimg +
+            "&rangeid=" +
+            rangeid +
             '">' +
             number +
             "</a></li>"

@@ -42,6 +42,8 @@ $(document).ready(() => {
               itm.titolo +
               "&img=" +
               itm.imglink +
+              "&rangeid=" +
+              itm.rangeid +
               '">' +
               '<div class="poster">' +
               '<img title="' +
@@ -97,7 +99,7 @@ $(document).ready(() => {
             fulltitle +
             "&img=" +
             img +
-            '">' +
+            '&rangeid=0">' +
             '<div class="poster">' +
             '<img title="' +
             fulltitle +

@@ -187,7 +187,7 @@ h3 {
 }
 .profile {
   width: 130px;
-   height: 130px;
+  height: 130px;
   border: 4px solid white;
   border-radius: 100px;
 }
@@ -219,7 +219,10 @@ h3 {
   width: 100px;
   border-radius: 110px;
 }
-
+.range {
+  text-align: center;
+  margin-bottom: 15px;
+}
 @media only screen and (max-width: 600px) {
   .sugg {
     background-color: white;
@@ -273,7 +276,7 @@ h3 {
     border-radius: 10px;
     bottom: 0;
     height: 50px;
-   
+
     width: 90%;
     background-color: #424242;
     border: 2px solid white;
