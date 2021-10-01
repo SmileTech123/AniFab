@@ -91,6 +91,7 @@ apps.use(express.static(path.join(__dirname, "/")));
 
 apps.get("/srcuser", function (req, res) {
   var user = req.query.user;
+  var touser=req.query.touser
   var sql = "SELECT * from users where users.user like '%" + user + "%'";
   console.log(sql);
   var obj = { users: [] };
@@ -105,10 +106,11 @@ apps.get("/srcuser", function (req, res) {
   db.all(sql, (err, rows) => {
     for (let i = 0; i < rows.length; i++) {
       const itm = rows[i];
+    
       var sql2 =
         "SELECT * from friendrequest where friendrequest.touser = '" +
         itm.user +
-        "'";
+        "' and friendrequest.user='"+touser+"'";
       db.get(sql2, (err, row) => {
         if (row == undefined) {
           console.log("sono qui");
