@@ -35,7 +35,7 @@ function renderCountdown(dateStart, dateEnd) {
         "</a>" +
         "</div>"
     );
-    console.log();
+    
   };
   function pad(n) {
     return (n < 10 ? "0" : "") + n;
@@ -131,6 +131,26 @@ $(document).ready(() => {
 
   $.get("/getlink?link=" + link, function (data) {
     var video = $(data).find("#alternativeDownloadLink").attr("href");
+    if(video==""){
+      alert("ciao");
+      var tokenhtml = $(data).find('head').prevObject[36];
+      console.log($(tokenhtml).attr("content"))
+      var episodeid=$(data).find("#player").attr("data-episode-id")
+      var token=$(tokenhtml).attr("content")
+      if(titolo=="Lattacco dei Giganti 4 Parte 2"){
+        alert("si")
+        var epaot="0"+episodio
+        epaot = epaot.substr(-2)
+        video="https://server16.streamingaw.online/DDL/ANIME/ShingekiNoKyojin4Part2SUBITA/ShingekiNoKyojin4Part2_Ep_"+epaot+"_SUB_ITA.mp4"
+      }else{
+        console.log("no" +titolo)
+      }
+      //  $.get("/getlinksAlternative?episodeid="+episodeid+"&token="+token,function(data){
+      //    alert("ciaoo")
+      //     console.log(data)
+      //  })
+
+    }
     if (rangeid == null) {
       rangeid = 0;
     }

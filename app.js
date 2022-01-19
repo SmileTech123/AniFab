@@ -364,7 +364,7 @@ apps.get("/lastseen", function (req, res) {
   });
   var user = req.query.user;
   var img = req.query.linkimg;
-  var titolo = req.query.titolo;
+  var titolo = req.query.titolo.replace("'","");
   var link = req.query.link;
   var episodio = req.query.episodio;
   var rangeid = req.query.rangeid;
@@ -688,6 +688,23 @@ apps.get("/getlink", async function (req, res) {
     res.send(resp);
   }
 });
+
+apps.get("/getlinksAlternative", async function (req, res) {
+
+  var episodeID = req.query.episodeid;
+  var Token = "2YxJrfRO-_VenaSWGAKPYFAOQcJrF9ZutWOA"
+  var option={
+    method: 'POST',
+    headers:{ 'CSRF-Token': Token },
+  }
+    //console.log("ci sono" + episodeID+"-"+Token)
+    var resp = await fetch("https://www.animeworld.tv/api/download/" + episodeID,option).catch((e)=>{console.log(e)});
+    console.log("ci sono 2")
+    resp = await resp.text();
+    res.send(resp);
+  
+});
+
 // catch 404 and forward to error handler
 apps.use(function (req, res, next) {
   next(createError(404));
