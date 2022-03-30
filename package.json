@@ -6,19 +6,6 @@
   "scripts": {
     "start": "node app.js"
   },
-  "build": {
-    "appId": "com.anifab.app",
-    "icon": "anifablogo.png",
-    "asar": false,
-    "win": {
-      "target": "nsis"
-    },
-    "nsis": {
-      "oneClick": false,
-      "perMachine": false,
-      "allowToChangeInstallationDirectory": true
-    }
-  },
   "dependencies": {
     "base64-arraybuffer": "^1.0.1",
     "express": "~4.16.1",
@@ -30,9 +17,6 @@
     "set-interval-async": "^2.0.3",
     "socket.io": "^4.2.0",
     "sqlite3": "^5.0.2"
-  },
-  "devDependencies": {
-    "electron": "^14.0.1",
-    "electron-builder": "^22.11.7"
   }
+
 }
