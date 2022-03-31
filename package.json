@@ -15,8 +15,7 @@
     "js-cookie": "^3.0.1",
     "node-fetch": "^2.6.2",
     "set-interval-async": "^2.0.3",
-    "socket.io": "^4.2.0",
-    "sqlite3": "5.0.0"
+    "socket.io": "^4.2.0"
   }
 
 }
