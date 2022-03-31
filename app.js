@@ -3,12 +3,18 @@ var express = require("express");
 var path = require("path");
 var fetch = require("node-fetch");
 var http = require("http");
+var https = require("https");
 var sqlite3 = require("sqlite3");
 var fs = require("fs");
 var conv = require("base64-arraybuffer");
 const { traceProcessWarnings } = require("process");
 // const { app } = require("electron/main");
 var apps = express();
+
+const options = {
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+};
 
 var db2 = new sqlite3.Database("anime.db", (err, room) => {
   if (err) {
@@ -45,11 +51,14 @@ db2.close();
 var port = normalizePort(process.env.PORT || "3000");
 apps.set("port", port);
 
+// apps.set("key", fs.readFileSync("key.pem"));
+// apps.set("cert", fs.readFileSync("cert.pem"));
+
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(apps);
+var server = https.createServer(options, apps);
 const { Server } = require("socket.io");
 const { ajaxSetup } = require("jquery");
 const io = new Server(server);
@@ -364,7 +373,7 @@ apps.get("/lastseen", function (req, res) {
   });
   var user = req.query.user;
   var img = req.query.linkimg;
-  var titolo = req.query.titolo.replace("'","");
+  var titolo = req.query.titolo.replace("'", "");
   var link = req.query.link;
   var episodio = req.query.episodio;
   var rangeid = req.query.rangeid;
@@ -690,19 +699,22 @@ apps.get("/getlink", async function (req, res) {
 });
 
 apps.get("/getlinksAlternative", async function (req, res) {
-
   var episodeID = req.query.episodeid;
-  var Token = "2YxJrfRO-_VenaSWGAKPYFAOQcJrF9ZutWOA"
-  var option={
-    method: 'POST',
-    headers:{ 'CSRF-Token': Token },
-  }
-    //console.log("ci sono" + episodeID+"-"+Token)
-    var resp = await fetch("https://www.animeworld.tv/api/download/" + episodeID,option).catch((e)=>{console.log(e)});
-    console.log("ci sono 2")
-    resp = await resp.text();
-    res.send(resp);
-  
+  var Token = "2YxJrfRO-_VenaSWGAKPYFAOQcJrF9ZutWOA";
+  var option = {
+    method: "POST",
+    headers: { "CSRF-Token": Token },
+  };
+  //console.log("ci sono" + episodeID+"-"+Token)
+  var resp = await fetch(
+    "https://www.animeworld.tv/api/download/" + episodeID,
+    option
+  ).catch((e) => {
+    console.log(e);
+  });
+  console.log("ci sono 2");
+  resp = await resp.text();
+  res.send(resp);
 });
 
 // catch 404 and forward to error handler
