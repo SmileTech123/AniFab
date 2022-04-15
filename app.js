@@ -10,7 +10,11 @@ var conv = require("base64-arraybuffer");
 const { traceProcessWarnings } = require("process");
 // const { app } = require("electron/main");
 var apps = express();
-
+const opts = {
+  headers: {
+      cookie: 'sessionId=s:9ujLxafw6hbzd8rPbiyxxZRlc6UGaKoe.qk9vu/o3mDoVhP2Wy1fPBvWX3l0Rl5DKXD2S1L2aGGI; AWCookieVerify=6f0747e37686db5f451f4dca362bc77d'
+  }
+};
 const options = {
   key: fs.readFileSync("key.pem"),
   cert: fs.readFileSync("cert.pem"),
@@ -337,13 +341,14 @@ apps.get("/homepage", async function (req, res) {
 
   var resp = "";
   if (src != "") {
-    resp = await fetch("https://www.animeworld.tv/search?keyword=" + src);
+    resp = await fetch("https://www.animeworld.tv/search?keyword=" + src,opts);
   } else {
-    resp = await fetch("https://www.animeworld.tv/ongoing");
+    resp = await fetch("https://www.animeworld.tv/ongoing?d=2",opts);
   }
 
   resp = await resp.text();
   res.send(resp);
+  console.log(resp)
 });
 
 apps.get("/animelook", function (req, res) {
@@ -692,7 +697,7 @@ apps.get("/loadminutes", function (req, res) {
 apps.get("/getlink", async function (req, res) {
   var link = req.query.link;
   if (link != null) {
-    var resp = await fetch("https://www.animeworld.tv" + link);
+    var resp = await fetch("https://www.animeworld.tv" + link,opts);
     resp = await resp.text();
     res.send(resp);
   }
@@ -704,6 +709,7 @@ apps.get("/getlinksAlternative", async function (req, res) {
   var option = {
     method: "POST",
     headers: { "CSRF-Token": Token },
+    cookie: 'sessionId=s:9ujLxafw6hbzd8rPbiyxxZRlc6UGaKoe.qk9vu/o3mDoVhP2Wy1fPBvWX3l0Rl5DKXD2S1L2aGGI; AWCookieVerify=6f0747e37686db5f451f4dca362bc77d'
   };
   //console.log("ci sono" + episodeID+"-"+Token)
   var resp = await fetch(
