@@ -38,7 +38,6 @@ $(document).ready(() => {
         "</span>"
     );
   }
-  console.log(user);
 
   $("#image").change(function () {
     readURL(this, user.split("@")[0], user);
@@ -94,7 +93,6 @@ $(document).ready(() => {
   });
 
   $.get("/animelook?user=" + user, function (dati) {
-    console.log(dati);
     var secondi = 0;
     var anime = [];
     dati.forEach((itm) => {
@@ -116,7 +114,6 @@ $(document).ready(() => {
   });
 
   $.get("/managelastseen?user=" + user + "&page=" + page, function (dati) {
-    console.log(dati);
     $("#tablebody").html("");
     dati.righe.forEach((itm) => {
       $("#tablebody").append(
@@ -134,7 +131,7 @@ $(document).ready(() => {
           '") class="btn btn-sm btn-danger">Elimina</button></td></tr>'
       );
     });
-    console.log(dati);
+
     for (let i = 0; i < dati.totpagine; i++) {
       if (page == i + 1) {
         $(".pagination").append(

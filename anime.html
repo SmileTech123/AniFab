@@ -18,7 +18,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script type="module" src="node_modules/js-cookie/dist/js.cookie.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="owl.carousel.min.css">
+    <link rel="stylesheet" href="owl.theme.default.min.css">
+    <script src="owl.carousel.min.js"></script>
     <script src="node_modules/socket.io/client-dist/socket.io.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.min.js"></script>
     <title>AniFab</title>
   </head>
   <body>
@@ -69,7 +75,14 @@
     </div>
     <div class="center">
       <h2 id='inc' style="color: white;margin-top: 0;">In corso</h2>
+      <div class="owl-carousel owl-theme">
+
+      </div>
+      <br>
+      <h2 id='inc' style="color: white;margin-top: 0;">Calendario anime</h2>
+      <div id='calendar'></div>
     </div>
+  
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
       <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">

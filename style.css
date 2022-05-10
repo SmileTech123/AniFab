@@ -31,6 +31,14 @@ body {
 .center2 {
   text-align: center;
 }
+
+.fc .fc-list-event:hover td{
+  background-color: transparent!important;
+}
+
+.fc-theme-standard .fc-list-day-cushion{
+  background-color: #323232!important;
+}
 .poster {
   width: 200px;
   display: inline-block;

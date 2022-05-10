@@ -19,7 +19,6 @@ $(document).ready(() => {
     });
   }
   $.get("/getfriendsreq?user=" + user, function (dati) {
-    console.log(dati);
     dati.forEach((itm) => {
       $("#reqlist").append(
         '<div class="friend">' +
@@ -45,7 +44,6 @@ $(document).ready(() => {
   });
 
   $.get("/getfriends?user=" + user, function (dati) {
-    console.log(dati);
     dati.forEach((itm) => {
       var src = $(".profilebar").attr("src");
       if (itm.type == "accepted") {

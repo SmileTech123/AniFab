@@ -22,10 +22,9 @@ $(document).ready(() => {
   }
   $("#basic-addon2").on("click", function () {
     var srcus = $("#srcus").val();
-    $.get("/srcuser?user=" + srcus+"&touser="+user, function (dati) {
-      console.log(dati);
-      $("#qua").html(""); 
-      
+    $.get("/srcuser?user=" + srcus + "&touser=" + user, function (dati) {
+      $("#qua").html("");
+
       dati.users.forEach((itm) => {
         switch (itm.type) {
           case "P":

@@ -12,8 +12,9 @@ const { traceProcessWarnings } = require("process");
 var apps = express();
 const opts = {
   headers: {
-      cookie: 'sessionId=s:9ujLxafw6hbzd8rPbiyxxZRlc6UGaKoe.qk9vu/o3mDoVhP2Wy1fPBvWX3l0Rl5DKXD2S1L2aGGI; AWCookieVerify=6f0747e37686db5f451f4dca362bc77d'
-  }
+    cookie:
+      "sessionId=s:9ujLxafw6hbzd8rPbiyxxZRlc6UGaKoe.qk9vu/o3mDoVhP2Wy1fPBvWX3l0Rl5DKXD2S1L2aGGI; AWCookieVerify=6f0747e37686db5f451f4dca362bc77d",
+  },
 };
 const options = {
   key: fs.readFileSync("key.pem"),
@@ -148,6 +149,12 @@ apps.get("/srcuser", function (req, res) {
   });
 });
 
+apps.get("/calendario", async function (req, res) {
+  var resp = await fetch("https://www.animeworld.tv/schedule", opts);
+  resp = await resp.text();
+  res.send(resp);
+});
+
 apps.get("/inviareq", function (req, res) {
   var user = req.query.user;
   var touser = req.query.touser;
@@ -225,7 +232,6 @@ apps.get("/getfriendsreq", function (req, res) {
     user +
     "' and friendrequest.type = 'pending'";
 
-  console.log(sql);
   db.all(sql, (err, rows) => {
     res.json(rows);
   });
@@ -246,7 +252,6 @@ apps.get("/getfriends", function (req, res) {
     user +
     "' and friendrequest.type <> 'close'";
 
-  console.log(sql);
   db.all(sql, (err, rows) => {
     res.json(rows);
   });
@@ -280,16 +285,11 @@ function decodeBase64Image(dataString) {
 
 apps.get("/getimage", function (req, res) {
   var user = req.query.user;
-  console.log(
-    "/public/images/" + user + ".png",
-    fs.existsSync("public/images/" + user + ".png")
-  );
+
   if (fs.existsSync("public/images/" + user + ".png")) {
     res.json({ src: "public/images/" + user + ".png" });
-    console.log("ciao");
   } else {
     res.json({ src: "public/images/Defaultuser.png" });
-    console.log("ciao1");
   }
 });
 
@@ -341,14 +341,13 @@ apps.get("/homepage", async function (req, res) {
 
   var resp = "";
   if (src != "") {
-    resp = await fetch("https://www.animeworld.tv/search?keyword=" + src,opts);
+    resp = await fetch("https://www.animeworld.tv/search?keyword=" + src, opts);
   } else {
-    resp = await fetch("https://www.animeworld.tv/ongoing?d=2",opts);
+    resp = await fetch("https://www.animeworld.tv/ongoing?d=2", opts);
   }
 
   resp = await resp.text();
   res.send(resp);
-  console.log(resp)
 });
 
 apps.get("/animelook", function (req, res) {
@@ -383,15 +382,7 @@ apps.get("/lastseen", function (req, res) {
   var episodio = req.query.episodio;
   var rangeid = req.query.rangeid;
   var sql = "";
-  console.log(
-    user,
-    "ciaooooo",
-    'select * from lastseen where titolo="' +
-      titolo +
-      '" and user=' +
-      user +
-      '"'
-  );
+
   db.all(
     'select * from lastseen where titolo="' +
       titolo +
@@ -697,7 +688,7 @@ apps.get("/loadminutes", function (req, res) {
 apps.get("/getlink", async function (req, res) {
   var link = req.query.link;
   if (link != null) {
-    var resp = await fetch("https://www.animeworld.tv" + link,opts);
+    var resp = await fetch("https://www.animeworld.tv" + link, opts);
     resp = await resp.text();
     res.send(resp);
   }
@@ -709,7 +700,8 @@ apps.get("/getlinksAlternative", async function (req, res) {
   var option = {
     method: "POST",
     headers: { "CSRF-Token": Token },
-    cookie: 'sessionId=s:9ujLxafw6hbzd8rPbiyxxZRlc6UGaKoe.qk9vu/o3mDoVhP2Wy1fPBvWX3l0Rl5DKXD2S1L2aGGI; AWCookieVerify=6f0747e37686db5f451f4dca362bc77d'
+    cookie:
+      "sessionId=s:9ujLxafw6hbzd8rPbiyxxZRlc6UGaKoe.qk9vu/o3mDoVhP2Wy1fPBvWX3l0Rl5DKXD2S1L2aGGI; AWCookieVerify=6f0747e37686db5f451f4dca362bc77d",
   };
   //console.log("ci sono" + episodeID+"-"+Token)
   var resp = await fetch(

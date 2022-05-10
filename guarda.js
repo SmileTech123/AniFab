@@ -35,7 +35,6 @@ function renderCountdown(dateStart, dateEnd) {
         "</a>" +
         "</div>"
     );
-    
   };
   function pad(n) {
     return (n < 10 ? "0" : "") + n;
@@ -69,7 +68,6 @@ $(document).ready(() => {
   });
 
   socket.on("friendarrive", function (dati) {
-    console.log(dati);
     if (dati.touser == user) {
       var tst = document.getElementById("liveToast");
       var toast = new bootstrap.Toast(tst);
@@ -79,7 +77,7 @@ $(document).ready(() => {
 
   $("body").keypress(function (e) {
     var key = e.which;
-    console.log("aaa");
+
     if (key == 13) {
       var search = $("#searchbar").val();
       if (search != "") {
@@ -99,57 +97,40 @@ $(document).ready(() => {
     }
   });
 
-  $.get(
-    "/lastseen?user=" +
-      user +
-      "&linkimg=" +
-      linkimg +
-      "&titolo=" +
-      titolo +
-      "&link=" +
-      link +
-      "&episodio=" +
-      episodio +
-      "&rangeid=" +
-      rangeid,
-    function (data) {
-      console.log(data);
-      console.log(
-        "/lastseen?user=" +
-          user +
-          "&linkimg=" +
-          linkimg +
-          "&titolo=" +
-          titolo +
-          "&link=" +
-          link +
-          "&episodio=" +
-          episodio
-      );
-    }
-  );
+  // $.get(
+  //   "/lastseen?user=" +
+  //     user +
+  //     "&linkimg=" +
+  //     linkimg +
+  //     "&titolo=" +
+  //     titolo +
+  //     "&link=" +
+  //     link +
+  //     "&episodio=" +
+  //     episodio +
+  //     "&rangeid=" +
+  //     rangeid,
+  //   function (data) {
+
+  //   }
+  // );
 
   $.get("/getlink?link=" + link, function (data) {
     var video = $(data).find("#alternativeDownloadLink").attr("href");
-    if(video==""){
- 
-      var tokenhtml = $(data).find('head').prevObject[36];
-      console.log($(tokenhtml).attr("content"))
-      var episodeid=$(data).find("#player").attr("data-episode-id")
-      var token=$(tokenhtml).attr("content")
-      if(titolo=="L'attacco dei Giganti 4 Parte 2"){
-  
-        var epaot="0"+episodio
-        epaot = epaot.substr(-2)
-        video="https://server16.streamingaw.online/DDL/ANIME/ShingekiNoKyojin4Part2SUBITA/ShingekiNoKyojin4Part2_Ep_"+epaot+"_SUB_ITA.mp4"
-      }else{
-        console.log("no" +titolo)
-      }
-      //  $.get("/getlinksAlternative?episodeid="+episodeid+"&token="+token,function(data){
-      //    alert("ciaoo")
-      //     console.log(data)
-      //  })
+    if (video == "") {
+      var tokenhtml = $(data).find("head").prevObject[36];
 
+      var episodeid = $(data).find("#player").attr("data-episode-id");
+      var token = $(tokenhtml).attr("content");
+      if (titolo == "L'attacco dei Giganti 4 Parte 2") {
+        var epaot = "0" + episodio;
+        epaot = epaot.substr(-2);
+        video =
+          "https://server16.streamingaw.online/DDL/ANIME/ShingekiNoKyojin4Part2SUBITA/ShingekiNoKyojin4Part2_Ep_" +
+          epaot +
+          "_SUB_ITA.mp4";
+      } else {
+      }
     }
     if (rangeid == null) {
       rangeid = 0;
@@ -158,7 +139,6 @@ $(document).ready(() => {
       ".episodes.range[data-range-id=" + rangeid + "]"
     )[0];
     episodes = $(episodes).find(".episode");
-    console.log(episodes);
 
     var rangeepisodi = $(data).find(".range")[0];
     var rangeepisodilen = $(rangeepisodi).children().length;
@@ -199,7 +179,7 @@ $(document).ready(() => {
           href[3] +
           "&rangeid=" +
           $(itm).attr("data-range-id");
-        console.log(href);
+
         if (rangeid == $(itm).attr("data-range-id")) {
           $(".range").append(
             '<a href="' +
@@ -262,14 +242,11 @@ $(document).ready(() => {
     if (nextep[0] != undefined) {
       var giorno = $(nextep).attr("data-calendar-date");
       var ora = $(nextep).attr("data-calendar-time");
-      console.log(giorno, ora);
+
       renderCountdown(new Date(), new Date(giorno + " " + ora));
     }
-    $("body").click(() => {
-      console.log();
-    });
+
     $.get("/loadminutes?id=" + link + "&user=" + user, function (data) {
-      console.log(data);
       $("video")[0].currentTime = parseFloat(data.minute);
     });
 

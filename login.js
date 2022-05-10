@@ -3,7 +3,7 @@ $(document).ready(() => {
   var newuser = params.get("newuser");
   var disconn = params.get("disconn");
   var user = undefined;
-  console.log(user);
+
   if (newuser != null) {
     $("#logbtn").text("Registrati");
     $("#logbtn").attr("tipo", "registrazione");
@@ -38,7 +38,7 @@ $(document).ready(() => {
     var tipo = $("#logbtn").attr("tipo");
     var user = $("#user").val();
     var pass = $("#pass").val();
-    console.log(user, pass);
+
     if (user == "" || pass == "") {
       $("#al").addClass("alert-danger");
       $("#al").css("display", "block");
@@ -54,7 +54,6 @@ $(document).ready(() => {
 
     if (tipo == "login") {
       $.get("/loguser?user=" + user + "&pass=" + pass, function (dati) {
-        console.log(dati);
         if (dati.auth) {
           // document.cookie = "username="+user;
           // document.cookie = "password="+pass;

@@ -26,7 +26,7 @@ $(document).ready(() => {
       if (dati.length > 0) {
         dati.forEach((itm) => {
           var title = itm.titolo;
-          console.log(itm.titolo.length);
+
           if (itm.titolo.length >= 26) {
             //title = itm.titolo.substring(0, 19) + "...";
           }
@@ -71,6 +71,57 @@ $(document).ready(() => {
     $(".profile").attr("src", dati.src);
     $(".profilebar").attr("src", dati.src);
   });
+
+  $.get("/calendario", function (data) {
+    var lista = $(data).find(".widget-body");
+    var giorni = $(lista).find(".calendario-aw");
+
+    var eventi = [];
+    var data = new Date();
+    var dayofWeek = data.getDay() - 1;
+    var giorno = data.getDate() - dayofWeek;
+    giorno = "0" + giorno;
+    var mese = data.getMonth() + 1;
+    mese = "0" + mese;
+    var primadata =
+      data.getFullYear() + "-" + mese.substr(-2) + "-" + giorno.substr(-2);
+
+    for (let index = 0; index < giorni.length - 1; index++) {
+      const itm = giorni[index];
+
+      var box = $(itm).find(".boxcalendario");
+      for (let index2 = 0; index2 < box.length; index2++) {
+        const element = box[index2];
+        var orario = $(element)
+          .find(".hour")
+          .text()
+          .replace("Trasmesso alle", "")
+          .trim();
+        var titolo = $(element).find(".name").text().trim();
+        var episodio = $(element).find(".episodio-calendario").text().trim();
+
+        var obj = {
+          title: titolo + " (" + episodio + ")",
+          start: primadata + "T" + orario + ":00",
+        };
+        eventi.push(obj);
+      }
+      var giorno = data.getDate() - dayofWeek;
+      giorno = giorno + (index + 1);
+      giorno = "0" + giorno;
+      primadata =
+        data.getFullYear() + "-" + mese.substr(-2) + "-" + giorno.substr(-2);
+    }
+
+    var calendarEl = document.getElementById("calendar");
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "listWeek",
+      locale: "it",
+      events: eventi,
+    });
+    calendar.render();
+  });
+
   $.get("/homepage?src=" + src, function (data) {
     var lista = $(data).find(".film-list");
 
@@ -91,8 +142,9 @@ $(document).ready(() => {
         if (title.length >= 26) {
           // title = title.substring(0, 22) + "...";
         }
-        $(".center").append(
-          "<div class='inner'>" +
+        $(".owl-carousel").append(
+          "<div class='item'>" +
+            "<div class='inner'>" +
             '<a href="/guarda.html?link=' +
             href +
             "&episode=1&titolo=" +
@@ -110,14 +162,35 @@ $(document).ready(() => {
             "</a>" +
             "<a style='display: block;'>" +
             title +
-            "</a></div>"
+            "</a></div></div>"
         );
       }
     }
+    $(".owl-carousel").owlCarousel({
+      loop: true,
+      margin: 10,
+      nav: true,
+      responsive: {
+        0: {
+          items: 3,
+        },
+        600: {
+          items: 2,
+        },
+        1000: {
+          items: 3,
+        },
+        1500: {
+          items: 5,
+        },
+        2000: {
+          items: 10,
+        },
+      },
+    });
   });
 
   socket.on("friendarrive", function (dati) {
-    console.log(dati);
     if (dati.touser == user) {
       var tst = document.getElementById("liveToast");
       var toast = new bootstrap.Toast(tst);
@@ -126,8 +199,6 @@ $(document).ready(() => {
   });
 
   $.get("/getfriendsreq?user=" + user, function (dati) {
-    console.log(dati);
-    console.log(dati.length, "sadasdasdasdasd");
     if (dati.length > 0) {
       var tst = document.getElementById("liveToast");
       var toast = new bootstrap.Toast(tst);
