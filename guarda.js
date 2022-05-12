@@ -97,23 +97,21 @@ $(document).ready(() => {
     }
   });
 
-  // $.get(
-  //   "/lastseen?user=" +
-  //     user +
-  //     "&linkimg=" +
-  //     linkimg +
-  //     "&titolo=" +
-  //     titolo +
-  //     "&link=" +
-  //     link +
-  //     "&episodio=" +
-  //     episodio +
-  //     "&rangeid=" +
-  //     rangeid,
-  //   function (data) {
-
-  //   }
-  // );
+  $.get(
+    "/lastseen?user=" +
+      user +
+      "&linkimg=" +
+      linkimg +
+      "&titolo=" +
+      titolo +
+      "&link=" +
+      link +
+      "&episodio=" +
+      episodio +
+      "&rangeid=" +
+      rangeid,
+    function (data) {}
+  );
 
   $.get("/getlink?link=" + link, function (data) {
     var video = $(data).find("#alternativeDownloadLink").attr("href");

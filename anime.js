@@ -31,9 +31,9 @@ $(document).ready(() => {
             //title = itm.titolo.substring(0, 19) + "...";
           }
           var titolofull = title + " - Ep." + itm.episodio;
-
-          $(".center2").append(
-            "<div class='inner'>" +
+          $(".owl-carousel2").append(
+            "<div class='item'>" +
+              "<div class='inner'>" +
               '<a href="/guarda.html?link=' +
               itm.animelink +
               "&episode=" +
@@ -56,8 +56,31 @@ $(document).ready(() => {
               "</a>" +
               "<a style='display: block;'>" +
               titolofull +
-              "</a></div>"
+              "</a></div></div>"
           );
+        });
+        $(".owl-carousel2").owlCarousel({
+          loop: dati.length > 3,
+          center: true,
+          margin: 10,
+          nav: true,
+          responsive: {
+            0: {
+              items: 2,
+            },
+            600: {
+              items: 2,
+            },
+            1000: {
+              items: 3,
+            },
+            1500: {
+              items: 5,
+            },
+            2000: {
+              items: 10,
+            },
+          },
         });
       }
     });
@@ -172,7 +195,7 @@ $(document).ready(() => {
       nav: true,
       responsive: {
         0: {
-          items: 3,
+          items: 2,
         },
         600: {
           items: 2,
