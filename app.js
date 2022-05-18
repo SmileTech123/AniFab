@@ -367,6 +367,11 @@ apps.get("/animelook", function (req, res) {
   );
 });
 
+apps.get("/database", function (req, res) {
+  const file = `${__dirname}/anime.db`;
+  res.download(file); // Set disposition and send it.
+});
+
 apps.get("/lastseen", function (req, res) {
   var db = new sqlite3.Database("anime.db", (err, room) => {
     if (err) {
