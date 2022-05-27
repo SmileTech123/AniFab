@@ -693,10 +693,21 @@ apps.get("/loadminutes", function (req, res) {
 apps.get("/getlink", async function (req, res) {
   var link = req.query.link;
   if (link != null) {
+    var id = link.split("/");
+    console.log(id);
     var resp = await fetch("https://www.animeworld.tv" + link, opts);
     resp = await resp.text();
     res.send(resp);
   }
+});
+
+apps.get("/getvideolink", async function (req, res) {
+  var id = req.query.id;
+  var resp = await fetch(
+    "https://www.animeworld.tv/api/episode/info?id=" + id + "&alt=0"
+  );
+  resp = await resp.json();
+  res.json(resp);
 });
 
 apps.get("/getlinksAlternative", async function (req, res) {

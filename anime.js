@@ -154,7 +154,9 @@ $(document).ready(() => {
     } else {
       for (let i = 0; i < lista.length; i++) {
         const itm = lista[i];
+
         var href = $(itm).find(".inner").find("a.poster").attr("href");
+        console.log(href);
         var img = $(itm)
           .find(".inner")
           .find("a.poster")

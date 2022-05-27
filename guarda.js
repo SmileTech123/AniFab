@@ -114,143 +114,137 @@ $(document).ready(() => {
   );
 
   $.get("/getlink?link=" + link, function (data) {
-    var video = $(data).find("#alternativeDownloadLink").attr("href");
-    if (video == "") {
-      var tokenhtml = $(data).find("head").prevObject[36];
+    var tokenid = $(data).find("#player")[0].dataset.id;
+    console.log($(data).find("#player").attr("data-id"));
+    $.get("/getvideolink?id=" + tokenid, function (dati) {
+      console.log(dati);
+      var video = dati.grabber;
 
-      var episodeid = $(data).find("#player").attr("data-episode-id");
-      var token = $(tokenhtml).attr("content");
-      if (titolo == "L'attacco dei Giganti 4 Parte 2") {
-        var epaot = "0" + episodio;
-        epaot = epaot.substr(-2);
-        video =
-          "https://server16.streamingaw.online/DDL/ANIME/ShingekiNoKyojin4Part2SUBITA/ShingekiNoKyojin4Part2_Ep_" +
-          epaot +
-          "_SUB_ITA.mp4";
-      } else {
+      if (rangeid == null) {
+        rangeid = 0;
       }
-    }
-    if (rangeid == null) {
-      rangeid = 0;
-    }
-    var episodes = $(data).find(
-      ".episodes.range[data-range-id=" + rangeid + "]"
-    )[0];
-    episodes = $(episodes).find(".episode");
+      var server = $(data).find(".server[data-name=9]")[0];
+      console.log(server);
+      var episodes = $(server).find(
+        ".episodes.range.active[data-range-id=" + rangeid + "]"
+      )[0];
+      console.log(episodes);
+      episodes = $(episodes).find(".episode");
 
-    var rangeepisodi = $(data).find(".range")[0];
-    var rangeepisodilen = $(rangeepisodi).children().length;
+      var rangeepisodi = $(data).find(".range")[0];
+      var rangeepisodilen = $(rangeepisodi).children().length;
 
-    var titolo2 = titolo + " - Episodio " + episodio;
-    var wid = $(document).width();
-    if (wid > 500) {
-      wid = wid / 2;
-    } else {
-      wid = wid - 20;
-    }
+      var titolo2 = titolo + " - Episodio " + episodio;
+      var wid = $(document).width();
+      if (wid > 500) {
+        wid = wid / 2;
+      } else {
+        wid = wid - 20;
+      }
 
-    $(".center2").append(
-      "<div>" +
-        "<h4 style='margin-top:10px'>" +
-        titolo2 +
-        "</h4>" +
-        '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
-        wid +
-        '" controls><source src="' +
-        video +
-        '" type="video/mp4"></video>'
-    );
-    if (rangeepisodilen > 0) {
-      var ranges = $(rangeepisodi).children();
-      for (let i = 0; i < ranges.length; i++) {
-        const itm = ranges[i];
-        var txt = $(itm).text();
+      $(".center2").append(
+        "<div>" +
+          "<h4 style='margin-top:10px'>" +
+          titolo2 +
+          "</h4>" +
+          '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
+          wid +
+          '" controls><source src="' +
+          video +
+          '" type="video/mp4"></video>'
+      );
+      if (rangeepisodilen > 0) {
+        var ranges = $(rangeepisodi).children();
+        for (let i = 0; i < ranges.length; i++) {
+          const itm = ranges[i];
+          var txt = $(itm).text();
 
-        var href = location.href.split("&");
-        href =
-          href[0] +
-          "&" +
-          href[1] +
-          "&" +
-          href[2] +
-          "&" +
-          href[3] +
-          "&rangeid=" +
-          $(itm).attr("data-range-id");
+          var href = location.href.split("&");
+          href =
+            href[0] +
+            "&" +
+            href[1] +
+            "&" +
+            href[2] +
+            "&" +
+            href[3] +
+            "&rangeid=" +
+            $(itm).attr("data-range-id");
 
-        if (rangeid == $(itm).attr("data-range-id")) {
-          $(".range").append(
-            '<a href="' +
+          if (rangeid == $(itm).attr("data-range-id")) {
+            $(".range").append(
+              '<a href="' +
+                href +
+                '" style="margin: 5px;" class="btn btn-sm btn-primary">' +
+                txt +
+                "</a>"
+            );
+          } else {
+            $(".range").append(
+              '<a href="' +
+                href +
+                '" style="margin: 5px;" class="btn btn-sm btn-secondary">' +
+                txt +
+                "</a>"
+            );
+          }
+        }
+      }
+      for (let i = 0; i < episodes.length; i++) {
+        const itm = episodes[i];
+        var href = $(itm).find("a").attr("href");
+        var number = $(itm).find("a").text();
+
+        if (number == episodio) {
+          $(".pagination").append(
+            '<li class="page-item"><a style="background-color:cyan;" class="page-link" href="guarda.html?link=' +
               href +
-              '" style="margin: 5px;" class="btn btn-sm btn-primary">' +
-              txt +
-              "</a>"
+              "&episode=" +
+              number +
+              "&titolo=" +
+              titolo +
+              "&imglink=" +
+              linkimg +
+              "&rangeid=" +
+              rangeid +
+              '">' +
+              number +
+              "</a></li>"
           );
         } else {
-          $(".range").append(
-            '<a href="' +
+          $(".pagination").append(
+            '<li class="page-item"><a class="page-link" href="guarda.html?link=' +
               href +
-              '" style="margin: 5px;" class="btn btn-sm btn-secondary">' +
-              txt +
-              "</a>"
+              "&episode=" +
+              number +
+              "&titolo=" +
+              titolo +
+              "&imglink=" +
+              linkimg +
+              "&rangeid=" +
+              rangeid +
+              '">' +
+              number +
+              "</a></li>"
           );
         }
       }
-    }
-    for (let i = 0; i < episodes.length; i++) {
-      const itm = episodes[i];
-      var href = $(itm).find("a").attr("href");
-      var number = $(itm).find("a").text();
+      var nextep = $(data).find("#next-episode");
+      if (nextep[0] != undefined) {
+        var giorno = $(nextep).attr("data-calendar-date");
+        var ora = $(nextep).attr("data-calendar-time");
 
-      if (number == episodio) {
-        $(".pagination").append(
-          '<li class="page-item"><a style="background-color:cyan;" class="page-link" href="guarda.html?link=' +
-            href +
-            "&episode=" +
-            number +
-            "&titolo=" +
-            titolo +
-            "&imglink=" +
-            linkimg +
-            "&rangeid=" +
-            rangeid +
-            '">' +
-            number +
-            "</a></li>"
-        );
-      } else {
-        $(".pagination").append(
-          '<li class="page-item"><a class="page-link" href="guarda.html?link=' +
-            href +
-            "&episode=" +
-            number +
-            "&titolo=" +
-            titolo +
-            "&imglink=" +
-            linkimg +
-            "&rangeid=" +
-            rangeid +
-            '">' +
-            number +
-            "</a></li>"
-        );
+        renderCountdown(new Date(), new Date(giorno + " " + ora));
       }
-    }
-    var nextep = $(data).find("#next-episode");
-    if (nextep[0] != undefined) {
-      var giorno = $(nextep).attr("data-calendar-date");
-      var ora = $(nextep).attr("data-calendar-time");
 
-      renderCountdown(new Date(), new Date(giorno + " " + ora));
-    }
+      $.get("/loadminutes?id=" + link + "&user=" + user, function (data) {
+        $("video")[0].currentTime = parseFloat(data.minute);
+      });
 
-    $.get("/loadminutes?id=" + link + "&user=" + user, function (data) {
-      $("video")[0].currentTime = parseFloat(data.minute);
+      setInterval(() => {
+        scriviminuto(user);
+      }, 10000);
     });
-
-    setInterval(() => {
-      scriviminuto(user);
-    }, 10000);
   });
   document.addEventListener("fullscreenchange", function () {
     var vid = $("video")[0];
