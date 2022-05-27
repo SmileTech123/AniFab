@@ -114,10 +114,10 @@ $(document).ready(() => {
   );
 
   $.get("/getlink?link=" + link, function (data) {
+    var actualLink = "";
     var tokenid = $(data).find("#player")[0].dataset.id;
     console.log($(data).find("#player").attr("data-id"));
     $.get("/getvideolink?id=" + tokenid, function (dati) {
-      console.log(dati);
       var video = dati.grabber;
 
       if (rangeid == null) {
@@ -196,6 +196,17 @@ $(document).ready(() => {
         var number = $(itm).find("a").text();
 
         if (number == episodio) {
+          actualLink =
+            "guarda.html?link=" +
+            href +
+            "&episode=" +
+            number +
+            "&titolo=" +
+            titolo +
+            "&imglink=" +
+            linkimg +
+            "&rangeid=" +
+            rangeid;
           $(".pagination").append(
             '<li class="page-item"><a style="background-color:cyan;" class="page-link" href="guarda.html?link=' +
               href +
@@ -244,6 +255,11 @@ $(document).ready(() => {
       setInterval(() => {
         scriviminuto(user);
       }, 10000);
+
+      var ismp4 = video.split(".")[video.split(".").length - 1];
+      if (ismp4 != "mp4") {
+        location.href = actualLink;
+      }
     });
   });
   document.addEventListener("fullscreenchange", function () {
