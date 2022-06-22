@@ -239,6 +239,19 @@ h3 {
   text-align: center;
   margin-bottom: 15px;
 }
+
+.imgInfo{
+  vertical-align: top;
+  margin: 10px;
+  border:1px solid white; 
+  border-radius: 10px;
+  width: 150px;
+}
+
+.trama{
+  margin:10px;
+  text-align:center
+}
 @media only screen and (max-width: 600px) {
   .sugg {
     background-color: white;
@@ -269,6 +282,19 @@ h3 {
     border-radius: 110px;
   }
 
+  .imgInfo{
+    vertical-align: top;
+    margin: 10px;
+    border:1px solid white; 
+    border-radius: 10px;
+    width: 80px;
+  }
+  .trama{
+    margin:10px;
+    margin-left:25px;
+    text-align:center;
+    font-size: 12px;
+  }
   .friend {
     border: 2px solid white;
     width: 200px;
@@ -322,5 +348,12 @@ h3 {
     /* text-align: center; */
     width: 100%;
     margin: 0 auto;
+  }
+  .widget-body{
+    margin: 0 auto;
+    background-color: #131b20;
+    width: 300px;
+    border: 2px solid white;
+    border-radius: 10px;
   }
 }
