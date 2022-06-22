@@ -116,7 +116,21 @@ $(document).ready(() => {
   $.get("/getlink?link=" + link, function (data) {
     var actualLink = "";
     var tokenid = $(data).find("#player")[0].dataset.id;
-    console.log($(data).find("#player").attr("data-id"));
+    var info = $(data).find(".widget.info")[0];
+    var imgInfo = $(info).find("img")[0];
+    imgInfo = $(imgInfo).attr("src");
+    var titleInfo = $(info).find(".c1 .title").text().toUpperCase();
+    var descrizione = $(info).find(".desc").text();
+    console.log($(info).find(".desc")[0]);
+    $(".widget-body").append(
+      ' <div class="col-3"><img style="vertical-align: top;margin: 10px;border:1px solid white; border-radius: 10px;"src="' +
+        imgInfo +
+        '" width="150"></div><div class="col-9"><div style="text-align: center;font-size: 25px;margin-bottom: 10px;"><span >' +
+        titleInfo +
+        '</span></div><div class="row"> <div class="col-sm"> <div style="margin:10px;text-align:center">' +
+        descrizione +
+        "</div> </div> </div> </div>"
+    );
     $.get("/getvideolink?id=" + tokenid, function (dati) {
       var video = dati.grabber;
 

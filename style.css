@@ -20,6 +20,14 @@ body {
 .wrap {
   font-size: 110px;
 }
+
+.widget-body{
+  margin: 0 auto;
+  background-color: #131b20;
+  width: 900px;
+  border: 2px solid white;
+  border-radius: 10px;
+}
 .mids {
   height: 100vh;
 
