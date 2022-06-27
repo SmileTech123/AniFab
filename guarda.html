@@ -60,6 +60,12 @@
     </div>
     </div>
   </nav>
+  <div id="condivisione" style="text-align: center;background-color: red;display: none;" >
+      <h2>Utenti Connessi</h2>
+      <div id="UsersList">
+      </div>
+      <br>
+  </div>
   <div class="center2">
   </div>
   <div class="range">
@@ -84,6 +90,27 @@
       </div>
       <div style="background-color:#0f1217" class="toast-body">
         Hai nuove richieste di amicizia, controlla subito!
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" data-backdrop="static" data-keyboard="false"  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div style="background-color: #323232;border: 2px solid white;" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="color:white">Condivisione</h5>
+          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span> 
+          </button> -->
+        </div>
+        <div class="modal-body">
+          <label>Link condivisione</label>
+          <input class="form-control" id="linkCondivisione">
+          <input type="hidden" id="roomShare">
+        </div>
+        <div class="modal-footer">
+          <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+          <button id="startCondivisione" type="button" class="btn btn-primary">Avvia</button>
+        </div>
       </div>
     </div>
   </div>

@@ -3,8 +3,12 @@ var link = params.get("link");
 var episodio = params.get("episode");
 var linkimg = params.get("img");
 var titolo = params.get("titolo");
+var room = params.get("room");
+var role = params.get("role");
+var minute = params.get("minute");
 var socket = io();
 var rangeid = params.get("rangeid");
+
 function renderCountdown(dateStart, dateEnd) {
   let currentDate = dateStart.getTime();
   let targetDate = dateEnd.getTime(); // set the countdown date
@@ -39,10 +43,44 @@ function renderCountdown(dateStart, dateEnd) {
   function pad(n) {
     return (n < 10 ? "0" : "") + n;
   }
+
   getCountdown();
   setInterval(function () {
     getCountdown(count++);
   }, 1000);
+}
+function makeid(length) {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+function shareLink() {
+  if (params.get("room") != undefined) {
+    var url = location.href.split("&");
+    var new_url = "";
+    for (let i = 0; i < 5; i++) {
+      const itm = url[i];
+      new_url = new_url + itm + "&";
+    }
+    location.href = new_url;
+    console.log(new_url);
+  } else {
+    $("#exampleModal").modal("show");
+    var minute = $("video")[0].currentTime;
+    var room = makeid(5);
+    var linkClient =
+      location.href + "&room=" + room + "&role=client&minute=" + minute;
+
+    console.log(link);
+    $("#roomShare").val(room);
+    $("#linkCondivisione").val(linkClient);
+  }
 }
 
 $(document).ready(() => {
@@ -62,9 +100,22 @@ $(document).ready(() => {
     );
   }
 
+  if (room != undefined) {
+    $("#condivisione").css("display", "block");
+  }
+
+  $("#startCondivisione").click(() => {
+    var room = $("#roomShare").val();
+    location.href = location.href + "&room=" + room + "&role=admin";
+  });
+
   $.get("/getimage?user=" + user.split("@")[0], function (dati) {
     $(".profile").attr("src", dati.src);
     $(".profilebar").attr("src", dati.src);
+  });
+
+  $("#closeModal").click(() => {
+    $("#exampleModal").modal("hide");
   });
 
   socket.on("friendarrive", function (dati) {
@@ -73,6 +124,40 @@ $(document).ready(() => {
       var toast = new bootstrap.Toast(tst);
       toast.show();
     }
+  });
+
+  socket.on("connect", function () {
+    console.log("Connected to Socket I/O Server!");
+    //console.log($("video")[0].currentTime);
+    if (room != undefined) {
+      socket.emit("joinRoom", {
+        room: room,
+        user: user,
+      });
+    }
+  });
+
+  socket.on("userdisconnect", function (req) {
+    console.log(req);
+    $("#UsersList").html("");
+    var users = req.filter(function (i) {
+      return i.room == room;
+    });
+    users.forEach((element) => {
+      $("#UsersList").append("<span> | " + element.user + " </span>");
+    });
+    console.log(users, req);
+  });
+
+  socket.on("userJoin", function (req) {
+    $("#UsersList").html("");
+    var users = req.filter(function (i) {
+      return i.room == room;
+    });
+    users.forEach((element) => {
+      $("#UsersList").append("<span> | " + element.user + " </span>");
+    });
+    console.log(users, req);
   });
 
   $("body").keypress(function (e) {
@@ -155,18 +240,49 @@ $(document).ready(() => {
       } else {
         wid = wid - 20;
       }
+      if (params.get("room") != undefined && params.get("role") == "admin") {
+        $(".center2").append(
+          "<div>" +
+            "<h4 style='margin-top:10px'>" +
+            titolo2 +
+            "</h4>" +
+            "<div><button onclick='shareLink()' class='btn btn-sm btn-danger'>Annulla condivisione</button><div>" +
+            '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
+            wid +
+            '" controls><source src="' +
+            video +
+            '" type="video/mp4"></video>'
+        );
+      } else if (
+        params.get("room") != undefined &&
+        params.get("role") == "client"
+      ) {
+        $(".center2").append(
+          "<div>" +
+            "<h4 style='margin-top:10px'>" +
+            titolo2 +
+            "</h4>" +
+            '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
+            wid +
+            '" controls><source src="' +
+            video +
+            '" type="video/mp4"></video>'
+        );
+      } else {
+        $(".center2").append(
+          "<div>" +
+            "<h4 style='margin-top:10px'>" +
+            titolo2 +
+            "</h4>" +
+            "<div><button onclick='shareLink()' class='btn btn-sm btn-primary'>Avvia condivisione</button><div>" +
+            '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
+            wid +
+            '" controls><source src="' +
+            video +
+            '" type="video/mp4"></video>'
+        );
+      }
 
-      $(".center2").append(
-        "<div>" +
-          "<h4 style='margin-top:10px'>" +
-          titolo2 +
-          "</h4>" +
-          '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
-          wid +
-          '" controls><source src="' +
-          video +
-          '" type="video/mp4"></video>'
-      );
       if (rangeepisodilen > 0) {
         var ranges = $(rangeepisodi).children();
         for (let i = 0; i < ranges.length; i++) {
@@ -261,10 +377,13 @@ $(document).ready(() => {
 
         renderCountdown(new Date(), new Date(giorno + " " + ora));
       }
-
-      $.get("/loadminutes?id=" + link + "&user=" + user, function (data) {
-        $("video")[0].currentTime = parseFloat(data.minute);
-      });
+      if (minute == undefined) {
+        $.get("/loadminutes?id=" + link + "&user=" + user, function (data) {
+          $("video")[0].currentTime = parseFloat(data.minute);
+        });
+      } else {
+        $("video")[0].currentTime = parseFloat(minute);
+      }
 
       setInterval(() => {
         scriviminuto(user);
@@ -276,6 +395,50 @@ $(document).ready(() => {
       }
     });
   });
+  setTimeout(() => {
+    var videoplya = $("video")[0];
+    socket.on("playVideo", function (dati) {
+      if (role == "client") {
+        videoplya.play();
+      }
+    });
+
+    socket.on("pauseVideo", function (dati) {
+      if (role == "client") {
+        videoplya.pause();
+      }
+    });
+
+    socket.on("seekVideo", function (dati) {
+      if (role == "client") {
+        videoplya.currentTime = dati.time;
+        console.log("seeeeek");
+        //videoplya.play();
+        //videoplya.fastSeek(dati.time);
+      }
+    });
+
+    videoplya.addEventListener("play", (event) => {
+      console.log("play");
+      if (role == "admin") {
+        socket.emit("playVideo", { room: room });
+      }
+    });
+    videoplya.addEventListener("seeked", (event) => {
+      console.log("seek");
+      if (role == "admin") {
+        socket.emit("seekVideo", { room: room, time: videoplya.currentTime });
+      }
+    });
+
+    videoplya.addEventListener("pause", (event) => {
+      console.log("pause");
+      if (role == "admin") {
+        socket.emit("pauseVideo", { room: room });
+      }
+    });
+  }, 2000);
+
   document.addEventListener("fullscreenchange", function () {
     var vid = $("video")[0];
     $(vid).css("border", "0px");

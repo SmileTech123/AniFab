@@ -7,6 +7,7 @@ var https = require("https");
 var sqlite3 = require("sqlite3");
 var fs = require("fs");
 var conv = require("base64-arraybuffer");
+var userRoom = [];
 const { traceProcessWarnings } = require("process");
 // const { app } = require("electron/main");
 var apps = express();
@@ -87,6 +88,49 @@ io.on("connection", (socket) => {
 
   socket.on("friendRequest", (friend) => {
     io.emit("friendarrive", friend);
+  });
+  socket.on("playVideo", function (req) {
+    io.to(req.room).emit("playVideo");
+  });
+  socket.on("pauseVideo", function (req) {
+    io.to(req.room).emit("pauseVideo");
+  });
+  socket.on("seekVideo", function (req) {
+    io.to(req.room).emit("seekVideo", req);
+  });
+  socket.on("joinRoom", function (req) {
+    socket.join(req.room);
+    console.log(userRoom);
+    //let roomUsers = await io.in(req.room).fetchSockets();
+    const found = userRoom.some((el) => el.user === req.user);
+    if (!found) {
+      userRoom.push({ room: req.room, user: req.user, id: socket.id });
+    } else {
+      console.log("ciao");
+    }
+
+    // if (userRoom.includes({ room: req.room, user: req.user })) {
+    //   console.log("ciao");
+    // }
+    // userRoom.push({ room: req.room, user: req.user });
+    //dict[req.room] = req.user;
+    //console.log(roomUsers);
+    io.to(req.room).emit("userJoin", userRoom);
+  });
+
+  socket.on("disconnect", function (req) {
+    var room = userRoom.filter((i) => i.id == socket.id);
+    if (room.length > 0) {
+      console.log("disconnesso", socket.id, room[0].room);
+      socket.leave(room[0].room);
+
+      userRoom.splice(
+        userRoom.findIndex((item) => item.id === socket.id),
+        1
+      );
+      io.to(room[0].room).emit("userdisconnect", userRoom);
+      console.log("ciao", userRoom);
+    }
   });
 });
 
