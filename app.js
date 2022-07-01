@@ -673,41 +673,47 @@ apps.get("/writeminutes", function (req, res) {
   db.all(
     "select * from anime where id='" + id + "' and user='" + user + "'",
     (err, rows) => {
-      if (rows.length <= 0) {
-        db.run(
-          "insert into anime values('" +
-            id +
-            "','" +
-            minute +
-            "','" +
-            user +
-            "')",
-          (err) => {
-            if (err) {
-              console.log("non inserito" + err);
-            } else {
-              console.log("inserito");
+      if (rows==undefined){
+        res.json("Fine");
+        db.close();
+      }else{
+        if (rows.length <= 0) {
+          db.run(
+            "insert into anime values('" +
+              id +
+              "','" +
+              minute +
+              "','" +
+              user +
+              "')",
+            (err) => {
+              if (err) {
+                console.log("non inserito" + err);
+              } else {
+                console.log("inserito");
+              }
             }
-          }
-        );
-      } else {
-        db.run(
-          "update anime SET minute='" +
-            minute +
-            "' where id='" +
-            id +
-            "' and user='" +
-            user +
-            "'",
-          (err) => {
-            if (err) {
-              return;
-            } else {
-              return;
+          );
+        } else {
+          db.run(
+            "update anime SET minute='" +
+              minute +
+              "' where id='" +
+              id +
+              "' and user='" +
+              user +
+              "'",
+            (err) => {
+              if (err) {
+                return;
+              } else {
+                return;
+              }
             }
-          }
-        );
+          );
+        }
       }
+
     }
   );
 
