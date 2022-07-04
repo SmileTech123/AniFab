@@ -199,177 +199,9 @@ $(document).ready(() => {
   );
 
   $.get("/getlink?link=" + link, function (data) {
-    var actualLink = "";
-    var tokenid = $(data).find("#player")[0].dataset.id;
-    var info = $(data).find(".widget.info")[0];
-    var imgInfo = $(info).find("img")[0];
-    imgInfo = $(imgInfo).attr("src");
-    var titleInfo = $(info).find(".c1 .title").text().toUpperCase();
-    var descrizione = $(info).find(".desc").text();
-    console.log($(info).find(".desc")[0]);
-    $(".widget-body").append(
-      ' <div class="col-3"><img class="imgInfo" src="' +
-        imgInfo +
-        '" ></div><div class="col-9"><div style="text-align: center;font-size: 25px;margin-bottom: 10px;"><span >' +
-        titleInfo +
-        '</span></div><div class="row"> <div class="col-sm"> <div class="trama">' +
-        descrizione +
-        "</div> </div> </div> </div>"
-    );
-    $.get("/getvideolink?id=" + tokenid, function (dati) {
-      var video = dati.grabber;
-
-      if (rangeid == null) {
-        rangeid = 0;
-      }
-      var server = $(data).find(".server[data-name=9]")[0];
-      console.log(server);
-      var episodes = $(server).find(
-        ".episodes.range.active[data-range-id=" + rangeid + "]"
-      )[0];
-      console.log(episodes);
-      episodes = $(episodes).find(".episode");
-
-      var rangeepisodi = $(data).find(".range")[0];
-      var rangeepisodilen = $(rangeepisodi).children().length;
-
-      var titolo2 = titolo + " - Episodio " + episodio;
-      var wid = $(document).width();
-      if (wid > 500) {
-        wid = wid / 2;
-      } else {
-        wid = wid - 20;
-      }
-      if (params.get("room") != undefined && params.get("role") == "admin") {
-        $(".center2").append(
-          "<div>" +
-            "<h4 style='margin-top:10px'>" +
-            titolo2 +
-            "</h4>" +
-            "<div><button onclick='shareLink()' class='btn btn-sm btn-danger'>Annulla condivisione</button><div>" +
-            '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
-            wid +
-            '" controls><source src="' +
-            video +
-            '" type="video/mp4"></video>'
-        );
-      } else if (
-        params.get("room") != undefined &&
-        params.get("role") == "client"
-      ) {
-        $(".center2").append(
-          "<div>" +
-            "<h4 style='margin-top:10px'>" +
-            titolo2 +
-            "</h4>" +
-            '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
-            wid +
-            '" controls><source src="' +
-            video +
-            '" type="video/mp4"></video>'
-        );
-      } else {
-        $(".center2").append(
-          "<div>" +
-            "<h4 style='margin-top:10px'>" +
-            titolo2 +
-            "</h4>" +
-            "<div><button onclick='shareLink()' class='btn btn-sm btn-primary'>Avvia condivisione</button><div>" +
-            '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
-            wid +
-            '" controls><source src="' +
-            video +
-            '" type="video/mp4"></video>'
-        );
-      }
-
-      if (rangeepisodilen > 0) {
-        var ranges = $(rangeepisodi).children();
-        for (let i = 0; i < ranges.length; i++) {
-          const itm = ranges[i];
-          var txt = $(itm).text();
-
-          var href = location.href.split("&");
-          href =
-            href[0] +
-            "&" +
-            href[1] +
-            "&" +
-            href[2] +
-            "&" +
-            href[3] +
-            "&rangeid=" +
-            $(itm).attr("data-range-id");
-
-          if (rangeid == $(itm).attr("data-range-id")) {
-            $(".range").append(
-              '<a href="' +
-                href +
-                '" style="margin: 5px;" class="btn btn-sm btn-primary">' +
-                txt +
-                "</a>"
-            );
-          } else {
-            $(".range").append(
-              '<a href="' +
-                href +
-                '" style="margin: 5px;" class="btn btn-sm btn-secondary">' +
-                txt +
-                "</a>"
-            );
-          }
-        }
-      }
-      for (let i = 0; i < episodes.length; i++) {
-        const itm = episodes[i];
-        var href = $(itm).find("a").attr("href");
-        var number = $(itm).find("a").text();
-
-        if (number == episodio) {
-          actualLink =
-            "guarda.html?link=" +
-            href +
-            "&episode=" +
-            number +
-            "&titolo=" +
-            titolo +
-            "&imglink=" +
-            linkimg +
-            "&rangeid=" +
-            rangeid;
-          $(".pagination").append(
-            '<li class="page-item"><a style="background-color:cyan;" class="page-link" href="guarda.html?link=' +
-              href +
-              "&episode=" +
-              number +
-              "&titolo=" +
-              titolo +
-              "&imglink=" +
-              linkimg +
-              "&rangeid=" +
-              rangeid +
-              '">' +
-              number +
-              "</a></li>"
-          );
-        } else {
-          $(".pagination").append(
-            '<li class="page-item"><a class="page-link" href="guarda.html?link=' +
-              href +
-              "&episode=" +
-              number +
-              "&titolo=" +
-              titolo +
-              "&imglink=" +
-              linkimg +
-              "&rangeid=" +
-              rangeid +
-              '">' +
-              number +
-              "</a></li>"
-          );
-        }
-      }
+    if($(data).find("#player")[0]==undefined){
+      $("#NonDisponibile").css("display","block")
+      $(".widget-body").css("display","none")
       var nextep = $(data).find("#next-episode");
       if (nextep[0] != undefined) {
         var giorno = $(nextep).attr("data-calendar-date");
@@ -377,23 +209,204 @@ $(document).ready(() => {
 
         renderCountdown(new Date(), new Date(giorno + " " + ora));
       }
-      if (minute == undefined) {
-        $.get("/loadminutes?id=" + link + "&user=" + user, function (data) {
-          $("video")[0].currentTime = parseFloat(data.minute);
-        });
-      } else {
-        $("video")[0].currentTime = parseFloat(minute);
-      }
-
-      setInterval(() => {
-        scriviminuto(user);
-      }, 10000);
-
-      var ismp4 = video.split(".")[video.split(".").length - 1];
-      if (ismp4 != "mp4") {
-        location.href = actualLink;
-      }
-    });
+    }else{
+      var actualLink = "";
+      var tokenid = $(data).find("#player")[0].dataset.id;
+      var info = $(data).find(".widget.info")[0];
+      var imgInfo = $(info).find("img")[0];
+      imgInfo = $(imgInfo).attr("src");
+      var titleInfo = $(info).find(".c1 .title").text().toUpperCase();
+      var descrizione = $(info).find(".desc").text();
+      console.log($(info).find(".desc")[0]);
+      $(".widget-body").append(
+        ' <div class="col-3"><img class="imgInfo" src="' +
+          imgInfo +
+          '" ></div><div class="col-9"><div style="text-align: center;font-size: 25px;margin-bottom: 10px;"><span >' +
+          titleInfo +
+          '</span></div><div class="row"> <div class="col-sm"> <div class="trama">' +
+          descrizione +
+          "</div> </div> </div> </div>"
+      );
+      $.get("/getvideolink?id=" + tokenid, function (dati) {
+        var video = dati.grabber;
+  
+        if (rangeid == null) {
+          rangeid = 0;
+        }
+        var server = $(data).find(".server[data-name=9]")[0];
+        console.log(server);
+        var episodes = $(server).find(
+          ".episodes.range.active[data-range-id=" + rangeid + "]"
+        )[0];
+        console.log(episodes);
+        episodes = $(episodes).find(".episode");
+  
+        var rangeepisodi = $(data).find(".range")[0];
+        var rangeepisodilen = $(rangeepisodi).children().length;
+  
+        var titolo2 = titolo + " - Episodio " + episodio;
+        var wid = $(document).width();
+        if (wid > 500) {
+          wid = wid / 2;
+        } else {
+          wid = wid - 20;
+        }
+        if (params.get("room") != undefined && params.get("role") == "admin") {
+          $(".center2").append(
+            "<div>" +
+              "<h4 style='margin-top:10px'>" +
+              titolo2 +
+              "</h4>" +
+              "<div><button onclick='shareLink()' class='btn btn-sm btn-danger'>Annulla condivisione</button><div>" +
+              '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
+              wid +
+              '" controls><source src="' +
+              video +
+              '" type="video/mp4"></video>'
+          );
+        } else if (
+          params.get("room") != undefined &&
+          params.get("role") == "client"
+        ) {
+          $(".center2").append(
+            "<div>" +
+              "<h4 style='margin-top:10px'>" +
+              titolo2 +
+              "</h4>" +
+              '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
+              wid +
+              '" controls><source src="' +
+              video +
+              '" type="video/mp4"></video>'
+          );
+        } else {
+          $(".center2").append(
+            "<div>" +
+              "<h4 style='margin-top:10px'>" +
+              titolo2 +
+              "</h4>" +
+              "<div><button onclick='shareLink()' class='btn btn-sm btn-primary'>Avvia condivisione</button><div>" +
+              '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
+              wid +
+              '" controls><source src="' +
+              video +
+              '" type="video/mp4"></video>'
+          );
+        }
+  
+        if (rangeepisodilen > 0) {
+          var ranges = $(rangeepisodi).children();
+          for (let i = 0; i < ranges.length; i++) {
+            const itm = ranges[i];
+            var txt = $(itm).text();
+  
+            var href = location.href.split("&");
+            href =
+              href[0] +
+              "&" +
+              href[1] +
+              "&" +
+              href[2] +
+              "&" +
+              href[3] +
+              "&rangeid=" +
+              $(itm).attr("data-range-id");
+  
+            if (rangeid == $(itm).attr("data-range-id")) {
+              $(".range").append(
+                '<a href="' +
+                  href +
+                  '" style="margin: 5px;" class="btn btn-sm btn-primary">' +
+                  txt +
+                  "</a>"
+              );
+            } else {
+              $(".range").append(
+                '<a href="' +
+                  href +
+                  '" style="margin: 5px;" class="btn btn-sm btn-secondary">' +
+                  txt +
+                  "</a>"
+              );
+            }
+          }
+        }
+        for (let i = 0; i < episodes.length; i++) {
+          const itm = episodes[i];
+          var href = $(itm).find("a").attr("href");
+          var number = $(itm).find("a").text();
+  
+          if (number == episodio) {
+            actualLink =
+              "guarda.html?link=" +
+              href +
+              "&episode=" +
+              number +
+              "&titolo=" +
+              titolo +
+              "&imglink=" +
+              linkimg +
+              "&rangeid=" +
+              rangeid;
+            $(".pagination").append(
+              '<li class="page-item"><a style="background-color:cyan;" class="page-link" href="guarda.html?link=' +
+                href +
+                "&episode=" +
+                number +
+                "&titolo=" +
+                titolo +
+                "&imglink=" +
+                linkimg +
+                "&rangeid=" +
+                rangeid +
+                '">' +
+                number +
+                "</a></li>"
+            );
+          } else {
+            $(".pagination").append(
+              '<li class="page-item"><a class="page-link" href="guarda.html?link=' +
+                href +
+                "&episode=" +
+                number +
+                "&titolo=" +
+                titolo +
+                "&imglink=" +
+                linkimg +
+                "&rangeid=" +
+                rangeid +
+                '">' +
+                number +
+                "</a></li>"
+            );
+          }
+        }
+        var nextep = $(data).find("#next-episode");
+        if (nextep[0] != undefined) {
+          var giorno = $(nextep).attr("data-calendar-date");
+          var ora = $(nextep).attr("data-calendar-time");
+  
+          renderCountdown(new Date(), new Date(giorno + " " + ora));
+        }
+        if (minute == undefined) {
+          $.get("/loadminutes?id=" + link + "&user=" + user, function (data) {
+            $("video")[0].currentTime = parseFloat(data.minute);
+          });
+        } else {
+          $("video")[0].currentTime = parseFloat(minute);
+        }
+  
+        setInterval(() => {
+          scriviminuto(user);
+        }, 10000);
+  
+        var ismp4 = video.split(".")[video.split(".").length - 1];
+        if (ismp4 != "mp4") {
+          location.href = actualLink;
+        }
+      });
+    }
+  
   });
   setTimeout(() => {
     var videoplya = $("video")[0];
