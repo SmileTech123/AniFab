@@ -16,6 +16,8 @@ body {
 }
 .typewrite {
   text-decoration: none;
+  pointer-events: none;
+  cursor: default;
 }
 .wrap {
   font-size: 110px;
