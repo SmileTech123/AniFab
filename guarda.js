@@ -26,7 +26,7 @@ function renderCountdown(dateStart, dateEnd) {
     seconds = pad(Math.floor(secondsLeft % 60));
     // format countdown string + set tag value
     $("#time-elapsed").html(
-      '<div style=" text-align: center;" class="alert alert-warning" role="alert">' +
+      '<br><div style=" text-align: center;" class="alert alert-warning" role="alert">' +
         '<a href="#" class="alert-link">Prossimo episodio tra : ' +
         days +
         " giorni " +
@@ -201,7 +201,21 @@ $(document).ready(() => {
   $.get("/getlink?link=" + link, function (data) {
     if($(data).find("#player")[0]==undefined){
       $("#NonDisponibile").css("display","block")
-      $(".widget-body").css("display","none")
+      var info = $(data).find(".widget.info")[0];
+      var imgInfo = $(info).find("img")[0];
+      imgInfo = $(imgInfo).attr("src");
+      var titleInfo = $(info).find(".c1 .title").text().toUpperCase();
+      var descrizione = $(info).find(".desc").text();
+      console.log($(info).find(".desc")[0]);
+      $(".widget-body").append(
+        ' <div class="col-3"><img class="imgInfo" src="' +
+          imgInfo +
+          '" ></div><div class="col-9"><div style="text-align: center;font-size: 25px;margin-bottom: 10px;"><span >' +
+          titleInfo +
+          '</span></div><div class="row"> <div class="col-sm"> <div class="trama">' +
+          descrizione +
+          "</div> </div> </div> </div>"
+      );
       var nextep = $(data).find("#next-episode");
       if (nextep[0] != undefined) {
         var giorno = $(nextep).attr("data-calendar-date");
