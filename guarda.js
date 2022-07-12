@@ -248,9 +248,9 @@ $(document).ready(() => {
           rangeid = 0;
         }
         var server = $(data).find(".server[data-name=9]")[0];
-        console.log(server);
+        console.log(server,rangeid);
         var episodes = $(server).find(
-          ".episodes.range.active[data-range-id=" + rangeid + "]"
+          ".episodes.range[data-range-id=" + rangeid + "]"
         )[0];
         console.log(episodes);
         episodes = $(episodes).find(".episode");
