@@ -3,7 +3,7 @@ html {
 }
 body {
   /* background-color: #222831; */
-  background-image: url("sfondo-galassia.png");
+  background-image: url("sfondo-galassia-default.png");
   background-size: cover;
   background-attachment: fixed;
   font-family: "Roboto", sans-serif;
@@ -13,6 +13,18 @@ body {
   /* text-align: center; */
   width: 80%;
   margin: 0 auto;
+}
+
+
+.img-right {
+  background: url("AnyaChanDefault.png");
+  height: 750px;
+  width: 300px;
+  position: fixed;
+  z-index: -2;
+  bottom: -30px;
+  right: 0;
+  background-size: cover;
 }
 .typewrite {
   text-decoration: none;
@@ -268,6 +280,18 @@ h3 {
     z-index: 999;
     width: 157px;
   }
+
+  .img-right {
+    background: url("AnyaChanDefault.png");
+    height: 750px;
+    width: 350px;
+    position: fixed;
+    z-index: -2;
+    bottom: -30px;
+    right: 0;
+    background-size: cover;
+  }
+
   .wrap {
     font-size: 50px;
   }
