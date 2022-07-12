@@ -40,21 +40,8 @@
         </a>
        
           <div class="d-flex">
-            <input
-            autocomplete="off"
-              class="form-control me-2"
-              type="search"
-              placeholder="Cerca"
-              aria-label="Search"
-              id="searchbar"
-            />
-            <div class="sugg">
-          
-             
-            </div>
-            <button id="search" class="btn btn-primary" type="button">
-              Cerca
-            </button>
+   
+        
             <div class="dropdown" style="padding-left: 10px;">
               <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 
@@ -69,42 +56,27 @@
         </div>
       </div>
     </nav>
-    <br>
-    <div style="display: none;" id="downloadAnifab" class="alert alert-primary text-center">
-      <a style="color: black!important;" href="/download.html"><h4>AniFab è disponibile per Windows e Android! Scaricalo ora!</h4></a>
 
+    <div style="margin-top: 15%;" class="center2">
+        <h1>Scarica per Windows o Android!</h1>
+        <br>
+        <a href="https://github.com/SmileTech123/AniFab/releases/download/Windows/AniFab.Setup.1.0.4.exe">
+            <div style="width: 300px; height:100px;background-color: lightcoral;text-align: center;border-radius: 150px;margin: 0 auto;">
+                <img width="60px" height="60px" src="windows-brands.svg">
+                <br>
+                <span>Windows</span>
+            </div>
+        </a>
+        <br>
+        <a href="https://github.com/SmileTech123/AniFab/releases/download/Android/AniFab1.0.4.apk">
+            <div style="width: 300px; height:100px;background-color: green;text-align: center;border-radius: 150px;margin: 0 auto;">
+                <img width="60px" height="60px" src="android-brands.svg">
+                <br>
+                <span>Android</span>
+            </div>
+        </a>
+       
     </div>
-    <div class="center2">
-      <h2 id='lst' style="color: white;margin-top: 0;">Ultimi Visti</h2>
-      <div class="owl-carousel2 owl-theme">
-
-      </div>
-      <hr>
-    </div>
-    <div class="center">
-      <h2 id='inc' style="color: white;margin-top: 0;">In corso</h2>
-      <div class="owl-carousel owl-theme">
-
-      </div>
-      <br>
-      <h2 id='inc' style="color: white;margin-top: 0;">Calendario anime</h2>
-      <div id='calendar'></div>
-    </div>
-  
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-      <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-          <img width="30" src="anifablogo.png" class="rounded me-2" alt="...">
-          <strong class="me-auto">Richiesta di amicizia</strong>
-          
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div style="background-color:#0f1217" class="toast-body">
-          Hai nuove richieste di amicizia, controlla subito!
-        </div>
-      </div>
-    </div>
-   
+   <script src="download.js"></script>
   </body>
-  <script src="anime.js"></script>
 </html>

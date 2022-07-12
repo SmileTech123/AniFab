@@ -1,7 +1,11 @@
 $(document).ready(() => {
   var user = Cookies.get("user");
   var socket = io();
-
+  let agent = navigator.userAgent;
+  console.log(agent.includes("Electron"))
+  if(!agent.includes("Electron") && !agent.includes("Android") ){
+    $("#downloadAnifab").css("display","block")
+  }
   //socket.emit("friendRequest", { nome: "Fabio" });
   if (user != "") {
     var wid = $(document).width();
