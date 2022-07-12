@@ -3,11 +3,7 @@ $(document).ready(() => {
   var newuser = params.get("newuser");
   var disconn = params.get("disconn");
   var user = undefined;
-  let agent = navigator.userAgent;
-  console.log(agent.includes("Electron"))
-  if(!agent.includes("Electron") && !agent.includes("Android") ){
-    $("#downloadAnifab").css("display","block")
-  }
+
   if (newuser != null) {
     $("#logbtn").text("Registrati");
     $("#logbtn").attr("tipo", "registrazione");
