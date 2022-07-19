@@ -509,7 +509,7 @@ apps.get("/lastseenget", function (req, res) {
   db.all(
     "Select * from lastseen where user='" +
       user +
-      "'  ORDER by Data DESC Limit 10",
+      "'  ORDER by Data DESC ",
     (err, rows) => {
       if (err) {
         res.json(err);
