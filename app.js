@@ -13,10 +13,17 @@ const { traceProcessWarnings } = require("process");
 var apps = express();
 const opts = {
   headers: {
-    cookie:
-      "sessionId=s:9ujLxafw6hbzd8rPbiyxxZRlc6UGaKoe.qk9vu/o3mDoVhP2Wy1fPBvWX3l0Rl5DKXD2S1L2aGGI; AWCookieVerify=6f0747e37686db5f451f4dca362bc77d",
+    "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36 OPR/88.0.4412.85",
+    "cookie":
+      "sessionId=s:p_2yx63imkDBtxLARPHqYbqayltOO7_O.4cB40V2t7k1FBdzPYIqgK45/2C5W6gz55ecE9FPbq2A; _ga=GA1.2.1943481363.1656938121; SecurityAW=f03e9fd9ac8900c7d5ae2edfed992ccb; _gid=GA1.2.1389026422.1658234554; _gat=1; _gat_gtag_UA_93961448_1=1",
   },
 };
+// const opts = {
+//   headers: {
+//     cookie:
+//       "sessionId=s:9ujLxafw6hbzd8rPbiyxxZRlc6UGaKoe.qk9vu/o3mDoVhP2Wy1fPBvWX3l0Rl5DKXD2S1L2aGGI; AWCookieVerify=6f0747e37686db5f451f4dca362bc77d",
+//   },
+// };
 const options = {
   key: fs.readFileSync("key.pem"),
   cert: fs.readFileSync("cert.pem"),
@@ -391,6 +398,7 @@ apps.get("/homepage", async function (req, res) {
   }
 
   resp = await resp.text();
+  console.log(resp)
   res.send(resp);
 });
 
