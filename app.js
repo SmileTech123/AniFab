@@ -762,7 +762,7 @@ apps.get("/getlink", async function (req, res) {
 apps.get("/getvideolink", async function (req, res) {
   var id = req.query.id;
   var resp = await fetch(
-    "https://www.animeworld.tv/api/episode/info?id=" + id + "&alt=0"
+    "https://www.animeworld.tv/api/episode/info?id=" + id + "&alt=0",opts
   );
   resp = await resp.json();
   res.json(resp);
