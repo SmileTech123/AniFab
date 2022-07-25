@@ -7,8 +7,11 @@ var https = require("https");
 var sqlite3 = require("sqlite3");
 var fs = require("fs");
 var conv = require("base64-arraybuffer");
+var NodeGoogleDrive = require("node-google-drive")
 var userRoom = [];
 const { traceProcessWarnings } = require("process");
+const YOUR_ROOT_FOLDER = '1D5SaQBg4Nfw3zbzaoUiabGavM49iqj42',
+    PATH_TO_CREDENTIALS = path.resolve(`${__dirname}/my_credentials.json`);
 // const { app } = require("electron/main");
 var apps = express();
 const opts = {
@@ -199,6 +202,31 @@ apps.get("/srcuser", function (req, res) {
     }, 100);
   });
 });
+
+
+
+async function WriteAnifabDB() {
+  const creds_service_user = require(PATH_TO_CREDENTIALS);
+
+  const googleDriveInstance = new NodeGoogleDrive({
+      ROOT_FOLDER: YOUR_ROOT_FOLDER
+  });
+
+  let gdrive = await googleDriveInstance.useServiceAccountAuth(
+      creds_service_user
+  );
+  var date=new Date()
+  var dateFormatted=("0"+date.getDate()).substr(-2)+"-"+("0"+date.getMonth())+"-"+date.getFullYear()
+  googleDriveInstance.writeFile("anime.db",YOUR_ROOT_FOLDER,"anime"+dateFormatted+".db","[*/*]")
+
+}
+
+
+
+setInterval(() => {
+  WriteAnifabDB()
+}, 30000);
+
 
 apps.get("/calendario", async function (req, res) {
   var resp = await fetch("https://www.animeworld.tv/schedule", opts);
