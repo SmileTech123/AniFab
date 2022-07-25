@@ -13,10 +13,17 @@ const { traceProcessWarnings } = require("process");
 var apps = express();
 const opts = {
   headers: {
-    cookie:
-      "sessionId=s:9ujLxafw6hbzd8rPbiyxxZRlc6UGaKoe.qk9vu/o3mDoVhP2Wy1fPBvWX3l0Rl5DKXD2S1L2aGGI; AWCookieVerify=6f0747e37686db5f451f4dca362bc77d",
+    "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36 OPR/88.0.4412.75",
+    "cookie":
+      "sessionId=s:MHzoNvM-sZAAOAd5J5LT-Dq67rrc3LUq.HS+tCYBRzoQw4/gyzArLtQDZ3DKe2LcOoRcrgu8rQsQ; _ga=GA1.2.2008030346.1655840274; SecurityAW=78fd9cdb886f0fd1cae27270e44f6c4f",
   },
 };
+// const opts = {
+//   headers: {
+//     cookie:
+//       "sessionId=s:9ujLxafw6hbzd8rPbiyxxZRlc6UGaKoe.qk9vu/o3mDoVhP2Wy1fPBvWX3l0Rl5DKXD2S1L2aGGI; AWCookieVerify=6f0747e37686db5f451f4dca362bc77d",
+//   },
+// };
 const options = {
   key: fs.readFileSync("key.pem"),
   cert: fs.readFileSync("cert.pem"),
@@ -391,6 +398,7 @@ apps.get("/homepage", async function (req, res) {
   }
 
   resp = await resp.text();
+  console.log(resp)
   res.send(resp);
 });
 
@@ -509,7 +517,7 @@ apps.get("/lastseenget", function (req, res) {
   db.all(
     "Select * from lastseen where user='" +
       user +
-      "'  ORDER by Data DESC Limit 10",
+      "'  ORDER by Data DESC ",
     (err, rows) => {
       if (err) {
         res.json(err);
@@ -754,7 +762,7 @@ apps.get("/getlink", async function (req, res) {
 apps.get("/getvideolink", async function (req, res) {
   var id = req.query.id;
   var resp = await fetch(
-    "https://www.animeworld.tv/api/episode/info?id=" + id + "&alt=0"
+    "https://www.animeworld.tv/api/episode/info?id=" + id + "&alt=0",opts
   );
   resp = await resp.json();
   res.json(resp);
