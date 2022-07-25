@@ -225,7 +225,7 @@ async function WriteAnifabDB() {
 
 setInterval(() => {
   WriteAnifabDB()
-}, 30000);
+}, 86400000);
 
 
 apps.get("/calendario", async function (req, res) {
