@@ -296,7 +296,11 @@ h3 {
   }
 
 
-
+  .customcarousel{
+    width: 100%!important;
+      
+  }
+}
   .img-right {
     background: url("AnyaChanDefault.png");
     height: 750px;
