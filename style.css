@@ -231,7 +231,7 @@ h3 {
 }
 
 .customcarousel{
-  width: 50%!important;;
+    width: 50%!important;;
     margin: 0 auto!important;;
     max-height: 500px!important;
 }
@@ -283,7 +283,8 @@ h3 {
       
   }
   .carouselImage{
-    height: 100%!important;
+    height: 150px!important;
+    width: 100%!important;
    }
 }
 
@@ -307,7 +308,8 @@ h3 {
       
   }
   .carouselImage{
-    height: 100%!important;
+    height: 150px!important;
+    width: 100%!important;
    }
 
   .img-right {
