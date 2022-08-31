@@ -275,6 +275,7 @@ h3 {
 
 .carouselImage{
  height: 500px!important;
+ width: 100%!important;
 }
 
 @media only screen and (max-width: 1920px) {
