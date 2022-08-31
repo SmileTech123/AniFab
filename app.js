@@ -7,17 +7,18 @@ var https = require("https");
 var sqlite3 = require("sqlite3");
 var fs = require("fs");
 var conv = require("base64-arraybuffer");
-var NodeGoogleDrive = require("node-google-drive")
+var NodeGoogleDrive = require("node-google-drive");
 var userRoom = [];
 const { traceProcessWarnings } = require("process");
-const YOUR_ROOT_FOLDER = '1D5SaQBg4Nfw3zbzaoUiabGavM49iqj42',
-    PATH_TO_CREDENTIALS = path.resolve(`${__dirname}/my_credentials.json`);
+const YOUR_ROOT_FOLDER = "1D5SaQBg4Nfw3zbzaoUiabGavM49iqj42",
+  PATH_TO_CREDENTIALS = path.resolve(`${__dirname}/my_credentials.json`);
 // const { app } = require("electron/main");
 var apps = express();
 const opts = {
   headers: {
-    "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36 OPR/88.0.4412.75",
-    "cookie":
+    "User-Agent":
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36 OPR/88.0.4412.75",
+    cookie:
       "sessionId=s:MHzoNvM-sZAAOAd5J5LT-Dq67rrc3LUq.HS+tCYBRzoQw4/gyzArLtQDZ3DKe2LcOoRcrgu8rQsQ; _ga=GA1.2.2008030346.1655840274; SecurityAW=78fd9cdb886f0fd1cae27270e44f6c4f",
   },
 };
@@ -203,30 +204,34 @@ apps.get("/srcuser", function (req, res) {
   });
 });
 
-
-
 async function WriteAnifabDB() {
   const creds_service_user = require(PATH_TO_CREDENTIALS);
 
   const googleDriveInstance = new NodeGoogleDrive({
-      ROOT_FOLDER: YOUR_ROOT_FOLDER
+    ROOT_FOLDER: YOUR_ROOT_FOLDER,
   });
 
   let gdrive = await googleDriveInstance.useServiceAccountAuth(
-      creds_service_user
+    creds_service_user
   );
-  var date=new Date()
-  var dateFormatted=("0"+date.getDate()).substr(-2)+"-"+("0"+date.getMonth())+"-"+date.getFullYear()
-  googleDriveInstance.writeFile("anime.db",YOUR_ROOT_FOLDER,"anime"+dateFormatted+".db","[*/*]")
-
+  var date = new Date();
+  var dateFormatted =
+    ("0" + date.getDate()).substr(-2) +
+    "-" +
+    ("0" + date.getMonth()) +
+    "-" +
+    date.getFullYear();
+  googleDriveInstance.writeFile(
+    "anime.db",
+    YOUR_ROOT_FOLDER,
+    "anime" + dateFormatted + ".db",
+    "[*/*]"
+  );
 }
 
-
-
 setInterval(() => {
-  WriteAnifabDB()
+  WriteAnifabDB();
 }, 86400000);
-
 
 apps.get("/calendario", async function (req, res) {
   var resp = await fetch("https://www.animeworld.tv/schedule", opts);
@@ -415,6 +420,13 @@ apps.post("/writeimage", function (req, res) {
   db.close();
 });
 
+apps.get("/carosello", async function (req, res) {
+  var resp = await fetch("https://www.animeworld.tv", opts);
+  resp = await resp.text();
+  console.log(resp);
+  res.send(resp);
+});
+
 apps.get("/homepage", async function (req, res) {
   var src = req.query.src;
 
@@ -426,7 +438,7 @@ apps.get("/homepage", async function (req, res) {
   }
 
   resp = await resp.text();
-  console.log(resp)
+  console.log(resp);
   res.send(resp);
 });
 
@@ -543,9 +555,7 @@ apps.get("/lastseenget", function (req, res) {
   });
   var user = req.query.user;
   db.all(
-    "Select * from lastseen where user='" +
-      user +
-      "'  ORDER by Data DESC ",
+    "Select * from lastseen where user='" + user + "'  ORDER by Data DESC ",
     (err, rows) => {
       if (err) {
         res.json(err);
@@ -709,10 +719,10 @@ apps.get("/writeminutes", function (req, res) {
   db.all(
     "select * from anime where id='" + id + "' and user='" + user + "'",
     (err, rows) => {
-      if (rows==undefined){
+      if (rows == undefined) {
         res.json("Fine");
         db.close();
-      }else{
+      } else {
         if (rows.length <= 0) {
           db.run(
             "insert into anime values('" +
@@ -749,7 +759,6 @@ apps.get("/writeminutes", function (req, res) {
           );
         }
       }
-
     }
   );
 
@@ -790,7 +799,8 @@ apps.get("/getlink", async function (req, res) {
 apps.get("/getvideolink", async function (req, res) {
   var id = req.query.id;
   var resp = await fetch(
-    "https://www.animeworld.tv/api/episode/info?id=" + id + "&alt=0",opts
+    "https://www.animeworld.tv/api/episode/info?id=" + id + "&alt=0",
+    opts
   );
   resp = await resp.json();
   res.json(resp);

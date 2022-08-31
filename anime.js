@@ -2,9 +2,9 @@ $(document).ready(() => {
   var user = Cookies.get("user");
   var socket = io();
   let agent = navigator.userAgent;
-  console.log(agent.includes("Electron"))
-  if(!agent.includes("Electron") && !agent.includes("Android") ){
-    $("#downloadAnifab").css("display","block")
+  console.log(agent.includes("Electron"));
+  if (!agent.includes("Electron") && !agent.includes("Android")) {
+    $("#downloadAnifab").css("display", "block");
   }
   //socket.emit("friendRequest", { nome: "Fabio" });
   if (user != "") {
@@ -21,6 +21,54 @@ $(document).ready(() => {
         "</span>"
     );
   }
+
+  $.get("/carosello", function (dati) {
+    for (
+      let index = 0;
+      index < $(dati).find("#swiper-container").find(".swiper-slide").length;
+      index++
+    ) {
+      const itm = $(dati).find("#swiper-container").find(".swiper-slide")[
+        index
+      ];
+      var titolo = $(itm).find(".info").find(".name").attr("title");
+      var href = $(itm).find(".info").find(".name").attr("href");
+      var descrizione = $(itm).find(".info").find("p").html();
+
+      var img = $(itm)
+        .attr("style")
+        .replace("background-image: url(", "")
+        .replace(")", "");
+      console.log(titolo, href, img, descrizione);
+      if (index == 0) {
+        $(".carousel-inner").append(
+          '<div class="carousel-item active"><img height="500px" src="' +
+            img +
+            '" class="d-block w-100" alt="..."> <div style="-webkit-text-stroke: 0.2px black;background-color: rgb(19, 104, 201); border: 1px solid black;border-radius: 10px;" class="carousel-caption d-none d-md-block"><h1 >' +
+            titolo +
+            "</h1> <p style='font-size:15px'>" +
+            descrizione +
+            "</p></div></div>"
+        );
+      } else {
+        $(".carousel-inner").append(
+          '<div class="carousel-item"><img height="500px" src="' +
+            img +
+            '" class="d-block w-100" alt="..."> <div style="-webkit-text-stroke: 0.2px black;background-color: rgb(19, 104, 201); border: 1px solid black;border-radius: 10px;" class="carousel-caption d-none d-md-block"><h1 >' +
+            titolo +
+            "</h1> <p style='font-size:15px'>" +
+            descrizione +
+            "</p></div></div>"
+        );
+      }
+    }
+    setTimeout(() => {
+      var myCarousel = document.querySelector("#myCarousel");
+      var carousel = new bootstrap.Carousel(myCarousel, {
+        interval: 5000,
+      });
+    }, 1000);
+  });
 
   const params = new URLSearchParams(window.location.search);
   var src = params.get("src");
@@ -160,7 +208,7 @@ $(document).ready(() => {
         const itm = lista[i];
 
         var href = $(itm).find(".inner").find("a.poster").attr("href");
-        console.log(href);
+
         var img = $(itm)
           .find(".inner")
           .find("a.poster")
