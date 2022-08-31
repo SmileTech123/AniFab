@@ -273,11 +273,18 @@ h3 {
   text-align:center
 }
 
+.carouselImage{
+ height: 500px!important;
+}
+
 @media only screen and (max-width: 1920px) {
   .customcarousel{
     width: 100%!important;
       
   }
+  .carouselImage{
+    height: 100%!important;
+   }
 }
 
 @media only screen and (max-width: 600px) {
@@ -295,12 +302,14 @@ h3 {
     width: 157px;
   }
 
-
   .customcarousel{
     width: 100%!important;
       
   }
-}
+  .carouselImage{
+    height: 100%!important;
+   }
+
   .img-right {
     background: url("AnyaChanDefault.png");
     height: 750px;

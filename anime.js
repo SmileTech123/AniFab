@@ -42,7 +42,7 @@ $(document).ready(() => {
       console.log(titolo, href, img, descrizione);
       if (index == 0) {
         $(".carousel-inner").append(
-          '<div class="carousel-item active"><img height="500px" src="' +
+          '<div class="carousel-item active"><img class="carouselImage"  src="' +
             img +
             '" class="d-block w-100" alt="..."> <div style="-webkit-text-stroke: 0.2px black;background-color: rgb(19, 104, 201); border: 1px solid black;border-radius: 10px;" class="carousel-caption d-none d-md-block"><h1 >' +
             titolo +
@@ -52,7 +52,7 @@ $(document).ready(() => {
         );
       } else {
         $(".carousel-inner").append(
-          '<div class="carousel-item"><img height="500px" src="' +
+          '<div class="carousel-item"><img class="carouselImage" src="' +
             img +
             '" class="d-block w-100" alt="..."> <div style="-webkit-text-stroke: 0.2px black;background-color: rgb(19, 104, 201); border: 1px solid black;border-radius: 10px;" class="carousel-caption d-none d-md-block"><h1 >' +
             titolo +
