@@ -38,7 +38,6 @@ var db2 = new sqlite3.Database("anime.db", (err, room) => {
     console.log("errore");
     return;
   }
-  console.log("connesso");
 });
 db2.run("CREATE TABLE anime (id text,minute text,user text)", (err) => {
   if (err) {
@@ -87,7 +86,6 @@ function createWindow() {
     icon: __dirname + "/anifablogo.png",
   });
   globalShortcut.register("f5", function () {
-    console.log("f5 is pressed");
     win.reload();
   });
   //win.webContents.openDevTools();
@@ -95,8 +93,6 @@ function createWindow() {
 }
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
-
   socket.on("friendRequest", (friend) => {
     io.emit("friendarrive", friend);
   });
@@ -111,13 +107,11 @@ io.on("connection", (socket) => {
   });
   socket.on("joinRoom", function (req) {
     socket.join(req.room);
-    console.log(userRoom);
+
     //let roomUsers = await io.in(req.room).fetchSockets();
     const found = userRoom.some((el) => el.user === req.user);
     if (!found) {
       userRoom.push({ room: req.room, user: req.user, id: socket.id });
-    } else {
-      console.log("ciao");
     }
 
     // if (userRoom.includes({ room: req.room, user: req.user })) {
@@ -132,7 +126,6 @@ io.on("connection", (socket) => {
   socket.on("disconnect", function (req) {
     var room = userRoom.filter((i) => i.id == socket.id);
     if (room.length > 0) {
-      console.log("disconnesso", socket.id, room[0].room);
       socket.leave(room[0].room);
 
       userRoom.splice(
@@ -140,7 +133,6 @@ io.on("connection", (socket) => {
         1
       );
       io.to(room[0].room).emit("userdisconnect", userRoom);
-      console.log("ciao", userRoom);
     }
   });
 });
@@ -162,7 +154,7 @@ apps.get("/srcuser", function (req, res) {
   var user = req.query.user;
   var touser = req.query.touser;
   var sql = "SELECT * from users where users.user like '%" + user + "%'";
-  console.log(sql);
+
   var obj = { users: [] };
 
   var db = new sqlite3.Database("anime.db", (err, room) => {
@@ -170,7 +162,6 @@ apps.get("/srcuser", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   db.all(sql, (err, rows) => {
     for (let i = 0; i < rows.length; i++) {
@@ -184,9 +175,7 @@ apps.get("/srcuser", function (req, res) {
         "'";
       db.get(sql2, (err, row) => {
         if (row == undefined) {
-          console.log("sono qui");
           obj.users.push({ user: itm.user, icon: itm.icon, type: "R" });
-          console.log(itm.user);
         } else {
           if (row.type == "pending") {
             obj.users.push({ user: itm.user, icon: itm.icon, type: "P" });
@@ -247,7 +236,6 @@ apps.get("/inviareq", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var sql =
     "select * from friendrequest where user='" +
@@ -277,7 +265,6 @@ apps.get("/updatefriendrequest", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var user = req.query.user;
   var sql =
@@ -308,7 +295,6 @@ apps.get("/getfriendsreq", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var user = req.query.user;
   var sql =
@@ -328,7 +314,6 @@ apps.get("/getfriends", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var user = req.query.user;
   var sql =
@@ -381,7 +366,7 @@ apps.post("/writeimage", function (req, res) {
   var filename = req.body.filename;
   var bs64 = req.body.file;
   var user = req.body.user;
-  console.log(filename);
+
   var data = bs64.replace(/^data:image\/\w+;base64,/, "");
   fs.writeFile(
     "public/images/" + filename + ".png",
@@ -394,17 +379,8 @@ apps.post("/writeimage", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
-  console.log(
-    "update users set icon='" +
-      "public/images/" +
-      filename +
-      ".png" +
-      "' where user='" +
-      user +
-      "'"
-  );
+
   db.run(
     "update users set icon='" +
       "public/images/" +
@@ -423,7 +399,7 @@ apps.post("/writeimage", function (req, res) {
 apps.get("/carosello", async function (req, res) {
   var resp = await fetch("https://www.animeworld.tv", opts);
   resp = await resp.text();
-  console.log(resp);
+
   res.send(resp);
 });
 
@@ -438,7 +414,7 @@ apps.get("/homepage", async function (req, res) {
   }
 
   resp = await resp.text();
-  console.log(resp);
+
   res.send(resp);
 });
 
@@ -448,7 +424,6 @@ apps.get("/animelook", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var user = req.query.user;
   db.all(
@@ -470,7 +445,6 @@ apps.get("/lastseen", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var user = req.query.user;
   var img = req.query.linkimg;
@@ -508,8 +482,6 @@ apps.get("/lastseen", function (req, res) {
           (err) => {
             if (err) {
               console.log("non inserito" + err);
-            } else {
-              console.log("inserito");
             }
           }
         );
@@ -551,7 +523,6 @@ apps.get("/lastseenget", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var user = req.query.user;
   db.all(
@@ -573,7 +544,6 @@ apps.get("/eliminalastseen", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var id = req.query.id;
   var user = req.query.user;
@@ -593,7 +563,6 @@ apps.get("/managelastseen", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var user = req.query.user;
   var page = req.query.page;
@@ -622,7 +591,6 @@ apps.get("/setting", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var user = req.query.user;
   db.get("select setting from users where user='" + user + "'", (err, row) => {
@@ -640,7 +608,6 @@ apps.get("/writesetting", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var user = req.query.user;
   var sett = req.query.sett;
@@ -661,7 +628,6 @@ apps.get("/reguser", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var user = req.query.user;
   var pass = req.query.pass;
@@ -689,7 +655,7 @@ apps.post("/wallpaperLink", async function (req, res) {
     },
     body: obj,
   };
-  console.log(obj);
+
   var resp = await fetch(
     "https://api.alphacoders.com/content/get-download-link",
     settings
@@ -699,7 +665,6 @@ apps.post("/wallpaperLink", async function (req, res) {
 });
 
 apps.get("/wallpaper", async function (req, res) {
-  console.log("ciaoo");
   var src = req.query.src;
   var arrsrc = src.split(" ");
   var newSrc = arrsrc[0];
@@ -707,7 +672,7 @@ apps.get("/wallpaper", async function (req, res) {
     const itm = arrsrc[i];
     newSrc = newSrc + "+" + itm;
   }
-  console.log(newSrc);
+
   var resp = await fetch(
     "https://wall.alphacoders.com/search.php?search=" + src + "&lang=Italian"
   );
@@ -721,7 +686,6 @@ apps.get("/loguser", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var user = req.query.user;
   var pass = req.query.pass;
@@ -745,7 +709,6 @@ apps.get("/writeminutes", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var id = req.query.id;
   var user = req.query.user;
@@ -771,8 +734,6 @@ apps.get("/writeminutes", function (req, res) {
             (err) => {
               if (err) {
                 console.log("non inserito" + err);
-              } else {
-                console.log("inserito");
               }
             }
           );
@@ -808,7 +769,6 @@ apps.get("/loadminutes", function (req, res) {
       console.log("errore");
       return;
     }
-    console.log("connesso");
   });
   var id = req.query.id;
   var user = req.query.user;
@@ -825,7 +785,7 @@ apps.get("/getlink", async function (req, res) {
   var link = req.query.link;
   if (link != null) {
     var id = link.split("/");
-    console.log(id);
+
     var resp = await fetch("https://www.animeworld.tv" + link, opts);
     resp = await resp.text();
     res.send(resp);
@@ -858,7 +818,7 @@ apps.get("/getlinksAlternative", async function (req, res) {
   ).catch((e) => {
     console.log(e);
   });
-  console.log("ci sono 2");
+
   resp = await resp.text();
   res.send(resp);
 });
