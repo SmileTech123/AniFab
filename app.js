@@ -679,6 +679,42 @@ apps.get("/reguser", function (req, res) {
   db.close();
 });
 
+apps.post("/wallpaperLink", async function (req, res) {
+  var obj = Object.keys(req.body)[0];
+  const settings = {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: obj,
+  };
+  console.log(obj);
+  var resp = await fetch(
+    "https://api.alphacoders.com/content/get-download-link",
+    settings
+  );
+  resp = await resp.json();
+  res.json(resp);
+});
+
+apps.get("/wallpaper", async function (req, res) {
+  console.log("ciaoo");
+  var src = req.query.src;
+  var arrsrc = src.split(" ");
+  var newSrc = arrsrc[0];
+  for (let i = 1; i < arrsrc.length; i++) {
+    const itm = arrsrc[i];
+    newSrc = newSrc + "+" + itm;
+  }
+  console.log(newSrc);
+  var resp = await fetch(
+    "https://wall.alphacoders.com/search.php?search=" + src + "&lang=Italian"
+  );
+  resp = await resp.text();
+  res.send(resp);
+});
+
 apps.get("/loguser", function (req, res) {
   var db = new sqlite3.Database("anime.db", (err, room) => {
     if (err) {

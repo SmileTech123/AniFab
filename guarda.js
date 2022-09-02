@@ -99,6 +99,30 @@ $(document).ready(() => {
         "</span>"
     );
   }
+  $.get("/wallpaper?src=" + titolo, function (dati) {
+    //alert("ciao");
+    var imgLink = $(dati).find(".img-responsive")[0];
+    imgLink = $(imgLink).attr("src");
+    if ($(dati).find(".img-responsive").hasClass("thumb-desktop")) {
+      $("body").css("background-image", "url('" + imgLink + "')");
+    } else {
+      var server = imgLink.split(".")[0].split("/")[2];
+      var id = imgLink.split("-")[1].split(".")[0];
+      var typeimg = imgLink.split("-")[1].split(".")[1];
+
+      var o = {
+        content_id: id,
+        content_type: "wallpaper",
+        file_type: typeimg,
+        image_server: server,
+      };
+      console.log(JSON.stringify(o));
+      $.post("/wallpaperLink", JSON.stringify(o), function (dati) {
+        console.log(dati);
+        $("body").css("background-image", "url('" + dati.link + "')");
+      });
+    }
+  });
 
   if (room != undefined) {
     $("#condivisione").css("display", "block");
@@ -199,8 +223,8 @@ $(document).ready(() => {
   );
 
   $.get("/getlink?link=" + link, function (data) {
-    if($(data).find("#player")[0]==undefined){
-      $("#NonDisponibile").css("display","block")
+    if ($(data).find("#player")[0] == undefined) {
+      $("#NonDisponibile").css("display", "block");
       var info = $(data).find(".widget.info")[0];
       var imgInfo = $(info).find("img")[0];
       imgInfo = $(imgInfo).attr("src");
@@ -223,7 +247,7 @@ $(document).ready(() => {
 
         renderCountdown(new Date(), new Date(giorno + " " + ora));
       }
-    }else{
+    } else {
       var actualLink = "";
       var tokenid = $(data).find("#player")[0].dataset.id;
       var info = $(data).find(".widget.info")[0];
@@ -243,21 +267,21 @@ $(document).ready(() => {
       );
       $.get("/getvideolink?id=" + tokenid, function (dati) {
         var video = dati.grabber;
-  
+
         if (rangeid == null) {
           rangeid = 0;
         }
         var server = $(data).find(".server[data-name=9]")[0];
-        console.log(server,rangeid);
+        console.log(server, rangeid);
         var episodes = $(server).find(
           ".episodes.range[data-range-id=" + rangeid + "]"
         )[0];
         console.log(episodes);
         episodes = $(episodes).find(".episode");
-  
+
         var rangeepisodi = $(data).find(".range")[0];
         var rangeepisodilen = $(rangeepisodi).children().length;
-  
+
         var titolo2 = titolo + " - Episodio " + episodio;
         var wid = $(document).width();
         if (wid > 500) {
@@ -307,13 +331,13 @@ $(document).ready(() => {
               '" type="video/mp4"></video>'
           );
         }
-  
+
         if (rangeepisodilen > 0) {
           var ranges = $(rangeepisodi).children();
           for (let i = 0; i < ranges.length; i++) {
             const itm = ranges[i];
             var txt = $(itm).text();
-  
+
             var href = location.href.split("&");
             href =
               href[0] +
@@ -325,7 +349,7 @@ $(document).ready(() => {
               href[3] +
               "&rangeid=" +
               $(itm).attr("data-range-id");
-  
+
             if (rangeid == $(itm).attr("data-range-id")) {
               $(".range").append(
                 '<a href="' +
@@ -349,7 +373,7 @@ $(document).ready(() => {
           const itm = episodes[i];
           var href = $(itm).find("a").attr("href");
           var number = $(itm).find("a").text();
-  
+
           if (number == episodio) {
             actualLink =
               "guarda.html?link=" +
@@ -399,7 +423,7 @@ $(document).ready(() => {
         if (nextep[0] != undefined) {
           var giorno = $(nextep).attr("data-calendar-date");
           var ora = $(nextep).attr("data-calendar-time");
-  
+
           renderCountdown(new Date(), new Date(giorno + " " + ora));
         }
         if (minute == undefined) {
@@ -409,18 +433,17 @@ $(document).ready(() => {
         } else {
           $("video")[0].currentTime = parseFloat(minute);
         }
-  
+
         setInterval(() => {
           scriviminuto(user);
         }, 10000);
-  
+
         var ismp4 = video.split(".")[video.split(".").length - 1];
         if (ismp4 != "mp4") {
           location.href = actualLink;
         }
       });
     }
-  
   });
   setTimeout(() => {
     var videoplya = $("video")[0];
