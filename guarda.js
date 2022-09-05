@@ -228,9 +228,15 @@ $(document).ready(() => {
       var info = $(data).find(".widget.info")[0];
       var imgInfo = $(info).find("img")[0];
       imgInfo = $(imgInfo).attr("src");
-      var titleInfo = $(info).find(".c1 .title").text().toUpperCase();
+
       var descrizione = $(info).find(".desc").text();
-      console.log($(info).find(".desc")[0]);
+      var column_episode = $(info).find(".meta")[1];
+      var totalEpisode = $(column_episode).find("dd")[2].innerHTML;
+      var titleInfo =
+        $(info).find(".c1 .title").text().toUpperCase() +
+        " (" +
+        totalEpisode +
+        " EP)";
       $(".widget-body").append(
         ' <div class="col-3"><img class="imgInfo" src="' +
           imgInfo +
@@ -253,9 +259,14 @@ $(document).ready(() => {
       var info = $(data).find(".widget.info")[0];
       var imgInfo = $(info).find("img")[0];
       imgInfo = $(imgInfo).attr("src");
-      var titleInfo = $(info).find(".c1 .title").text().toUpperCase();
       var descrizione = $(info).find(".desc").text();
-      console.log($(info).find(".desc")[0]);
+      var column_episode = $(info).find(".meta")[1];
+      var totalEpisode = $(column_episode).find("dd")[2].innerHTML;
+      var titleInfo =
+        $(info).find(".c1 .title").text().toUpperCase() +
+        " (" +
+        totalEpisode +
+        " EP)";
       $(".widget-body").append(
         ' <div class="col-3"><img class="imgInfo" src="' +
           imgInfo +
