@@ -99,10 +99,12 @@ $(document).ready(() => {
         "</span>"
     );
   }
-  $.get("/wallpaper?src=" + titolo, function (dati) {
+  $.get("/wallpaper?src=" + titolo.split("(")[0].trim(), function (dati) {
     //alert("ciao");
+    console.log(titolo);
     var imgLink = $(dati).find(".img-responsive")[0];
     imgLink = $(imgLink).attr("src");
+
     if ($(dati).find(".img-responsive").hasClass("thumb-desktop")) {
       $("body").css("background-image", "url('" + imgLink + "')");
     } else {
