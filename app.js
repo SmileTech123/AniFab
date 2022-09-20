@@ -822,7 +822,12 @@ apps.get("/getlinksAlternative", async function (req, res) {
   resp = await resp.text();
   res.send(resp);
 });
-
+apps.get("/versione", function (req, res) {
+  var json = {};
+  json.versione = "1.0.5";
+  //console.log("ciao", json);
+  res.json(json);
+});
 // catch 404 and forward to error handler
 apps.use(function (req, res, next) {
   next(createError(404));
