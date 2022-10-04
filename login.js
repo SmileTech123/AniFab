@@ -4,6 +4,13 @@ $(document).ready(() => {
   var disconn = params.get("disconn");
   var user = undefined;
 
+  $('#pass').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+      $("#logbtn").click()
+    }
+});
+
   if (newuser != null) {
     $("#logbtn").text("Registrati");
     $("#logbtn").attr("tipo", "registrazione");
