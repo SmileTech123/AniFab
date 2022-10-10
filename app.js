@@ -9,6 +9,13 @@ var fs = require("fs");
 var conv = require("base64-arraybuffer");
 var NodeGoogleDrive = require("node-google-drive");
 var userRoom = [];
+var TelegramClient = require("telegram");
+var StringSession = require("telegram/sessions");
+const apiId = 17687008;
+const apiHash = "b049d65f86a391a078b404fb685266c5";
+const stringSession = new StringSession.StringSession(
+  "1BAAOMTQ5LjE1NC4xNjcuOTEAUIbJ4Zd1Qzk+TIugDeVRbq2+aAH8mWIwplW7InIk2DKoYwOdolj3nnHETFtke92PBsY+vgXcXHiatyvhK+EPil9uKVZtqsiD8uONAi4JyAEI6qv9FzL0262qAI490Jtvvy84C/mzAjc3IEqieXW54rBq3lN2aPQrwBL5/OBBbgXijsWV8vflrjD3/DHyFE55Ay0gDmjHI1+pMbz2l6IeJqqqr/8BnUZJbDxnkGcboDzmWIY2Si3v/GU/5AqBi2EAoGsmaRZQZsX+K01gOkElStgTAev1dPmJUqNK8WcxfWJMGEW0QsAYbjtaSIgp4BsOc7rNRC61ofDeNeyefZ6j9Jw="
+);
 const { traceProcessWarnings } = require("process");
 const YOUR_ROOT_FOLDER = "1D5SaQBg4Nfw3zbzaoUiabGavM49iqj42",
   PATH_TO_CREDENTIALS = path.resolve(`${__dirname}/my_credentials.json`);
@@ -221,6 +228,60 @@ async function WriteAnifabDB() {
 setInterval(() => {
   WriteAnifabDB();
 }, 86400000);
+
+async function TelegramNotify() {
+  console.log("Loading interactive example...");
+  const client = new TelegramClient.TelegramClient(
+    stringSession,
+    apiId,
+    apiHash,
+    {
+      connectionRetries: 5,
+    }
+  );
+
+  // await client.start({
+  //   phoneNumber: async () => await input.text("Please enter your number: "),
+  //   password: async () => await input.text("Please enter your password: "),
+  //   phoneCode: async () =>
+  //     await input.text("Please enter the code you received: "),
+  //   onError: (err) => console.log(err),
+  // });
+  await client.connect();
+  console.log("You should now be connected.");
+  console.log(client.session.save()); // Save this string to avoid logging in again
+  var lastid = fs.readFileSync("lastid.txt", "utf-8");
+  lastid = parseInt(lastid);
+  var LatestMessage = await client.getMessages("AnimeWorldITA2", {
+    minId: lastid,
+  });
+  if (LatestMessage.length > 0) {
+    const buffer = await client.downloadFile(
+      new TelegramClient.Api.InputPhotoFileLocation({
+        id: LatestMessage[0].media.photo.id,
+        accessHash: LatestMessage[0].media.photo.accessHash,
+        fileReference: LatestMessage[0].media.photo.fileReference,
+        thumbSize: "i",
+      }),
+      {
+        dcId: LatestMessage[0].media.photo.dcId,
+        fileSize: 19423,
+      }
+    );
+    fs.writeFileSync("a.png", buffer);
+    await client.sendFile("anifabproject", {
+      file: "a.png",
+      caption: LatestMessage[0].message,
+    });
+    fs.writeFileSync("lastid.txt", LatestMessage[0].id.toString());
+    await client.disconnect();
+  } else {
+    await client.disconnect();
+  }
+}
+setInterval(async () => {
+  await TelegramNotify();
+}, 600000);
 
 apps.get("/calendario", async function (req, res) {
   var resp = await fetch("https://www.animeworld.tv/schedule", opts);

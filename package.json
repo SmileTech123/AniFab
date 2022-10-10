@@ -10,6 +10,7 @@
     "base64-arraybuffer": "^1.0.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "input": "^1.0.1",
     "jade": "~1.11.0",
     "jquery": "^3.6.0",
     "js-cookie": "^3.0.1",
@@ -17,6 +18,7 @@
     "node-google-drive": "^1.1.2",
     "set-interval-async": "^2.0.3",
     "socket.io": "^4.2.0",
-    "sqlite3": "^5.0.10"
+    "sqlite3": "^5.0.10",
+    "telegram": "^2.12.8"
   }
 }
