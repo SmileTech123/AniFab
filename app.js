@@ -286,7 +286,7 @@ async function TelegramNotify() {
       "&img=https://img.animeworld.tv/locandine/" +
       img +
       "&rangeid=0";
-    await client.sendFile("me", {
+    await client.sendFile("anifabproject", {
       file: "a.png",
       caption:
         LatestMessage[0].message +
