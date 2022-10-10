@@ -2,14 +2,18 @@ $(document).ready(() => {
   const params = new URLSearchParams(window.location.search);
   var newuser = params.get("newuser");
   var disconn = params.get("disconn");
+  var redirect = params.get("redirect");
+  var episode = params.get("episode");
+  var titolo = params.get("titolo");
+  var img = params.get("img");
+  var rangeid = params.get("rangeid");
   var user = undefined;
 
-  $('#pass').keyup(function(e){
-    if(e.keyCode == 13)
-    {
-      $("#logbtn").click()
+  $("#pass").keyup(function (e) {
+    if (e.keyCode == 13) {
+      $("#logbtn").click();
     }
-});
+  });
 
   if (newuser != null) {
     $("#logbtn").text("Registrati");
@@ -26,7 +30,21 @@ $(document).ready(() => {
     user = Cookies.get("user");
   }
   if (user != undefined) {
-    location.href = "/anime.html";
+    var link =
+      redirect +
+      "&episode=" +
+      episode +
+      "&titolo=" +
+      titolo +
+      "&img=" +
+      img +
+      "&rangeid=" +
+      rangeid;
+    if (redirect != null) {
+      location.href = link;
+    } else {
+      location.href = "/anime.html";
+    }
   }
 
   $("#vispass").click(() => {

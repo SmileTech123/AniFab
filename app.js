@@ -269,9 +269,31 @@ async function TelegramNotify() {
       }
     );
     fs.writeFileSync("a.png", buffer);
-    await client.sendFile("anifabproject", {
+    var episode = LatestMessage[0].message.split("Ep")[1].split("-")[0].trim();
+    var titolo = LatestMessage[0].message.split("[")[1].split("]")[0];
+    titolo = titolo.replace(/\s/g, "%20");
+    var img =
+      LatestMessage[0].replyMarkup.rows[0].buttons[1].url
+        .split(".")[3]
+        .replace("/", "") + ".jpg";
+    var redirect =
+      "guarda.html?link=/play" +
+      LatestMessage[0].replyMarkup.rows[0].buttons[1].url.split("/play")[1] +
+      "&episode=" +
+      episode +
+      "&titolo=" +
+      titolo +
+      "&img=https://img.animeworld.tv/locandine/" +
+      img +
+      "&rangeid=0";
+    await client.sendFile("me", {
       file: "a.png",
-      caption: LatestMessage[0].message,
+      caption:
+        LatestMessage[0].message +
+        "\n" +
+        "Guarda ora: " +
+        "https://anifab.duckdns.org:3000/login.html?redirect=" +
+        redirect,
     });
     fs.writeFileSync("lastid.txt", LatestMessage[0].id.toString());
     await client.disconnect();
@@ -281,7 +303,7 @@ async function TelegramNotify() {
 }
 setInterval(async () => {
   await TelegramNotify();
-}, 600000);
+}, 10000);
 
 apps.get("/calendario", async function (req, res) {
   var resp = await fetch("https://www.animeworld.tv/schedule", opts);
