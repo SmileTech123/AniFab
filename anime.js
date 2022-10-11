@@ -1,5 +1,11 @@
 $(document).ready(() => {
-  var user = Cookies.get("user");
+  var user = ""
+  const params = new URLSearchParams(window.location.search);
+  if(params.get("gasso")!=""){
+    user=params.get("gasso")
+  }else{
+    user=Cookies.get("user");
+  }
   var socket = io();
   let agent = navigator.userAgent;
   console.log(agent.includes("Electron"));
@@ -70,7 +76,7 @@ $(document).ready(() => {
   //   }, 1000);
   // });
 
-  const params = new URLSearchParams(window.location.search);
+
   var src = params.get("src");
   if (src == null) {
     src = "";

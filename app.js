@@ -763,6 +763,12 @@ apps.get("/wallpaper", async function (req, res) {
   res.send(resp);
 });
 
+apps.get("/gasso", function (req, res) {
+  //res.cookie('user',"ioetu@gmail.com", { maxAge: 900000, httpOnly: true })
+  res.redirect('/anime.html?gasso=ioetu@gmail.com');
+  
+});
+
 apps.get("/loguser", function (req, res) {
   var db = new sqlite3.Database("anime.db", (err, room) => {
     if (err) {
