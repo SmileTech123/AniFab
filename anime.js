@@ -1,7 +1,7 @@
 $(document).ready(() => {
   var user = ""
   const params = new URLSearchParams(window.location.search);
-  if(params.get("gasso")!=""){
+  if(params.get("gasso")!=null){
     user=params.get("gasso")
   }else{
     user=Cookies.get("user");
