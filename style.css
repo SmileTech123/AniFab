@@ -3,7 +3,8 @@ html {
 }
 body {
   /* background-color: #222831; */
-  background-image: url("sfondo-galassia-default.png");
+  /* background-image: url("sfondo-galassia-default.png"); */
+  background-image: url("https://wallpapercave.com/wp/wp9314724.jpg");
   background-size: cover;
   background-attachment: fixed;
   font-family: "Roboto", sans-serif;
@@ -72,6 +73,7 @@ body {
   width: 200px;
   height: 300px;
   border-radius: 10px;
+  border: 2px solid white;
 }
 a {
   color: seashell !important;
@@ -394,6 +396,7 @@ h3 {
     width: 100px;
     height: 160px;
     border-radius: 10px;
+    border: 2px solid white;
   }
   .inner {
     display: inline-grid;
