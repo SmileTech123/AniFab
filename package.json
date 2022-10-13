@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "base64-arraybuffer": "^1.0.1",
+    "cors": "^2.8.5",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "input": "^1.0.1",
