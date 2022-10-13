@@ -6,6 +6,7 @@ var http = require("http");
 var https = require("https");
 var sqlite3 = require("sqlite3");
 var fs = require("fs");
+const cors = require("cors");
 var conv = require("base64-arraybuffer");
 var NodeGoogleDrive = require("node-google-drive");
 var userRoom = [];
@@ -35,6 +36,11 @@ const opts = {
 //       "sessionId=s:9ujLxafw6hbzd8rPbiyxxZRlc6UGaKoe.qk9vu/o3mDoVhP2Wy1fPBvWX3l0Rl5DKXD2S1L2aGGI; AWCookieVerify=6f0747e37686db5f451f4dca362bc77d",
 //   },
 // };
+apps.use(
+  cors({
+    origin: "*",
+  })
+);
 const options = {
   key: fs.readFileSync("key.pem"),
   cert: fs.readFileSync("cert.pem"),
@@ -765,8 +771,7 @@ apps.get("/wallpaper", async function (req, res) {
 
 apps.get("/gasso", function (req, res) {
   //res.cookie('user',"ioetu@gmail.com", { maxAge: 900000, httpOnly: true })
-  res.redirect('/anime.html?gasso=ioetu@gmail.com');
-  
+  res.redirect("/anime.html?gasso=ioetu@gmail.com");
 });
 
 apps.get("/loguser", function (req, res) {
