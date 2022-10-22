@@ -307,9 +307,9 @@ async function TelegramNotify() {
     await client.disconnect();
   }
 }
-setInterval(async () => {
-  await TelegramNotify();
-}, 300000);
+//setInterval(async () => {
+//  await TelegramNotify();
+//}, 300000);
 
 apps.get("/calendario", async function (req, res) {
   var resp = await fetch("https://www.animeworld.tv/schedule", opts);
