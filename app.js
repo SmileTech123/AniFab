@@ -734,6 +734,11 @@ apps.get("/reguser", function (req, res) {
   db.close();
 });
 
+21
+
+
+
+
 apps.post("/wallpaperLink", async function (req, res) {
   var obj = Object.keys(req.body)[0];
   const settings = {
@@ -748,7 +753,11 @@ apps.post("/wallpaperLink", async function (req, res) {
   var resp = await fetch(
     "https://api.alphacoders.com/content/get-download-link",
     settings
-  );
+  ).catch(function (err) {
+    console.warn(err);
+    res.json({link:"https://wallpapercave.com/wp/wp9314724.jpg"});
+    return
+});
   resp = await resp.json();
   res.json(resp);
 });
@@ -764,7 +773,11 @@ apps.get("/wallpaper", async function (req, res) {
 
   var resp = await fetch(
     "https://wall.alphacoders.com/search.php?search=" + src + "&lang=Italian"
-  );
+  ).catch(function (err) {
+    console.warn(err);
+    res.send("error");
+    return
+});
   resp = await resp.text();
   res.send(resp);
 });

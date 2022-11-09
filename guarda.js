@@ -100,6 +100,9 @@ $(document).ready(() => {
     );
   }
   $.get("/wallpaper?src=" + titolo.split("(")[0].trim(), function (dati) {
+    if(dati=="error"){
+      return
+    }
     //alert("ciao");
     console.log(titolo);
     var imgLink = $(dati).find(".img-responsive")[0];
