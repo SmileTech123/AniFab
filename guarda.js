@@ -344,7 +344,7 @@ $(document).ready(() => {
               wid +
               '" controls><source src="' +
               video +
-              '" type="video/mp4"></video>'
+              '" type="video/mp4"></video><br><button class="btn btn-primary" onclick="$(`video`).width($(`video`).width()-50)" style="margin-right:10px"><i class="fas fa-search-minus"></i></button><button class="btn btn-primary" onclick="$(`video`).width($(`video`).width()+50)"><i class="fa fa-search-plus"></i></button>'
           );
         }
 
