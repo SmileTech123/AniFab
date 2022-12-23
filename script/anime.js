@@ -22,7 +22,7 @@ $(document).ready(() => {
       user2 = user;
     }
     $("#dropdownMenuButton1").append(
-      "<img class='profilebar' src='public/images/Defaultuser.png'><span>" +
+      "<img class='profilebar' src='../public/images/Defaultuser.png'><span>" +
         user2.split("@")[0] +
         "</span>"
     );
@@ -92,7 +92,7 @@ $(document).ready(() => {
           $(".owl-carousel2").append(
             "<div class='item'>" +
               "<div class='inner'>" +
-              '<a href="/guarda.html?link=' +
+              '<a href="/pages/guarda.html?link=' +
               itm.animelink +
               "&episode=" +
               itm.episodio +
@@ -228,7 +228,7 @@ $(document).ready(() => {
         $(".owl-carousel").append(
           "<div class='item'>" +
             "<div class='inner'>" +
-            '<a href="/guarda.html?link=' +
+            '<a href="/pages/guarda.html?link=' +
             href +
             "&episode=1&titolo=" +
             fulltitle +
@@ -295,7 +295,7 @@ $(document).ready(() => {
     if (key == 13) {
       var search = $("#searchbar").val();
       if (search != "") {
-        location.href = "/anime.html?src=" + search;
+        location.href = "/pages/anime.html?src=" + search;
       } else {
         alert("Parole mancanti");
       }
@@ -305,7 +305,7 @@ $(document).ready(() => {
   $("#search").click(() => {
     var search = $("#searchbar").val();
     if (search != "") {
-      location.href = "/anime.html?src=" + search;
+      location.href = "/pages/anime.html?src=" + search;
     } else {
       alert("Parole mancanti");
     }
@@ -319,7 +319,7 @@ $(document).ready(() => {
         for (let i = 0; i < dati.results.length; i++) {
           const itm = dati.results[i];
           $(".sugg").append(
-            '<a style="color:black!important" href="/anime.html?src=' +
+            '<a style="color:black!important" href="/pages/anime.html?src=' +
               itm.title +
               '"><div class="itmsugg"><img style="height:70px" src="' +
               itm.image_url +

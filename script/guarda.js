@@ -94,7 +94,7 @@ $(document).ready(() => {
       user2 = user;
     }
     $("#dropdownMenuButton1").append(
-      "<img class='profilebar' src='public/images/Defaultuser.png'><span>" +
+      "<img class='profilebar' src='../public/images/Defaultuser.png'><span>" +
         user2.split("@")[0] +
         "</span>"
     );
@@ -195,7 +195,7 @@ $(document).ready(() => {
     if (key == 13) {
       var search = $("#searchbar").val();
       if (search != "") {
-        location.href = "/anime.html?src=" + search;
+        location.href = "/pages/anime.html?src=" + search;
       } else {
         alert("Parole mancanti");
       }
@@ -205,7 +205,7 @@ $(document).ready(() => {
   $("#search").click(() => {
     var search = $("#searchbar").val();
     if (search != "") {
-      location.href = "/anime.html?src=" + search;
+      location.href = "/pages/anime.html?src=" + search;
     } else {
       alert("Parole mancanti");
     }

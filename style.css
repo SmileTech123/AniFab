@@ -18,7 +18,7 @@ body {
 
 
 .img-right {
-  background: url("AnyaChanDefault.png");
+  background: url("/public/assets/AnyaChanDefault.png");
   height: 750px;
   width: 300px;
   position: fixed;
@@ -316,7 +316,7 @@ h3 {
    }
 
   .img-right {
-    background: url("AnyaChanDefault.png");
+    background: url("public/assets/AnyaChanDefault.png");
     height: 750px;
     width: 350px;
     position: fixed;

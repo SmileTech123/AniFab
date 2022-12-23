@@ -3,7 +3,7 @@ $(document).ready(()=>{
     $.get("/setting?user="+user,function(dati){
         dati=JSON.parse(dati)
         if(dati.intro!="S"){
-         location.href="login.html"
+         location.href="/pages/login.html"
         }
     })
 })
@@ -51,7 +51,7 @@ TxtType.prototype.tick = function() {
             that.tick();
         }else{
             sleep(1500)
-            location.href="login.html"
+            location.href="/pages/login.html"
         }
 
     }, delta);

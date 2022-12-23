@@ -42,8 +42,8 @@ apps.use(
   })
 );
 const options = {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem"),
+  key: fs.readFileSync("public/assets/key.pem"),
+  cert: fs.readFileSync("public/assets/cert.pem"),
 };
 
 var db2 = new sqlite3.Database("anime.db", (err, room) => {
@@ -96,7 +96,7 @@ function createWindow() {
     width: 1280,
     height: 720,
     autoHideMenuBar: true,
-    icon: __dirname + "/anifablogo.png",
+    icon: __dirname + "/../public/assets/anifablogo.png",
   });
   globalShortcut.register("f5", function () {
     win.reload();
@@ -445,9 +445,10 @@ apps.get("/getimage", function (req, res) {
   var user = req.query.user;
 
   if (fs.existsSync("public/images/" + user + ".png")) {
-    res.json({ src: "public/images/" + user + ".png" });
+    console.log("A")
+    res.json({ src: "../public/images/" + user + ".png" });
   } else {
-    res.json({ src: "public/images/Defaultuser.png" });
+    res.json({ src: "../public/images/Defaultuser.png" });
   }
 });
 
@@ -458,7 +459,7 @@ apps.post("/writeimage", function (req, res) {
 
   var data = bs64.replace(/^data:image\/\w+;base64,/, "");
   fs.writeFile(
-    "public/images/" + filename + ".png",
+    "../public/images/" + filename + ".png",
     data,
     { encoding: "base64" },
     function (err) {}
@@ -472,7 +473,7 @@ apps.post("/writeimage", function (req, res) {
 
   db.run(
     "update users set icon='" +
-      "public/images/" +
+      "../public/images/" +
       filename +
       ".png" +
       "' where user='" +
@@ -724,7 +725,7 @@ apps.get("/reguser", function (req, res) {
     var settdefault = '{"intro":"S"}';
     var qry = db.prepare("insert into users values(?,?,?,?)");
     if (row == undefined) {
-      qry.run(user, pass, settdefault, "public/images/Defaultuser.png");
+      qry.run(user, pass, settdefault, "../public/images/Defaultuser.png");
       qry.finalize();
       res.json({ reg: true });
     } else {
@@ -784,7 +785,7 @@ apps.get("/wallpaper", async function (req, res) {
 
 apps.get("/gasso", function (req, res) {
   //res.cookie('user',"ioetu@gmail.com", { maxAge: 900000, httpOnly: true })
-  res.redirect("/anime.html?gasso=ioetu@gmail.com");
+  res.redirect("/pages/anime.html?gasso=ioetu@gmail.com");
 });
 
 apps.get("/loguser", function (req, res) {

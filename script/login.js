@@ -43,7 +43,7 @@ $(document).ready(() => {
     if (redirect != null) {
       location.href = link;
     } else {
-      location.href = "/anime.html";
+      location.href = "/pages/anime.html";
     }
   }
 
@@ -90,7 +90,7 @@ $(document).ready(() => {
           }
           //
 
-          location.href = "/anime.html";
+          location.href = "/pages/anime.html";
         } else {
           $("#al").addClass("alert-danger");
           $("#al").css("display", "block");

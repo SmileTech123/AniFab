@@ -11,7 +11,7 @@ $(document).ready(() => {
       user2 = user;
     }
     $("#dropdownMenuButton1").append(
-      "<img class='profilebar' src='public/images/Defaultuser.png'><span>" +
+      "<img class='profilebar' src='../public/images/Defaultuser.png'><span>" +
         user2.split("@")[0] +
         "</span>"
     );
