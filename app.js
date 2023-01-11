@@ -445,7 +445,7 @@ apps.get("/getimage", function (req, res) {
   var user = req.query.user;
 
   if (fs.existsSync("public/images/" + user + ".png")) {
-    console.log("A")
+    console.log("A");
     res.json({ src: "../public/images/" + user + ".png" });
   } else {
     res.json({ src: "../public/images/Defaultuser.png" });
@@ -735,10 +735,7 @@ apps.get("/reguser", function (req, res) {
   db.close();
 });
 
-21
-
-
-
+21;
 
 apps.post("/wallpaperLink", async function (req, res) {
   var obj = Object.keys(req.body)[0];
@@ -756,9 +753,9 @@ apps.post("/wallpaperLink", async function (req, res) {
     settings
   ).catch(function (err) {
     console.warn(err);
-    res.json({link:"https://wallpapercave.com/wp/wp9314724.jpg"});
-    return
-});
+    res.json({ link: "https://wallpapercave.com/wp/wp9314724.jpg" });
+    return;
+  });
   resp = await resp.json();
   res.json(resp);
 });
@@ -777,8 +774,8 @@ apps.get("/wallpaper", async function (req, res) {
   ).catch(function (err) {
     console.warn(err);
     res.send("error");
-    return
-});
+    return;
+  });
   resp = await resp.text();
   res.send(resp);
 });
@@ -932,7 +929,7 @@ apps.get("/getlinksAlternative", async function (req, res) {
 });
 apps.get("/versione", function (req, res) {
   var json = {};
-  json.versione = "1.0.5";
+  json.versione = "1.0.6";
   //console.log("ciao", json);
   res.json(json);
 });
