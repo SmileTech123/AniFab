@@ -77,7 +77,7 @@ db2.run(
   }
 );
 db2.close();
-var port = normalizePort(process.env.PORT || "443");
+var port = normalizePort(process.env.PORT || "3000");
 apps.set("port", port);
 
 // apps.set("key", fs.readFileSync("key.pem"));
