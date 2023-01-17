@@ -18,6 +18,7 @@ $(document).ready(() => {
     $("#downloadPhrase").html(
       "<h4>Benvenuta su Anifab Megagnocca, Ti amo tanto 🧡</h4>"
     );
+    $("#downloadPhrase").attr("href", "../public/images/amo.png");
     $("#downloadAnifab").removeClass("alert-primary");
     $("#downloadAnifab").addClass("alert-danger");
     $("#downloadAnifab").css("display", "block");
