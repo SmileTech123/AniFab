@@ -30,7 +30,7 @@ $(document).ready(() => {
           case "P":
             $("#qua").append(
               '<div class="friend">' +
-                '<img class="friendimg" src="' +
+                '<img class="friendimg" src="../' +
                 itm.icon +
                 '">' +
                 "<h5>" +
@@ -47,7 +47,7 @@ $(document).ready(() => {
           case "A":
             $("#qua").append(
               '<div class="friend">' +
-                '<img class="friendimg" src="' +
+                '<img class="friendimg" src="../' +
                 itm.icon +
                 '">' +
                 "<h5>" +
@@ -64,7 +64,7 @@ $(document).ready(() => {
           case "R":
             $("#qua").append(
               '<div class="friend">' +
-                '<img class="friendimg" src="' +
+                '<img class="friendimg" src="../' +
                 itm.icon +
                 '">' +
                 "<h5>" +

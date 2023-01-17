@@ -90,6 +90,11 @@ $(document).ready(() => {
           "<br>"
       );
     }
+    if (user == "chiaracorrente19@gmail.com") {
+      $(".sett").append(
+        '<div class="itemsett">' + "<h4>Ti amo 🧡</h4>" + "</div>" + "<br>"
+      );
+    }
   });
 
   $.get("/animelook?user=" + user, function (dati) {

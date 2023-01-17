@@ -22,7 +22,7 @@ $(document).ready(() => {
     dati.forEach((itm) => {
       $("#reqlist").append(
         '<div class="friend">' +
-          '<img class="friendimg" src="' +
+          '<img class="friendimg" src="../' +
           itm.icon +
           '">' +
           "<h5>" +
@@ -49,7 +49,7 @@ $(document).ready(() => {
       if (itm.type == "accepted") {
         $("#friendlst").append(
           '<div class="friend">' +
-            '<img class="friendimg" src="' +
+            '<img class="friendimg" src="../' +
             itm.icon +
             '">' +
             "<h5>" +
@@ -60,7 +60,7 @@ $(document).ready(() => {
       } else {
         $("#friendlst").append(
           '<div class="friend">' +
-            '<img class="friendimg" src="' +
+            '<img class="friendimg" src="../' +
             itm.icon +
             '">' +
             "<h5>" +

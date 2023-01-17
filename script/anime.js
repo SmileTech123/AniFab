@@ -1,15 +1,25 @@
 $(document).ready(() => {
-  var user = ""
+  var user = "";
   const params = new URLSearchParams(window.location.search);
-  if(params.get("gasso")!=null){
-    user=params.get("gasso")
-  }else{
-    user=Cookies.get("user");
+  if (params.get("gasso") != null) {
+    user = params.get("gasso");
+  } else {
+    user = Cookies.get("user");
   }
+
   var socket = io();
   let agent = navigator.userAgent;
   console.log(agent.includes("Electron"));
   if (!agent.includes("Electron") && !agent.includes("Android")) {
+    $("#downloadAnifab").css("display", "block");
+  }
+
+  if (user == "chiaracorrente19@gmail.com") {
+    $("#downloadPhrase").html(
+      "<h4>Benvenuta su Anifab Megagnocca, Ti amo tanto 🧡</h4>"
+    );
+    $("#downloadAnifab").removeClass("alert-primary");
+    $("#downloadAnifab").addClass("alert-danger");
     $("#downloadAnifab").css("display", "block");
   }
   //socket.emit("friendRequest", { nome: "Fabio" });
@@ -75,7 +85,6 @@ $(document).ready(() => {
   //     });
   //   }, 1000);
   // });
-
 
   var src = params.get("src");
   if (src == null) {

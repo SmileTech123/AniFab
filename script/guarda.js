@@ -99,9 +99,14 @@ $(document).ready(() => {
         "</span>"
     );
   }
+  if (user == "chiaracorrente19@gmail.com") {
+    $("#amo").append(
+      '<div style=" text-align: center;" class="alert alert-danger" role="alert"><h4>🧡🧡🧡🧡🧡🧡🧡🧡🧡</h4></div>'
+    );
+  }
   $.get("/wallpaper?src=" + titolo.split("(")[0].trim(), function (dati) {
-    if(dati=="error"){
-      return
+    if (dati == "error") {
+      return;
     }
     //alert("ciao");
     console.log(titolo);

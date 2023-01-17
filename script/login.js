@@ -20,7 +20,7 @@ $(document).ready(() => {
     $("#logbtn").attr("tipo", "registrazione");
     $("#remember").remove();
     $("#labelreg").html(
-      'Hai un account? <a href="/login.html" class="ml-2">Accedi</a>'
+      'Hai un account? <a href="pages/login.html" class="ml-2">Accedi</a>'
     );
   }
   if (disconn != null) {
@@ -106,7 +106,7 @@ $(document).ready(() => {
           $("#al").text("Registrazione avvenuta con successo!");
           //alert("Registrazione avvenuta con successo")
           setTimeout(function () {
-            location.href = "/login.html";
+            location.href = "pages/login.html";
           }, 1500);
         } else {
           $("#al").addClass("alert-danger");
