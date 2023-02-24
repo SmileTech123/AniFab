@@ -122,7 +122,7 @@ $(document).ready(() => {
               "</div>" +
               "</a>" +
               "</a>" +
-              "<a style='display: block;'>" +
+              "<a class='badge bg-primary titleAnime' >" +
               titolofull +
               "</a></div></div>"
           );
@@ -253,7 +253,7 @@ $(document).ready(() => {
             '">' +
             "</div>" +
             "</a>" +
-            "<a style='display: block;'>" +
+            "<a class='badge bg-primary titleAnime'>" +
             title +
             "</a></div></div>"
         );
