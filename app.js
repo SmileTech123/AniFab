@@ -27,7 +27,7 @@ const opts = {
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36 OPR/88.0.4412.75",
     cookie:
-      "sessionId=s:MHzoNvM-sZAAOAd5J5LT-Dq67rrc3LUq.HS+tCYBRzoQw4/gyzArLtQDZ3DKe2LcOoRcrgu8rQsQ; _ga=GA1.2.2008030346.1655840274; SecurityAW=78fd9cdb886f0fd1cae27270e44f6c4f",
+      "sessionId=s%3AjjtCtjpAEtl8cSlv-tGucy2ZKJfBSl3-.XRhBju0%2FU9tX9AwrrMT84LrNG4IWPSlCf7Xu5pDbqfw; SecurityAW=e2e1fd615535fbd28f09432f90b8a735",
   },
 };
 // const opts = {
@@ -499,12 +499,14 @@ apps.get("/homepage", async function (req, res) {
   var resp = "";
   if (src != "") {
     resp = await fetch("https://www.animeworld.tv/search?keyword=" + src, opts);
+    console.log(resp)
   } else {
     resp = await fetch("https://www.animeworld.tv/ongoing?d=2", opts);
+
   }
 
   resp = await resp.text();
-
+  console.log(resp)
   res.send(resp);
 });
 
