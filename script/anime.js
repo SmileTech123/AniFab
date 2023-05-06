@@ -307,7 +307,7 @@ $(document).ready(() => {
       if (search != "") {
         location.href = "/pages/anime.html?src=" + search;
       } else {
-        alert("Parole mancanti");
+        //alert("Parole mancanti");
       }
     }
   });

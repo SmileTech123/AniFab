@@ -196,13 +196,18 @@ $(document).ready(() => {
 
   $("body").keypress(function (e) {
     var key = e.which;
-
+    console.log($("video"))
+    if (document.activeElement.tagName=="VIDEO") {
+      var videoplya = $("video")[0];
+      console.log(videoplya)
+      videoplya.requestFullscreen() 
+    }
     if (key == 13) {
       var search = $("#searchbar").val();
       if (search != "") {
         location.href = "/pages/anime.html?src=" + search;
       } else {
-        alert("Parole mancanti");
+        //alert("Parole mancanti");
       }
     }
   });
