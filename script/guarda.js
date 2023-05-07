@@ -368,7 +368,7 @@ $(document).ready(() => {
                 wid +
                 '" controls><source src="' +
                 video +
-                '" type="video/mp4"></video><br><button class="btn btn-primary" onclick="$(`video`)[0].requestFullscreen();$(`video`)[0].play()" style="margin-right:10px"><i class="fas fa-play"></i> PLAY</button><button class="btn btn-primary" onclick="$(`video`)[0].pause()"><i class="fa fa-pause"></i> PAUSA</button>'
+                '" type="video/mp4"></video><br><button class="btn btn-primary" onclick="$(`video`)[0].currentTime = $(`video`)[0].currentTime - 10;" style="margin-right:10px"><i class="fas fa-backward"></i></button><button class="btn btn-primary" onclick="$(`video`)[0].requestFullscreen();$(`video`)[0].play()" style="margin-right:10px"><i class="fas fa-play"></i> PLAY</button><button style="margin-right:10px" class="btn btn-primary" onclick="$(`video`)[0].pause()"><i class="fa fa-pause"></i> PAUSA</button><button class="btn btn-primary" onclick="$(`video`)[0].currentTime = $(`video`)[0].currentTime + 10;" style="margin-right:10px"><i class="fas fa-forward"></i></button>'
             );
           }
       
