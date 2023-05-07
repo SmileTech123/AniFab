@@ -51,7 +51,13 @@ TxtType.prototype.tick = function() {
             that.tick();
         }else{
             sleep(1500)
-            location.href="/pages/login.html"
+            console.log(navigator.userAgent)
+            if(navigator.userAgent.includes("gonative")){
+                location.href = "/pages/activate.html";
+              }else{
+                location.href="/pages/login.html"
+              }
+           
         }
 
     }, delta);

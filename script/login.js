@@ -40,9 +40,11 @@ $(document).ready(() => {
       img +
       "&rangeid=" +
       rangeid;
+
     if (redirect != null) {
       location.href = link;
     } else {
+
       location.href = "/pages/anime.html";
     }
   }
@@ -89,8 +91,12 @@ $(document).ready(() => {
             Cookies.set("user", user);
           }
           //
-
-          location.href = "/pages/anime.html";
+          if(params.get("tvcode")=="si"){
+            location.href = "/pages/setting.html?tvcode=si";
+          }else{
+            location.href = "/pages/anime.html";
+          }
+      
         } else {
           $("#al").addClass("alert-danger");
           $("#al").css("display", "block");

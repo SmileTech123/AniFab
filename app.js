@@ -782,6 +782,32 @@ apps.get("/wallpaper", async function (req, res) {
   res.send(resp);
 });
 
+
+apps.get("/usertv",function(req,res){
+  var db = new sqlite3.Database("anime.db", (err, room) => {
+    if (err) {
+      console.log("errore");
+      return;
+    }
+  });
+  var tvcode= req.query.code;
+
+
+  var sql =
+    "select user,setting from users where setting like '%"+tvcode+"%'";
+  console.log(sql)
+  db.all(sql, (err, rows) => {
+    console.log(rows.length)
+    if (rows.length > 1 || rows.length==0) {
+      res.json({auth:"false"});
+    } else {
+      res.json({auth:"true",user:rows[0].user});
+    }
+  });
+  db.close();
+  
+})
+
 apps.get("/gasso", function (req, res) {
   //res.cookie('user',"ioetu@gmail.com", { maxAge: 900000, httpOnly: true })
   res.redirect("/pages/anime.html?gasso=ioetu@gmail.com");

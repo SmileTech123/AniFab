@@ -1,3 +1,5 @@
+
+
 function readURL(input, user, fulluser) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
@@ -23,8 +25,8 @@ $(document).ready(() => {
   if (page == null) {
     page = 1;
   }
-
-  if (user != "") {
+  console.log(user)
+  if (user != "" && user != undefined) {
     var wid = $(document).width();
     var user2 = "";
     if (wid < 500) {
@@ -37,6 +39,8 @@ $(document).ready(() => {
         user2.split("@")[0] +
         "</span>"
     );
+  }else{
+    location.href ="/pages/login.html?tvcode=si"
   }
 
   $("#image").change(function () {
@@ -49,52 +53,78 @@ $(document).ready(() => {
 
   $.get("/setting?user=" + user, function (dati) {
     dati = JSON.parse(dati);
-    if (dati.intro == "S") {
+    console.log(dati.tvcode)
+
+    console.log(params)
+    if(params.get("tvcode")=="si"){
+      var codetv=""
+      if(dati.tvcode==undefined){
+        var code=Math.floor(100000 + Math.random() * 900000)
+        var sett = { intro: dati.intro,tvcode:code };
+        sett = JSON.stringify(sett);
+        $.get("/writesetting?user=" + user + "&sett=" + sett, function (dati) {});
+       codetv=code
+      }else{
+        codetv=dati.tvcode
+      }
+      $(".itemsett").css("display","none")
+      $(".footer").css("display","none")
       $(".sett").append(
         '<div class="itemsett">' +
-          "<label>Visualizza Intro iniziale</label>" +
-          "<br>" +
-          '<div class="form-check">' +
-          '<input value="S" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>' +
-          '<label class="form-check-label" for="flexRadioDefault1">' +
-          "Si" +
-          "</label>" +
-          "</div>" +
-          '<div class="form-check">' +
-          '<input value="N" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" >' +
-          '<label class="form-check-label" for="flexRadioDefault2">' +
-          "No" +
-          "</label>" +
-          "</div>" +
-          "</div>" +
-          "<br>"
-      );
-    } else {
-      $(".sett").append(
-        '<div class="itemsett">' +
-          "<label>Visualizza Intro iniziale</label>" +
-          "<br>" +
-          '<div class="form-check">' +
-          '<input value="S" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" >' +
-          '<label class="form-check-label" for="flexRadioDefault1">' +
-          "Si" +
-          "</label>" +
-          "</div>" +
-          '<div class="form-check">' +
-          '<input value="N" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>' +
-          '<label class="form-check-label" for="flexRadioDefault2">' +
-          "No" +
-          "</label>" +
-          "</div>" +
-          "</div>" +
-          "<br>"
-      );
+        "<label>Codice TV</label>" +
+        "<div><h2><b>"+codetv+"</b></h2></div>" +
+        '</div>'
+      )
+      
+    }else{
+      if (dati.intro == "S") {
+        $(".sett").append(
+          '<div class="itemsett">' +
+            "<label>Visualizza Intro iniziale</label>" +
+            "<br>" +
+            '<div class="form-check">' +
+            '<input value="S" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked>' +
+            '<label class="form-check-label" for="flexRadioDefault1">' +
+            "Si" +
+            "</label>" +
+            "</div>" +
+            '<div class="form-check">' +
+            '<input value="N" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" >' +
+            '<label class="form-check-label" for="flexRadioDefault2">' +
+            "No" +
+            "</label>" +
+            "</div>" +
+            "</div>" +
+            "<br>"
+        );
+      } else {
+        $(".sett").append(
+          '<div class="itemsett">' +
+            "<label>Visualizza Intro iniziale</label>" +
+            "<br>" +
+            '<div class="form-check">' +
+            '<input value="S" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" >' +
+            '<label class="form-check-label" for="flexRadioDefault1">' +
+            "Si" +
+            "</label>" +
+            "</div>" +
+            '<div class="form-check">' +
+            '<input value="N" class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>' +
+            '<label class="form-check-label" for="flexRadioDefault2">' +
+            "No" +
+            "</label>" +
+            "</div>" +
+            "</div>" +
+            "<br>"
+        );
+      }
+      if (user == "chiaracorrente19@gmail.com") {
+        $(".sett").append(
+          '<div class="itemsett">' + "<h4>Ti amo 🧡</h4>" + "</div>" + "<br>"
+        );
+      }
     }
-    if (user == "chiaracorrente19@gmail.com") {
-      $(".sett").append(
-        '<div class="itemsett">' + "<h4>Ti amo 🧡</h4>" + "</div>" + "<br>"
-      );
-    }
+
   });
 
   $.get("/animelook?user=" + user, function (dati) {
@@ -160,7 +190,7 @@ $(document).ready(() => {
 
   $("#salva").click(() => {
     var value = $("input[name=flexRadioDefault]:checked").val();
-
+    //var tvcode = $("#tvcode").val()
     var sett = { intro: value };
     sett = JSON.stringify(sett);
     $.get("/writesetting?user=" + user + "&sett=" + sett, function (dati) {});
