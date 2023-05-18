@@ -196,11 +196,11 @@ $(document).ready(() => {
 
   $("body").keypress(function (e) {
     var key = e.which;
-    console.log($("video"))
+    console.log($("video"));
     // if (document.activeElement.tagName=="VIDEO") {
     //   var videoplya = $("video")[0];
     //   console.log(videoplya)
-    //   //videoplya.requestFullscreen() 
+    //   //videoplya.requestFullscreen()
     // }
     if (key == 13) {
       var search = $("#searchbar").val();
@@ -344,34 +344,18 @@ $(document).ready(() => {
               '" type="video/mp4"></video>'
           );
         } else {
-          if(!navigator.userAgent.includes("gonative") || screen.width < screen.height ){
-            $(".center2").append(
-              "<div>" +
-                "<h4 style='margin-top:10px'>" +
-                titolo2 +
-                "</h4>" +
-                "<div><button onclick='shareLink()' class='btn btn-sm btn-primary'>Avvia condivisione</button><div>" +
-                '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
-                wid +
-                '" controls><source src="' +
-                video +
-                '" type="video/mp4"></video><br><button class="btn btn-primary" onclick="$(`video`).width($(`video`).width()-50)" style="margin-right:10px"><i class="fas fa-search-minus"></i></button><button class="btn btn-primary" onclick="$(`video`).width($(`video`).width()+50)"><i class="fa fa-search-plus"></i></button>'
-            );
-          }else{
-            $(".center2").append(
-              "<div>" +
-                "<h4 style='margin-top:10px'>" +
-                titolo2 +
-                "</h4>" +
-                "<div><button onclick='shareLink()' class='btn btn-sm btn-primary'>Avvia condivisione</button><div>" +
-                '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
-                wid +
-                '" controls><source src="' +
-                video +
-                '" type="video/mp4"></video><br><button class="btn btn-primary" onclick="$(`video`)[0].currentTime = $(`video`)[0].currentTime - 10;" style="margin-right:10px"><i class="fas fa-backward"></i></button><button class="btn btn-primary" onclick="$(`video`)[0].requestFullscreen();$(`video`)[0].play()" style="margin-right:10px"><i class="fas fa-play"></i> PLAY</button><button style="margin-right:10px" class="btn btn-primary" onclick="$(`video`)[0].pause()"><i class="fa fa-pause"></i> PAUSA</button><button class="btn btn-primary" onclick="$(`video`)[0].currentTime = $(`video`)[0].currentTime + 10;" style="margin-right:10px"><i class="fas fa-forward"></i></button>'
-            );
-          }
-      
+          $(".center2").append(
+            "<div>" +
+              "<h4 style='margin-top:10px'>" +
+              titolo2 +
+              "</h4>" +
+              "<div><button onclick='shareLink()' class='btn btn-sm btn-primary'>Avvia condivisione</button><div>" +
+              '<video  style="margin-top:30px;border-radius:10px;border: 2px solid white;" width="' +
+              wid +
+              '" controls><source src="' +
+              video +
+              '" type="video/mp4"></video><br><button class="btn btn-primary" onclick="$(`video`).width($(`video`).width()-50)" style="margin-right:10px"><i class="fas fa-search-minus"></i></button><button class="btn btn-primary" onclick="$(`video`).width($(`video`).width()+50)"><i class="fa fa-search-plus"></i></button>'
+          );
         }
 
         if (rangeepisodilen > 0) {
