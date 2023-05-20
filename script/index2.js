@@ -57,8 +57,8 @@ TxtType.prototype.tick = function () {
         navigator.userAgent.includes("gonative") &&
         screen.height < screen.width
       ) {
-        //location.href = "/pages/activate.html";
-        location.href = "/pages/login.html";
+        location.href = "/pages/activate.html";
+        //location.href = "/pages/login.html";
       } else {
         location.href = "/pages/login.html";
       }
