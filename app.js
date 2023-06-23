@@ -26,7 +26,7 @@ const opts = {
   headers: {
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36 OPR/88.0.4412.75",
-    cookie:"sessionId=s%3AjjtCtjpAEtl8cSlv-tGucy2ZKJfBSl3-.XRhBju0%2FU9tX9AwrrMT84LrNG4IWPSlCf7Xu5pDbqfw;SecurityAW=74552aa32064e278074d255406ca2ffe;",
+    cookie:"sessionId=s%3AXUYdfDI_9Ov9CVKZvJmtvlISsMRgPN5y.FgUFx2xkGy5VzfHNUMbFskKfxCUkr9KV7lyPWI5JUuE;SecurityAW=ebe33e77cd5cbf0fe38a91aa79667931",
   },
 };
 // const opts = {
@@ -288,7 +288,7 @@ async function TelegramNotify() {
       episode +
       "&titolo=" +
       titolo +
-      "&img=https://img.animeworld.tv/locandine/" +
+      "&img=https://img.animeworld.so/locandine/" +
       img +
       "&rangeid=0";
     await client.sendFile("anifabproject", {
@@ -311,7 +311,7 @@ async function TelegramNotify() {
 //}, 300000);
 
 apps.get("/calendario", async function (req, res) {
-  var resp = await fetch("https://www.animeworld.tv/schedule", opts);
+  var resp = await fetch("https://www.animeworld.so/schedule", opts);
   resp = await resp.text();
   res.send(resp);
 });
@@ -486,7 +486,7 @@ apps.post("/writeimage", function (req, res) {
 });
 
 apps.get("/carosello", async function (req, res) {
-  var resp = await fetch("https://www.animeworld.tv", opts);
+  var resp = await fetch("https://www.animeworld.so", opts);
   resp = await resp.text();
 
   res.send(resp);
@@ -497,10 +497,10 @@ apps.get("/homepage", async function (req, res) {
 
   var resp = "";
   if (src != "") {
-    resp = await fetch("https://www.animeworld.tv/search?keyword=" + src, opts);
+    resp = await fetch("https://www.animeworld.so/search?keyword=" + src, opts);
     console.log(resp)
   } else {
-    resp = await fetch("https://www.animeworld.tv/ongoing?d=2", opts);
+    resp = await fetch("https://www.animeworld.so/ongoing?d=2", opts);
 
   }
 
@@ -918,7 +918,7 @@ apps.get("/getlink", async function (req, res) {
   if (link != null) {
     var id = link.split("/");
 
-    var resp = await fetch("https://www.animeworld.tv" + link, opts);
+    var resp = await fetch("https://www.animeworld.so" + link, opts);
     resp = await resp.text();
     res.send(resp);
   }
@@ -927,7 +927,7 @@ apps.get("/getlink", async function (req, res) {
 apps.get("/getvideolink", async function (req, res) {
   var id = req.query.id;
   var resp = await fetch(
-    "https://www.animeworld.tv/api/episode/info?id=" + id + "&alt=0",
+    "https://www.animeworld.so/api/episode/info?id=" + id + "&alt=0",
     opts
   );
   resp = await resp.json();
@@ -945,7 +945,7 @@ apps.get("/getlinksAlternative", async function (req, res) {
   };
   //console.log("ci sono" + episodeID+"-"+Token)
   var resp = await fetch(
-    "https://www.animeworld.tv/api/download/" + episodeID,
+    "https://www.animeworld.so/api/download/" + episodeID,
     option
   ).catch((e) => {
     console.log(e);
