@@ -17,6 +17,22 @@ body {
 }
 
 
+.custom-form-control{
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
 .img-right {
   background: url("/public/assets/AnyaChanDefault.png");
   height: 750px;
@@ -225,8 +241,8 @@ h3 {
 }
 
 .profilebar {
-  width: 35px;
-  height: 35px;
+  width: 50px;
+  height: 50px;
   border: 2px solid white;
   border-radius: 100px;
   margin-right: 10px;
@@ -395,8 +411,8 @@ h3 {
   }
 
   .profilebar {
-    width: 35px;
-    height: 35px;
+    width: 50px;
+    height: 50px;
     border: 2px solid white;
     border-radius: 100px;
     margin-right: 10px;

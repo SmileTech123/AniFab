@@ -27,11 +27,29 @@ $(document).ready(() => {
   if (user != "") {
     var wid = $(document).width();
     var user2 = "";
+    var srcStyle=""
     if (wid < 500) {
-      user2 = user.substring(0, 4) + "...";
+      $("#logobar").css("margin-left","calc(50% - 100px)")
+      srcStyle=
+          '        <button data-bs-toggle="modal" data-bs-target="#exampleModal" id="lunchmodal" class="btn btn-primary" type="button">\n' +
+          '        <i class="fa fa-search"></i>  \n' +
+          '        </button>'
+      user2 = user
     } else {
+      srcStyle='        <input\n' +
+          '                autocomplete="off"\n' +
+          '                class="custom-form-control"\n' +
+          '                type="search"\n' +
+          '                placeholder="Cerca"\n' +
+          '                aria-label="Search"\n' +
+          '                id="searchbar"\n' +
+          '        />\n' +
+          '        <button id="search" class="btn btn-primary" type="button">\n' +
+          '          Cerca\n' +
+          '        </button>'
       user2 = user;
     }
+    $("#srcWeb").append(srcStyle)
     $("#dropdownMenuButton1").append(
       "<img class='profilebar' src='../public/images/Defaultuser.png'><span>" +
         user2.split("@")[0] +

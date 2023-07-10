@@ -24,18 +24,58 @@
     <title>AniFab</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-sm navbar-dark ">
+  <nav class="navbar navbar-dark  fixed-top">
+    <div style="width: 90%">
+      <button style="margin-left: 10px;margin-right: 10px;background-color: #0d6efd" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+        <i style="font-size: 25px;color: white" class="fa fa-bars" ></i>
+      </button>
+      <a id="logobar" class="navbar-brand" href="/pages/anime.html">
+        <img style="border-radius: 10px;" src="../public/assets/anifablogo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+        AniFab
+      </a>
+      <div id="srcWeb" style="display: inline-block;float: right;position: absolute;right: 5px;">
+        <!--        <input-->
+        <!--                autocomplete="off"-->
+        <!--                class="custom-form-control"-->
+        <!--                type="search"-->
+        <!--                placeholder="Cerca"-->
+        <!--                aria-label="Search"-->
+        <!--                id="searchbar"-->
+        <!--        />-->
+        <!--        <button id="search" class="btn btn-primary" type="button">-->
+        <!--          Cerca-->
+        <!--        </button>-->
+      </div>
 
-      <div class="container-fluid">
-        <a class="navbar-brand" href="">
-            <img style="border-radius: 10px;" src="../public/assets/anifablogo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-            AniFab
-        </a>
-       
-     
+
+      <div style="background-color: #40617a!important;" class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel"> <img style="border-radius: 10px;margin-right: 10px" src="../public/assets/anifablogo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">Anifab</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li id="dropdownMenuButton1" class="nav-item">
+
+            </li>
+            <hr>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/pages/anime.html"><i style="padding-right: 5px;" class="fa fa-home"></i>Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/pages/friends.html"><i style="padding-right: 5px;" class="fa fa-users"></i>Amici</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/pages/setting.html"><i style="padding-right: 5px;" class="fa fa-cog"></i>Impostazioni</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/pages/login.html?disconn=si"><i style="padding-right: 5px;" class="fa fa-sign-out-alt"></i>Esci</a>
+            </li>
+          </ul>
         </div>
       </div>
-    </nav>
+    </div>
+  </nav>
 	<div class="img-right"></div>
     <div style="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);width: 50%;"><h2 style="text-align: center;">Inserisci codice TV (XXXXXX)</h2> <input id="tvcode" type="text" class="form-control"><br><button id="logbtn"  class="btn btn login_btn">Accedi</button><br><h2 style="text-align: center;">Scansiona il codice QR</h2></labek><div style="text-align: center;"><img width="200px" src="../public/assets/qrcodetv.png"></div></div>
    
