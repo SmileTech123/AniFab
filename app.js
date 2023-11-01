@@ -26,7 +26,7 @@ const opts = {
   headers: {
     "User-Agent":
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.115 Safari/537.36 OPR/88.0.4412.75",
-    cookie:"sessionId=s%3AXUYdfDI_9Ov9CVKZvJmtvlISsMRgPN5y.FgUFx2xkGy5VzfHNUMbFskKfxCUkr9KV7lyPWI5JUuE;SecurityAW=ebe33e77cd5cbf0fe38a91aa79667931",
+    cookie:"sessionId=s%3AJ9Nb--FN_AK1Y7edXBZTMs10Jbps9bMD.SH7lb0SpHM%2Bvrgo3X%2Fqarzxc%2F9JGa58S%2FbKRMpmApE8;SecurityAW-Sa=dcafa503fb95268ea226a9603dc4b3d9",
   },
 };
 // const opts = {
