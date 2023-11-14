@@ -2,19 +2,8 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" /><script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-  window.OneSignalDeferred = window.OneSignalDeferred || [];
-  OneSignalDeferred.push(function(OneSignal) {
-    OneSignal.init({
-      appId: "3048b9a9-9c37-4a95-9ab5-e8ee4b34e3eb",
-      safari_web_id: "web.onesignal.auto.6a13c381-7602-4e1d-b2a0-1098f769d9cc",
-      notifyButton: {
-        enable: true,
-      },
-    });
-  });
-</script>
+
+  <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -31,12 +20,25 @@
   <link rel="apple-touch-icon" sizes="192x192" href="../public/assets/icon-192x192.png">
 
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-    integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+        integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
   <script type="module" src="../node_modules/js-cookie/dist/js.cookie.min.js"></script>
   <script src="https://unpkg.com/set-interval-async"></script>
   <script src="../node_modules/socket.io/client-dist/socket.io.min.js"></script>
   <title>AniFab</title>
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(function(OneSignal) {
+      OneSignal.init({
+        appId: "3048b9a9-9c37-4a95-9ab5-e8ee4b34e3eb",
+        safari_web_id: "web.onesignal.auto.6a13c381-7602-4e1d-b2a0-1098f769d9cc",
+        notifyButton: {
+          enable: true,
+        },
+      });
+    });
+  </script>
 </head>
 
 <body>
@@ -93,68 +95,68 @@
   </div>
 </nav>
 
-  <div class="img-right"></div>
+<div class="img-right"></div>
 <br>
 <br>
 <br>
-  <div id="NonDisponibile" class="alert alert-danger text-center" style="display: none;" role="alert">
-    L' anime non è ancora disponibile!
+<div id="NonDisponibile" class="alert alert-danger text-center" style="display: none;" role="alert">
+  L' anime non è ancora disponibile!
+</div>
+<div id="condivisione" style="text-align: center;background-color: red;display: none;" >
+  <h2>Utenti Connessi</h2>
+  <div id="UsersList">
   </div>
-  <div id="condivisione" style="text-align: center;background-color: red;display: none;" >
-      <h2>Utenti Connessi</h2>
-      <div id="UsersList">
+  <br>
+</div>
+<div class="center2">
+</div>
+<div class="range">
+
+</div>
+<div id='episodi' class="text-center">
+  <ul class="pagination flex-wrap">
+
+  </ul>
+</div>
+<div class="widget-body row">
+
+</div>
+<div id="time-elapsed"></div>
+<div id="amo"></div>
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img width="30" src="../public/assets/anifablogo.png" class="rounded me-2" alt="...">
+      <strong class="me-auto">Richiesta di amicizia</strong>
+
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div style="background-color:#0f1217" class="toast-body">
+      Hai nuove richieste di amicizia, controlla subito!
+    </div>
+  </div>
+</div>
+<div class="modal fade" data-backdrop="static" data-keyboard="false"  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div style="background-color: #323232;border: 2px solid white;" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color:white">Condivisione</h5>
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+        </button> -->
       </div>
-      <br>
-  </div>
-  <div class="center2">
-  </div>
-  <div class="range">
-
-  </div>
-  <div id='episodi' class="text-center">
-    <ul class="pagination flex-wrap">
-
-    </ul>
-  </div>
-  <div class="widget-body row">
-   
-  </div>
-  <div id="time-elapsed"></div>
-  <div id="amo"></div>
-  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <img width="30" src="../public/assets/anifablogo.png" class="rounded me-2" alt="...">
-        <strong class="me-auto">Richiesta di amicizia</strong>
-
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      <div class="modal-body">
+        <label>Link condivisione</label>
+        <input class="form-control" id="linkCondivisione">
+        <input type="hidden" id="roomShare">
       </div>
-      <div style="background-color:#0f1217" class="toast-body">
-        Hai nuove richieste di amicizia, controlla subito!
+      <div class="modal-footer">
+        <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+        <button id="startCondivisione" type="button" class="btn btn-primary">Avvia</button>
       </div>
     </div>
   </div>
-  <div class="modal fade" data-backdrop="static" data-keyboard="false"  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div style="background-color: #323232;border: 2px solid white;" class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel" style="color:white">Condivisione</h5>
-          <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-             <span aria-hidden="true">&times;</span> 
-          </button> -->
-        </div>
-        <div class="modal-body">
-          <label>Link condivisione</label>
-          <input class="form-control" id="linkCondivisione">
-          <input type="hidden" id="roomShare">
-        </div>
-        <div class="modal-footer">
-          <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-          <button id="startCondivisione" type="button" class="btn btn-primary">Avvia</button>
-        </div>
-      </div>
-    </div>
-  </div>
+</div>
 </body>
 <script src="../script/guarda.js"></script>
 
