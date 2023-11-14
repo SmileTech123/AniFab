@@ -16,7 +16,7 @@ $(document).ready(() => {
 
   if (user == "chiaracorrente19@gmail.com") {
     $("#downloadPhrase").html(
-      "<h4>Benvenuta su Anifab Megagnocca, Ti amo tanto 🧡</h4>"
+        "<h4>Benvenuta su Anifab Megagnocca, Ti amo tanto 🧡</h4>"
     );
     $("#downloadPhrase").attr("href", "../public/images/amo.png");
     $("#downloadAnifab").removeClass("alert-primary");
@@ -51,7 +51,7 @@ $(document).ready(() => {
     }
     $("#srcWeb").append(srcStyle)
     $("#dropdownMenuButton1").append(
-      "<img class='profilebar' src='../public/images/Defaultuser.png'><span>" +
+        "<img class='profilebar' src='../public/images/Defaultuser.png'><span>" +
         user2.split("@")[0] +
         "</span>"
     );
@@ -118,7 +118,7 @@ $(document).ready(() => {
           }
           var titolofull = title + " - Ep." + itm.episodio;
           $(".owl-carousel2").append(
-            "<div class='item'>" +
+              "<div class='item'>" +
               "<div class='inner'>" +
               '<a href="/pages/guarda.html?link=' +
               itm.animelink +
@@ -137,15 +137,12 @@ $(document).ready(() => {
               '" class="imgposter" src="' +
               itm.imglink +
               '">' +
-              "<a  class='badge  titleAnime' >" +
-              title +
-              "</a>"+
-              "<a class='badge titleAnime'>Ep. "+itm.episodio+"</a>"+
-
               "</div>" +
               "</a>" +
               "</a>" +
-              "</div></div>"
+              "<a style='background-color: rgb(0 0 0 / 25%)!important;' class='badge bg-primary titleAnime' >" +
+              titolofull +
+              "</a></div></div>"
           );
         });
         $(".owl-carousel2").owlCarousel({
@@ -196,7 +193,7 @@ $(document).ready(() => {
     var mese = data.getMonth() + 1;
     mese = "0" + mese;
     var primadata =
-      data.getFullYear() + "-" + mese.substr(-2) + "-" + giorno.substr(-2);
+        data.getFullYear() + "-" + mese.substr(-2) + "-" + giorno.substr(-2);
 
     for (let index = 0; index < giorni.length - 1; index++) {
       const itm = giorni[index];
@@ -205,10 +202,10 @@ $(document).ready(() => {
       for (let index2 = 0; index2 < box.length; index2++) {
         const element = box[index2];
         var orario = $(element)
-          .find(".hour")
-          .text()
-          .replace("Trasmesso alle", "")
-          .trim();
+            .find(".hour")
+            .text()
+            .replace("Trasmesso alle", "")
+            .trim();
         var titolo = $(element).find(".name").text().trim();
         var episodio = $(element).find(".episodio-calendario").text().trim();
 
@@ -222,7 +219,7 @@ $(document).ready(() => {
       giorno = giorno + (index + 1);
       giorno = "0" + giorno;
       primadata =
-        data.getFullYear() + "-" + mese.substr(-2) + "-" + giorno.substr(-2);
+          data.getFullYear() + "-" + mese.substr(-2) + "-" + giorno.substr(-2);
     }
 
     var calendarEl = document.getElementById("calendar");
@@ -247,17 +244,17 @@ $(document).ready(() => {
         var href = $(itm).find(".inner").find("a.poster").attr("href");
 
         var img = $(itm)
-          .find(".inner")
-          .find("a.poster")
-          .find("img")
-          .attr("src");
+            .find(".inner")
+            .find("a.poster")
+            .find("img")
+            .attr("src");
         var title = $(itm).find(".inner").find("a.name").text();
         var fulltitle = $(itm).find(".inner").find("a.name").text();
         if (title.length >= 26) {
           // title = title.substring(0, 22) + "...";
         }
         $(".owl-carousel").append(
-          "<div class='item'>" +
+            "<div class='item'>" +
             "<div class='inner'>" +
             '<a href="/pages/guarda.html?link=' +
             href +
@@ -350,7 +347,7 @@ $(document).ready(() => {
         for (let i = 0; i < dati.results.length; i++) {
           const itm = dati.results[i];
           $(".sugg").append(
-            '<a style="color:black!important" href="/pages/anime.html?src=' +
+              '<a style="color:black!important" href="/pages/anime.html?src=' +
               itm.title +
               '"><div class="itmsugg"><img style="height:70px" src="' +
               itm.image_url +
