@@ -5,11 +5,9 @@ body {
   /* background-color: #222831; */
   /* background-image: url("sfondo-galassia-default.png"); */
   background-image: url("https://wallpapercave.com/wp/wp9314724.jpg");
-
-  /*background: linear-gradient(180deg, rgba(92,124,162,1) 0%, rgba(15,169,200,1) 22%, rgba(9,153,205,1) 40%, rgba(7,113,152,1) 61%, rgba(5,85,115,1) 82%);*/
   background-size: cover;
   background-attachment: fixed;
-  font-family: 'Inter', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: seashell !important;
 }
 .center {
@@ -81,27 +79,18 @@ body {
   background-color: #323232!important;
 }
 .poster {
-  width: 250px;
+  width: 200px;
   display: inline-block;
   margin: 10px;
-  height: 350px;
   text-align: center;
-  border: 2px solid white;
-  border-radius: 10px;
-  background: #424242;
 }
-
 
 .imgposter {
   width: 200px;
-  height: 180px;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  object-fit: cover;
+  height: 300px;
+  border-radius: 10px;
+  border: 2px solid white;
 }
-
-
-
 a {
   color: seashell !important;
 }
@@ -184,9 +173,9 @@ h3 {
   padding: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  0 6px 20px 0 rgba(0, 0, 0, 0.19);
   -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
 }
 .brand_logo_container {
@@ -260,9 +249,9 @@ h3 {
 }
 
 .customcarousel{
-    width: 50%!important;;
-    margin: 0 auto!important;;
-    max-height: 500px!important;
+  width: 50%!important;;
+  margin: 0 auto!important;;
+  max-height: 500px!important;
 }
 
 .friend {
@@ -292,7 +281,7 @@ h3 {
 .imgInfo{
   vertical-align: top;
   margin: 10px;
-  border:1px solid white; 
+  border:1px solid white;
   border-radius: 10px;
   width: 150px;
 }
@@ -303,19 +292,19 @@ h3 {
 }
 
 .carouselImage{
- height: 500px!important;
- width: 100%!important;
+  height: 500px!important;
+  width: 100%!important;
 }
 
 @media only screen and (max-width: 1920px) {
   .customcarousel{
     width: 100%!important;
-      
+
   }
   .carouselImage{
     height: 500px!important;
     width: 100%!important;
-   }
+  }
 }
 
 ::-webkit-scrollbar {
@@ -329,7 +318,7 @@ h3 {
 
 ::-webkit-scrollbar-thumb {
   height: 5px;
-   background-color: #0b7ffc;
+  background-color: #0b7ffc;
 
   border-radius: 5px;
 }
@@ -340,8 +329,8 @@ h3 {
 
 
 .titleAnime{
-  display: block; 
-  text-decoration: none; 
+  display: block;
+  text-decoration: none;
   font-size: 15px;
   margin: auto;
   max-width: 250px;
@@ -365,12 +354,12 @@ h3 {
 
   .customcarousel{
     width: 100%!important;
-      
+
   }
   .carouselImage{
     height: 150px!important;
     width: 100%!important;
-   }
+  }
 
   .img-right {
     background: url("public/assets/AnyaChanDefault.png");
@@ -402,7 +391,7 @@ h3 {
   .imgInfo{
     vertical-align: top;
     margin: 10px;
-    border:1px solid white; 
+    border:1px solid white;
     border-radius: 10px;
     width: 80px;
   }
