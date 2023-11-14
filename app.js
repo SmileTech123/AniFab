@@ -444,7 +444,7 @@ apps.get("/getimage", function (req, res) {
   var user = req.query.user;
 
   if (fs.existsSync("public/images/" + user + ".png")) {
-    console.log("A");
+
     res.json({ src: "../public/images/" + user + ".png" });
   } else {
     res.json({ src: "../public/images/Defaultuser.png" });

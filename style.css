@@ -5,9 +5,11 @@ body {
   /* background-color: #222831; */
   /* background-image: url("sfondo-galassia-default.png"); */
   background-image: url("https://wallpapercave.com/wp/wp9314724.jpg");
+
+  /*background: linear-gradient(180deg, rgba(92,124,162,1) 0%, rgba(15,169,200,1) 22%, rgba(9,153,205,1) 40%, rgba(7,113,152,1) 61%, rgba(5,85,115,1) 82%);*/
   background-size: cover;
   background-attachment: fixed;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: seashell !important;
 }
 .center {
@@ -79,18 +81,27 @@ body {
   background-color: #323232!important;
 }
 .poster {
-  width: 200px;
+  width: 250px;
   display: inline-block;
   margin: 10px;
+  height: 350px;
   text-align: center;
+  border: 2px solid white;
+  border-radius: 10px;
+  background: #424242;
 }
+
 
 .imgposter {
   width: 200px;
-  height: 300px;
-  border-radius: 10px;
-  border: 2px solid white;
+  height: 180px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  object-fit: cover;
 }
+
+
+
 a {
   color: seashell !important;
 }

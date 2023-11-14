@@ -137,12 +137,15 @@ $(document).ready(() => {
               '" class="imgposter" src="' +
               itm.imglink +
               '">' +
+              "<a  class='badge  titleAnime' >" +
+              title +
+              "</a>"+
+              "<a class='badge titleAnime'>Ep. "+itm.episodio+"</a>"+
+
               "</div>" +
               "</a>" +
               "</a>" +
-              "<a style='background-color: rgb(0 0 0 / 25%)!important;' class='badge bg-primary titleAnime' >" +
-              titolofull +
-              "</a></div></div>"
+              "</div></div>"
           );
         });
         $(".owl-carousel2").owlCarousel({
